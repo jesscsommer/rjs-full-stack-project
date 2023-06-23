@@ -7,6 +7,7 @@ from random import randint, choice as rc
 from faker import Faker
 
 # Local imports
+#TODO: update/fact-check after SOC
 from app import app
 from models import db
 
