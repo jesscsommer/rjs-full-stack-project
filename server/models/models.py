@@ -43,7 +43,6 @@ class Follow(db.Model,SerializerMixin):
     follower_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     being_followed_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     created_at = db.Colum(db.DateTime, server_default=db.func.now())
-
     
     follower=db.relationship("User",back_populates="follows")
     being_followed=db.relationship("User",back_populates="followers")
@@ -73,7 +72,6 @@ class Comment(db.Model,SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     created_at = db.Colum(db.DateTime, server_default=db.func.now())
 
-    
     user = db.relationship("User", back_populates="comments")
     post = db.relationship("Post", back_populates="comments")
     comment_likes = db.relationship("CommentLikes", back_populates="comment")
