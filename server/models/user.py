@@ -1,5 +1,11 @@
 from .__init__ import db
 
+user_following = db.Table(
+    "user_following",
+    db.Column("follower_id", db.Integer, db.ForeignKey("users.id")),
+    db.Column("followed_id", db.Integer, db.ForeignKey("users.id"))
+)
+
 class User(db.Model):
     __tablename__="users"
     
@@ -12,10 +18,15 @@ class User(db.Model):
     
     # relationships
     comments = db.relationship("Comment", back_populates="user")
-    follows = db.relationship("Follow", back_populates="follower")
-    followers = db.relationship("Follow", back_populates="being_followed")
     posts = db.relationship("Post", back_populates="user")
     post_likes = db.relationship("PostLike", back_populates="user")
     comment_likes = db.relationship("CommentLike", back_populates="user")
+
+    following = db.relationship(
+        "User", lambda: user_following,
+        primaryjoin=lambda: User.id == user_following.c.follower_id, 
+        secondaryjoin=lambda: User.id == user_following.c.followed_id,
+        back_populates = "followers"
+    )
     
     
