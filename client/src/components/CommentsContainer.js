@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react"
 
-function CommentsContainer(){
+function CommentsContainer(post_id){
     const [comments, setComments] = useState([])
     const [liked, setLiked] = useState(false)
     useEffect(() => {
-        fetch('http://localhost:3000/comments')
+        fetch('http://localhost:5000/comments')
         .then(r => r.json())
-        .then(data => setComments(data))
+        .then(allComments => setComments(allComments.filter(comment => comment.post_id == post_id)))
         .catch(err => console.error(err))
     })
 
@@ -18,8 +18,8 @@ function CommentsContainer(){
         <div className="comments">
             {comments.map(comment => {
                 return (<div className="comment">
-                    <img className="comment-photo" src={comment['image_uri']}/>
-                    <div className='comment-text'>{comment[text]}</div>
+                    <div>{comment.user_id}</div>
+                    <div className='comment-text'>{comment[content]}</div>
                     <button onClick={handleLiked}>
                         {liked ? <div className="unlike">Heart</div> : <div className='like'>Heart</div>}
                     </button>
