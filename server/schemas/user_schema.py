@@ -10,6 +10,7 @@ from .__init__ import (
 from .post_schema import PostSchema
 from .comment_schema import CommentSchema
 from models.user import User
+import re
 
 class UserSchema(ma.SQLAlchemySchema):
     class Meta(): 
@@ -45,3 +46,5 @@ class UserSchema(ma.SQLAlchemySchema):
     def validates_username(self, username):
         if User.query.filter(User.username == username).first():
             raise ValidationError("That username is taken")
+        if not re.match(r"^[A-z0-9]+$", username):
+            raise ValidationError("Username may only contain letters and digits")
