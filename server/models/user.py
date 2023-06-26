@@ -13,6 +13,7 @@ class User(db.Model):
     username = db.Column(db.String, nullable=False,unique=True)
     name = db.Column(db.String)
     bio = db.Column(db.String)
+    public_acct = db.Column(db.Boolean, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
     
@@ -26,7 +27,7 @@ class User(db.Model):
         "User", lambda: user_following,
         primaryjoin=lambda: User.id == user_following.c.follower_id, 
         secondaryjoin=lambda: User.id == user_following.c.followed_id,
-        back_populates = "followers"
+        backref = "followers"
     )
     
     

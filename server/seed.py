@@ -41,7 +41,6 @@ if __name__ == '__main__':
                 username=username,
                 name=fake.name(),
                 bio=fake.paragraph(),
-                profile_pic_url=fake.image_url(),
                 public_acct=rc([True, False]),
             )
             # user.password_hash = user.username + "password"
