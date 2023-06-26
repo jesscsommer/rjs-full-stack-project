@@ -8,6 +8,9 @@ from flask_migrate import Migrate
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
+from werkzeug.utils import secure_filename
+import uuid as uuid
+import os
 
 # Local imports
 
@@ -34,3 +37,7 @@ api = Api(app)
 CORS(app)
 
 bcrypt = Bcrypt(app)
+
+#Upload Config
+UPLOAD_PATH = "static/profile_images/"
+app.config['UPLOAD_PATH'] = UPLOAD_PATH

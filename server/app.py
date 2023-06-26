@@ -40,5 +40,14 @@ api.add_resource(Users, "/users")
 api.add_resource(UserById, "/users/<int:id>")
 
 
+# This will go in the post/patch routes after the form has been created
+# saving file name for db
+# pic_filename = secure_filename()
+# pic_name = str(uuid.uuid1()) + "_" + pic_filename
+# saving the image 
+# pic_save = request.file["profile_pic"]
+# pic_save.profile_pic.save(os.path.join(app.config["UPLOAD_PATH"]),pic_name)
+# pic_save.profile_pic = pic_name
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
