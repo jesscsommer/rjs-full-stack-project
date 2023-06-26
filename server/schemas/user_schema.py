@@ -9,6 +9,7 @@ from .__init__ import (
 
 from .post_schema import PostSchema
 from .comment_schema import CommentSchema
+from models.user import User
 
 class UserSchema(ma.SQLAlchemySchema):
     class Meta(): 
@@ -39,3 +40,8 @@ class UserSchema(ma.SQLAlchemySchema):
             "collection": ma.URLFor("users")
         }
     )
+
+    @validates("username")
+    def validates_username(self, username):
+        if User.query.filter(User.username == username).first():
+            raise ValidationError("That username is taken")
