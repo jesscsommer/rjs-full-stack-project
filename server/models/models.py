@@ -23,7 +23,7 @@ class User(db.Model,SerializerMixin):
     # relationships
     comments = db.relationship("Comment", back_populates="user")
     follows = db.relationship("Follow", back_populates="follower")
-    followers = db.relationship("Follow", back_populates="beeing_followed")
+    followers = db.relationship("Follow", back_populates="being_followed")
     posts = db.relationship("Post", back_populates="user")
     post_likes = db.relationship("PostLike", back_populates="user")
     comment_likes = db.relationship("CommentLike", back_populates="user")
