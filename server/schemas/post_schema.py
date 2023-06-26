@@ -6,6 +6,8 @@ from .__init__ import (
     ma, 
     Post
 )
+from .post_like_schema import PostLikeSchema
+from .comment_schema import CommentSchema
 
 class PostSchema(ma.SQLAlchemySchema):
     class Meta(): 
@@ -14,7 +16,10 @@ class PostSchema(ma.SQLAlchemySchema):
         ordered = True
         fields = ("id", "content", "user", "comments", "post_likes", "url")
 
-    # add the nested field info to exclude unneeded stuff 
+    post_likes = fields.Nested(PostLikeSchema, 
+                                only=("id", "url"), many=True)
+    user = fields.Nested("UserSchema", only=("id", "username", "url"))
+    comments = fields.Nested(CommentSchema, only=("id", "url"), many=True)
 
     url = ma.Hyperlinks(
         {

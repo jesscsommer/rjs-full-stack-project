@@ -7,6 +7,9 @@ from .__init__ import (
     User
 )
 
+from .post_schema import PostSchema
+from .comment_schema import CommentSchema
+
 class UserSchema(ma.SQLAlchemySchema):
     class Meta(): 
         model = User
@@ -15,7 +18,12 @@ class UserSchema(ma.SQLAlchemySchema):
         fields = ("id", "username", "name", "bio", "posts", "comments", 
                     "follows", "followers", "url")
 
-    # add the nested field info to exclude unneeded stuff 
+    posts = fields.Nested(PostSchema, only=("id", "content", "url"), many=True)
+    comments = fields.Nested(CommentSchema, only=("id", "url"), many=True)
+    follows = fields.Nested("UserSchema", 
+                            only=("id", "username", "url"), many=True)
+    followers = fields.Nested("UserSchema", 
+                            only=("id", "username", "url"), many=True)
 
     url = ma.Hyperlinks(
         {

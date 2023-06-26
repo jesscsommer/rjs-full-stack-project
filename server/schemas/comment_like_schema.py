@@ -14,7 +14,8 @@ class CommentLikeSchema(ma.SQLAlchemySchema):
         ordered = True
         fields = ("id", "comment", "user", "url")
 
-    # add the nested field info to exclude unneeded stuff 
+    comment = fields.Nested("CommentSchema", only=("id", "url"))
+    user = fields.Nested("UserSchema", only=("id", "username", "url"))
 
     url = ma.Hyperlinks(
         {

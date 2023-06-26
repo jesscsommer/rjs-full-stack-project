@@ -14,7 +14,8 @@ class PostLikeSchema(ma.SQLAlchemySchema):
         ordered = True
         fields = ("id", "post", "user", "url")
 
-    # add the nested field info to exclude unneeded stuff 
+    post = fields.Nested("PostSchema", only=("id", "url"))
+    user = fields.Nested("UserSchema", only=("id", "username", "url"))
 
     url = ma.Hyperlinks(
         {

@@ -6,6 +6,7 @@ from .__init__ import (
     ma, 
     Follow
 )
+from .user_schema import UserSchema
 
 class FollowSchema(ma.SQLAlchemySchema):
     class Meta(): 
@@ -14,7 +15,8 @@ class FollowSchema(ma.SQLAlchemySchema):
         ordered = True
         fields = ("id", "follower", "being_followed", "url")
 
-    # add the nested field info to exclude unneeded stuff 
+    follower = fields.Nested("UserSchema", only=("id", "username", "url"))
+    being_followed = fields.Nested("UserSchema", only=("id", "username", "url"))
 
     url = ma.Hyperlinks(
         {
