@@ -13,7 +13,10 @@ from config import app, db, api
 from models import User, Recipe
 
 #TODO: blueprint imports 
+from blueprints.posts import Posts
+
 #TODO: add resources to API
+api.add_resource(Posts, "/posts")
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
