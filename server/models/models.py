@@ -74,7 +74,7 @@ class Comment(db.Model,SerializerMixin):
 
     user = db.relationship("User", back_populates="comments")
     post = db.relationship("Post", back_populates="comments")
-    comment_likes = db.relationship("CommentLikes", back_populates="comment")
+    comment_likes = db.relationship("CommentLike", back_populates="comment")
     
 class PostLike(db.Model,SerializerMixin):
     __tablename__="post_likes"
