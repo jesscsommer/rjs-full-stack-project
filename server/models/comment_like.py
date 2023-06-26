@@ -9,3 +9,4 @@ class CommentLike(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     
     comment = db.relationship("Comment", back_populates="comment_likes")
+    user = db.relationship("User", back_populates="comment_likes")
