@@ -80,8 +80,8 @@ class PostLike(db.Model,SerializerMixin):
     __tablename__="post_likes"
     
     id = db.Column(db.Integer, primary_key=True)
-    post_id = db.Column(db.Integer, db.ForeignKey("post.id"))
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    post_id = db.Column(db.Integer, db.ForeignKey("posts.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     
     post = db.relationship("Post", back_populates="post_likes")
