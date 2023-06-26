@@ -33,7 +33,7 @@ const SignUpForm = () => {
             <Typography component="h1" variant="h5">
                 Sign up
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Box component="form" noValidate sx={{ mt: 3 }}>
                 <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                     <TextField
@@ -77,12 +77,6 @@ const SignUpForm = () => {
                     autoComplete="new-password"
                     />
                 </Grid>
-                <Grid item xs={12}>
-                    <FormControlLabel
-                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                    label="I want to receive inspiration, marketing promotions and updates via email."
-                    />
-                </Grid>
                 </Grid>
                 <Button
                 type="submit"
@@ -101,7 +95,6 @@ const SignUpForm = () => {
                 </Grid>
             </Box>
             </Box>
-            <Copyright sx={{ mt: 5 }} />
             </Container>
         </ThemeProvider>
     )
