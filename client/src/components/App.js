@@ -4,7 +4,9 @@ import SignUpForm from "./SignUpForm";
 
 const App = () => {
   // Code goes here!
-  <SignUpForm />
+  return (
+    <SignUpForm />
+  )
 }
 
 export default App;
