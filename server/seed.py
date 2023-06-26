@@ -95,7 +95,7 @@ if __name__ == '__main__':
                 comment=rc(comments),
                 user=rc(users)
             )
-            comment_likes.append(post_like)
+            comment_likes.append(comment_like)
 
         db.session.add_all(comment_likes)
 
