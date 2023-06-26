@@ -28,8 +28,7 @@ class PostSchema(ma.SQLAlchemySchema):
     url = ma.Hyperlinks(
         {
             "self": ma.URLFor(
-                "posts",
-                # above is temporary, fix back to "postbyid"
+                "postbyid",
                 values=dict(id="<id>")
             ),
             "collection": ma.URLFor("posts")
