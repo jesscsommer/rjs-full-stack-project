@@ -7,9 +7,15 @@ from random import randint, choice as rc
 from faker import Faker
 
 # Local imports
-#TODO: update/fact-check after SOC
 from app import app
 from models import db
+
+from models.comment_like import CommentLike
+from models.comment import Comment
+from models.follow import Follow
+from models.post_like import PostLike
+from models.post import Post
+from models.user import User
 
 if __name__ == '__main__':
     fake = Faker()
@@ -40,7 +46,7 @@ if __name__ == '__main__':
                 profile_pic_url=fake.image_url(),
                 public_acct=rc([True, False]),
             )
-            user.password_hash = user.username + "password"
+            # user.password_hash = user.username + "password"
             users.append(user)
 
         db.session.add_all(users)
