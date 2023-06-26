@@ -12,7 +12,6 @@ from models import db
 
 from models.comment_like import CommentLike
 from models.comment import Comment
-from models.follow import Follow
 from models.post_like import PostLike
 from models.post import Post
 from models.user import User
@@ -27,7 +26,6 @@ if __name__ == '__main__':
         Comment.query.delete()
         PostLike.query.delete()
         CommentLike.query.delete()
-        Follow.query.delete()
 
         print("Creating users ...")
         users = []
@@ -48,7 +46,9 @@ if __name__ == '__main__':
             )
             # user.password_hash = user.username + "password"
             users.append(user)
-
+            for _ in range(3):
+                user.followers.append(rc(users))
+    
         db.session.add_all(users)
 
         print("Creating posts ...")
@@ -99,18 +99,6 @@ if __name__ == '__main__':
             comment_likes.append(post_like)
 
         db.session.add_all(comment_likes)
-
-        print("Creating follows ...")
-        follows = []
-
-        for _ in range(100):
-            follow = Follow(
-                follower=rc(users),
-                being_followed=rc(users)
-            )
-            follows.append(follow)
-
-        db.session.add_all(follows)
 
         print("Committing to db ...")
 
