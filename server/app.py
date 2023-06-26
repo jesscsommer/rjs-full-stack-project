@@ -9,7 +9,6 @@ from flask_restful import Resource
 # Local imports
 from config import app, db, api
 
-#TODO: import models
 from models.comment_like import CommentLike
 from models.comment import Comment
 from models.post_like import PostLike
@@ -17,7 +16,7 @@ from models.post import Post
 from models.user import User
 
 #TODO: blueprint imports 
-from blueprints.posts import Posts
+from blueprints.posts import Posts, posts_schema
 
 #TODO: add resources to API
 api.add_resource(Posts, "/posts")
