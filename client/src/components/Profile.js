@@ -10,8 +10,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
+import EditIcon from '@mui/icons-material/Edit';
 import MailIcon from '@mui/icons-material/Mail';
+import Avatar from '@mui/material/Avatar';
 
 const drawerWidth = 240;
 
@@ -31,18 +32,30 @@ const Profile = () => {
         >
             <Toolbar />
             <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                <ListItem key={text} disablePadding>
+                <ListItem>
+                <Avatar
+                    alt="Remy Sharp"
+                    src="/static/images/avatar/1.jpg"
+                    sx={{ width: 56, height: 56 }}
+                    />
+                <h3>User name</h3>
+                </ListItem>
+                <ListItem>
+                    <p>This is the user's bio. This is the user's bio. This is the user's bio. This is the user's bio. 
+                    This is the user's bio. This is the user's bio. This is the user's bio.</p>
+                </ListItem>
+                <ListItem disablePadding>
                 <ListItemButton>
                     <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                        <EditIcon />
                     </ListItemIcon>
-                    <ListItemText primary={text} />
+                    Edit
+                    <ListItemText />
                 </ListItemButton>
                 </ListItem>
-            ))}
             </List>
         </Drawer>
+        // Render user's posts ehre 
     )
 }
 
