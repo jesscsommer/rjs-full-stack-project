@@ -10,7 +10,11 @@ from flask_restful import Resource
 from config import app, db, api
 
 #TODO: import models
-from models import User, Recipe
+from models.comment_like import CommentLike
+from models.comment import Comment
+from models.post_like import PostLike
+from models.post import Post
+from models.user import User
 
 #TODO: blueprint imports 
 #TODO: add resources to API
