@@ -17,7 +17,9 @@ const defaultTheme = createTheme();
 const PostForm = () => {
     const [errors, setErrors] = useState([])
 
-    const postSchema = yup.object().shape({})
+    const postSchema = yup.object().shape({
+        content: yup.string()
+    })
 
     const formik = useFormik({
         initialValues: {}, 
@@ -59,16 +61,36 @@ const PostForm = () => {
                         <TextField
                         required
                         fullWidth
-                        id="filled-multiline-static"
-                        multiline
-                        placeholder="Placeholder"
-                        variant="filled"
-                        InputProps={{endAdornment: 
-                            <Button
-                                startIcon={<HistoryEduIcon />}
-                                >
-                                    Post</Button>}}
+                        id="line-1"
+                        placeholder="Line 1"
+                        variant="standard"
+                        margin="normal"
                         />
+                        <TextField
+                        required
+                        fullWidth
+                        id="line-2"
+                        placeholder="Line 2"
+                        variant="standard"
+                        margin="normal"
+                        />
+                        <TextField
+                        required
+                        fullWidth
+                        id="line-3"
+                        placeholder="Line 3"
+                        variant="standard"
+                        margin="normal"
+                        />
+                        <Button 
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            startIcon={<HistoryEduIcon />}
+                            >
+                            Post
+                        </Button>
                     </Grid>
                 </Grid>
             </Box>
