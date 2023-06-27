@@ -14,19 +14,19 @@ const defaultTheme = createTheme();
 const PostForm = () => {
     return(
         <ThemeProvider theme={defaultTheme}>
-            <Container component="main" maxWidth="m">
+            <Container component="main" maxWidth="lg">
                 <CssBaseline />
             <Box
+            component="form"
             sx={{
-                marginTop: 8,
+                marginTop: 5,
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center',
+                alignItems: 'center'
             }}
             >
-                <Box component="form" noValidate sx={{ mt: 3 }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
+                    <Grid container justifyContent="center" spacing={2}>
+                        <Grid item xs={6}>
                             <TextField
                             required
                             fullWidth
@@ -42,7 +42,6 @@ const PostForm = () => {
                             />
                         </Grid>
                     </Grid>
-                </Box>
             </Box>
             </Container>
         </ThemeProvider>
