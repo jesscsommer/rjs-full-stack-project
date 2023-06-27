@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import SignUpForm from "./SignUpForm";
-import SignInForm from "./SignInForm";
+import SignInForm from "./LogInForm";
 import Profile from "./Profile";
 import PostsContainer from "./PostsContainer";
 // import Nav from "./Nav";

@@ -30,4 +30,4 @@ function CommentForm({post_id, user_id, handleSubmitComment}){
     )
 }
 
-export default CommentForm
+export default CommentForm;
