@@ -4,22 +4,22 @@ import SignUpForm from "./SignUpForm";
 import SignInForm from "./SignInForm";
 import Profile from "./Profile";
 import PostsContainer from "./PostsContainer";
-// import Nav from "./Nav";
+import LeftSideBar from "./LeftSideBar";
+import RightSideBar from "./RightSideBar";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState([]);
-  const [isNavVisible, setIsNavVisible] = useState(false);
 
   return (
     <div className="app">
-      {/* <Nav /> */}
+      {/* <LeftSideBar isLoggedIn={isLoggedIn}/> */}
       <Routes>
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/login" element={<SignInForm />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/" element={<PostsContainer />} />
       </Routes>
+      {/* <RightSideBar /> */}
     </div>
   );
 };
