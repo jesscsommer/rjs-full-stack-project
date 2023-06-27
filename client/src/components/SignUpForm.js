@@ -4,8 +4,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -14,26 +12,65 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
-import Input from '@mui/material/Input';
-import FilledInput from '@mui/material/FilledInput';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 const defaultTheme = createTheme();
 
 const SignUpForm = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const [errors, setErrors] = useState([])
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+
+    const userSchema = yup.object().shape({
+        username: yup.string()
+        .min(5, "Username must be at least 5 characters")
+        .max(20, "Username must be at most 20 characters")
+        .test("valid-chs", "Username may only contain letters and numbers", 
+            (value) => {
+                return /^[A-z0-9]+$/.test(value)
+            })
+        .required("Username is required"),
+        password: yup.string()
+        .min(10, "Password must be at least 10 characters")
+        .required("Password is required")
+    })
+
+    const formik = useFormik({
+        initialValues: {
+            username: "",
+            password: ""
+        },
+        validationSchema: userSchema, 
+        onSubmit: (values) => {
+            fetch("/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(values)
+            })
+            .then(res => {
+                if (res.ok) {
+                    res.json()
+                    .then(data => console.log(data))
+                } else {
+                    res.json()
+                    .then(error => setErrors(error.message))
+                }
+            })
+            .catch(err => console.error(err))
+        }
+    })
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -53,7 +90,10 @@ const SignUpForm = () => {
             <Typography component="h1" variant="h5">
                 Sign up
             </Typography>
-            <Box component="form" noValidate sx={{ mt: 3 }}>
+            <Box 
+                component="form" 
+                onSubmit={formik.handleSubmit}
+                sx={{ mt: 3 }}>
                 <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <TextField
@@ -62,7 +102,9 @@ const SignUpForm = () => {
                     id="username"
                     label="Username"
                     name="username"
+                    onChange={formik.handleChange}
                     />
+                    <p style={{ color: "red" }}>{formik.errors.username}</p>
                 </Grid>
                 <Grid item xs={12}>
                     <TextField
@@ -71,6 +113,7 @@ const SignUpForm = () => {
                     name="password"
                     label="Password"
                     id="password"
+                    onChange={formik.handleChange}
                     type={showPassword ? 'text' : 'password'}
                     InputProps={{
                         endAdornment: 
@@ -85,15 +128,16 @@ const SignUpForm = () => {
                         </InputAdornment>
                     }}
                     />
+                    <p style={{ color: "red" }}>{formik.errors.password}</p>
                 </Grid>
                 </Grid>
                 <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
                 >
-                Sign Up
+                    Sign Up
                 </Button>
                 <Grid container justifyContent="flex-end">
                 <Grid item>

@@ -12,7 +12,7 @@ class User(db.Model):
     __tablename__="users"
     
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, nullable=False,unique=True)
+    username = db.Column(db.String, nullable=False, unique=True)
     _password_hash = db.Column(db.String)
     name = db.Column(db.String)
     bio = db.Column(db.String)
