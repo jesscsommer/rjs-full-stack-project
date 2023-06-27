@@ -1,3 +1,5 @@
+import React, { useState } from "react"
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,10 +13,28 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import Input from '@mui/material/Input';
+import FilledInput from '@mui/material/FilledInput';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const defaultTheme = createTheme();
 
 const SignUpForm = () => {
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
     return (
         <ThemeProvider theme={defaultTheme}>
             <Container component="main" maxWidth="xs">
@@ -35,35 +55,13 @@ const SignUpForm = () => {
             </Typography>
             <Box component="form" noValidate sx={{ mt: 3 }}>
                 <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                    <TextField
-                    autoComplete="given-name"
-                    name="firstName"
-                    required
-                    fullWidth
-                    id="firstName"
-                    label="First Name"
-                    autoFocus
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <TextField
-                    required
-                    fullWidth
-                    id="lastName"
-                    label="Last Name"
-                    name="lastName"
-                    autoComplete="family-name"
-                    />
-                </Grid>
                 <Grid item xs={12}>
                     <TextField
                     required
                     fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
+                    id="username"
+                    label="Username"
+                    name="username"
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -72,9 +70,20 @@ const SignUpForm = () => {
                     fullWidth
                     name="password"
                     label="Password"
-                    type="password"
                     id="password"
-                    autoComplete="new-password"
+                    type={showPassword ? 'text' : 'password'}
+                    InputProps={{
+                        endAdornment: 
+                        <InputAdornment position="end">
+                            <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                        </InputAdornment>
+                    }}
                     />
                 </Grid>
                 </Grid>
