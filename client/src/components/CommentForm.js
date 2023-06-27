@@ -11,7 +11,7 @@ function CommentForm({post_id, user_id, handleSubmitComment}){
     }
     const [submitComment, setSubmitComment] = useState(initialCommentForm)
 
-    const handleAddComment = () => {
+    const handleAddComment = (e) => {
         setSubmitComment({...submitComment, [e.target.name]:e.target.value})
     }
 
@@ -22,9 +22,9 @@ function CommentForm({post_id, user_id, handleSubmitComment}){
                     <AddReactionOutlinedIcon />
                 </span>
                 <input onChange={handleAddComment} placeholder='Add a Comment ...' name='content'></input>
-                <span>
+                <button>
                     <AddBoxOutlinedIcon />
-                </span>
+                </button>
             </form>
         </div>
     )
