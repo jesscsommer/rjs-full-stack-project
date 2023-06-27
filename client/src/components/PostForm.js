@@ -1,63 +1,132 @@
-import Avatar from '@mui/material/Avatar';
+import React, { useState } from "react";
+
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';;
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { syllable } from "syllable";
 
 const defaultTheme = createTheme();
-function PostForm(){
+
+const PostForm = () => {
+    const [errors, setErrors] = useState([])
+
+    const postSchema = yup.object().shape({
+        line1: yup.string()
+        .test("is-5-syallables", "Line 1 must be 5 syllables", (value) => {
+            return syllable(value) == 5
+        })
+        .required("Line 1 is required"), 
+        line2: yup.string()
+        .test("is-7-syllables", "Line 2 must be 7 syllables", (value) => {
+            return syllable(value) == 7
+        })
+        .required("Line 2 is required"), 
+        line3: yup.string()
+        .test("is-5-syallables", "Line 3 must be 5 syllables", (value) => {
+            return syllable(value) == 5
+        })
+        .required("Line 3 is required")
+    })
+
+    const formik = useFormik({
+        initialValues: {
+            line1: "",
+            line2: "",
+            line3: ""
+        }, 
+        validationSchema: postSchema, 
+        onSubmit: (values) => {
+            fetch("/posts", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "content": ([values.line1, values.line2, values.line3]).join(" \n")
+                })
+            })
+            .then(res => {
+                if (res.ok) {
+                    res.json()
+                    .then(data => console.log(data))
+                } else {
+                    res.json().then(error => setErrors(error.message))
+                }
+            })
+            .catch(err => console.error(err))
+        }
+    })
     return(
         <ThemeProvider theme={defaultTheme}>
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="lg">
                 <CssBaseline />
             <Box
+            component="form"
+            onSubmit={formik.handleSubmit}
             sx={{
-                marginTop: 8,
+                marginTop: 5,
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center',
+                alignItems: 'center'
             }}
             >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                <AddCircleOutlineOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-                New post
-            </Typography>
-                <Box component="form" noValidate sx={{ mt: 3 }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                            required
-                            fullWidth
-                            name="post-content"
-                            label="Post-content"
-                            type="post-content"
-                            id="post-content"
-                            autoComplete="post-content"
-                            />
-                        </Grid>
-                    </Grid>
-                    <Button
-                        type="submit"
+                <Grid container justifyContent="center" spacing={2}>
+                    <Grid item xs={6}>
+                        <TextField
+                        required
                         fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                    >Share</Button>
-                    <Grid container justifyContent="flex-end">
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                            Questions ?
-                            </Link>
-                        </Grid>
+                        id="line1"
+                        name="line1"
+                        placeholder="Line 1"
+                        value={formik.values.line1}
+                        variant="standard"
+                        margin="normal"
+                        onChange={formik.handleChange}
+                        />
+                        <p style={{ color: "red" }}>{formik.errors.line1}</p>
+                        <TextField
+                        required
+                        fullWidth
+                        id="line2"
+                        name="line2"
+                        placeholder="Line 2"
+                        value={formik.values.line2}
+                        variant="standard"
+                        margin="normal"
+                        onChange={formik.handleChange}
+                        />
+                        <p style={{ color: "red" }}>{formik.errors.line2}</p>
+                        <TextField
+                        required
+                        fullWidth
+                        id="line3"
+                        name="line3"
+                        placeholder="Line 3"
+                        value={formik.values.line3}
+                        variant="standard"
+                        margin="normal"
+                        onChange={formik.handleChange}
+                        />
+                        <p style={{ color: "red" }}>{formik.errors.line3}</p>
+                        <Button 
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            startIcon={<HistoryEduIcon />}
+                            >
+                            Post
+                        </Button>
                     </Grid>
-                </Box>
+                </Grid>
             </Box>
             </Container>
         </ThemeProvider>
