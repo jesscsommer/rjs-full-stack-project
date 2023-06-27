@@ -9,6 +9,8 @@ from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from werkzeug.utils import secure_filename
+from os import environ
+from dotenv import load_dotenv
 import uuid as uuid
 import os
 
@@ -16,7 +18,10 @@ import os
 
 # Instantiate app, set attributes
 app = Flask(__name__)
-#TODO: set up APP SECRET KEY; make sure it's secure/not on Git
+
+load_dotenv(".env")
+app.secret_key=environ.get("SECRET_KEY")
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
