@@ -28,6 +28,7 @@ from blueprints.user_by_id import UserById
 from blueprints.signup import Signup
 from blueprints.login import Login
 from blueprints.logout import Logout
+from blueprints.check_session import CheckSession
 
 api.add_resource(CommentLikes, "/comment_likes")
 api.add_resource(CommentLikeById, "/comment_likes/<int:id>")
@@ -42,6 +43,7 @@ api.add_resource(UserById, "/users/<int:id>")
 api.add_resource(Signup, "/signup")
 api.add_resource(Login, "/login")
 api.add_resource(Logout, "/logout")
+api.add_resource(CheckSession, "/check_session")
 
 # This will go in the post/patch routes after the form has been created
 # saving file name for db
