@@ -15,7 +15,6 @@ from models.post_like import PostLike
 from models.post import Post
 from models.user import User
 
-#TODO: blueprint imports 
 from blueprints.comment_likes import CommentLikes
 from blueprints.comment_like_by_id import CommentLikeById
 from blueprints.comments import Comments
@@ -27,7 +26,6 @@ from blueprints.post_like_by_id import PostLikeById
 from blueprints.users import Users
 from blueprints.user_by_id import UserById
 
-#TODO: add resources to API
 api.add_resource(CommentLikes, "/comment_likes")
 api.add_resource(CommentLikeById, "/comment_likes/<int:id>")
 api.add_resource(Comments, "/comments")

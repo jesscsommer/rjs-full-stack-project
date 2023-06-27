@@ -13,6 +13,7 @@ flask-cors = "*"
 flask-marshmallow = "*"
 flask-bcrypt = "*"
 marshmallow-sqlalchemy = "*"
+python-dotenv = "*"
 
 [dev-packages]
 ipdb = "*"
