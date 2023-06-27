@@ -3,13 +3,15 @@ import { Switch, Route } from "react-router-dom";
 import SignUpForm from "./SignUpForm";
 import SignInForm from "./SignInForm";
 import Profile from "./Profile";
+import PostForm from "./PostForm"
 
 const App = () => {
   return(
     <>
-      <SignUpForm />
+      {/* <SignUpForm />
       <SignInForm />
-      <Profile />
+      <Profile /> */}
+      <PostForm />
     </>
   )
 }
