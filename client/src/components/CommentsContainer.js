@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
+import CommentForm from './CommentForm'
 
-function CommentsContainer(){
+function CommentsContainer({post_id, user_id}){
     const [comments, setComments] = useState([])
     const [liked, setLiked] = useState(false)
     useEffect(() => {
@@ -10,12 +11,25 @@ function CommentsContainer(){
         .catch(err => console.error(err))
     })
 
+    const handleSubmitComment = (e, submitComment) => {
+        e.preventDefault()
+        fetch('http://localhost:3000/comments', {
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(submitComment)
+        }).then(res => res.json())
+        .then(comment => setComments(current => [...current, comment]))
+        .catch(err => console.error(err))
+    }
+
     const handleLiked = () => {
         setLiked(current => !current)
     }
 
     return(
         <div className="comments">
+            <CommentForm handleSubmitComment={handleSubmitComment}/>
+            <div>
             {comments.map(comment => {
                 return (<div className="comment">
                     <img className="comment-photo" src={comment['image_uri']}/>
@@ -25,6 +39,7 @@ function CommentsContainer(){
                     </button>
                 </div>)
             })}
+            </div>
         </div>
     )
 }
