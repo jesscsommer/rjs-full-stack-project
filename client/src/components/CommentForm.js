@@ -25,9 +25,9 @@ function CommentForm({ post_id, user_id, handleSubmitComment }) {
           placeholder="Add a Comment ..."
           name="content"
         ></input>
-        <span>
+        <button>
           <AddBoxOutlinedIcon />
-        </span>
+        </button>
       </form>
     </div>
   );

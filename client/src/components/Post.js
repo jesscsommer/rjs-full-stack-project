@@ -1,9 +1,11 @@
 import { useState } from "react";
-import CommentsContainer from "./CommentsContainer";
+import CommentForm from './CommentForm'
+import CommentsContainer from './CommentsContainer'
 
-function Post(post_id, content, user) {
-  const [showComments, setShowComments] = useState(false);
+function Post({content, user, post_likes, post_id}) {
+  const [showComments, setShowComments] = useState(true);
   const [liked, setLiked] = useState(false);
+  const [newComment, setNewComment] = useState([])
 
   const handleLiked = () => {
     setLiked((current) => !current);
@@ -11,31 +13,42 @@ function Post(post_id, content, user) {
   const handleShow = () => {
     setShowComments((current) => !current);
   };
+
+  const handleSubmitComment = (e, submitComment) => {
+    e.preventDefault()
+    fetch('/comments', {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(submitComment)
+    }).then(res => res.json())
+    .then(comment => setNewComment(comment))
+    .catch(err => console.error(err))
+  }
   return (
     <div className="post">
-      <div>{user.username}</div>
+      <div>{user}</div>
       <div className="comment-text">{content}</div>
       <button onClick={handleLiked}>
         {liked ? (
-          <div className="unlike">Heart</div>
+          <div className="unlike">Heart{post_likes.length}</div>
         ) : (
-          <div className="like">Heart</div>
+          <div className="like">Heart{post_likes.length}</div>
         )}
       </button>
+      <CommentForm handleSubmitComment={handleSubmitComment}/>
       <div>
         {showComments ? (
           <div>
-            <button className="hide">Show</button>
+            <button onClick={handleShow} className="hide">Show</button>
           </div>
         ) : (
           <div>
-            <button>Hide</button>
+            <button onClick={handleShow}>Hide</button>
             <CommentsContainer post_id={post_id} />
           </div>
         )}
       </div>
-    </div>
-  );
+    </div>)
 }
 
 export default Post;
