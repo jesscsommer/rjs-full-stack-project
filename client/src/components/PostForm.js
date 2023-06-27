@@ -26,23 +26,23 @@ const PostForm = () => {
                 alignItems: 'center'
             }}
             >
-                    <Grid container justifyContent="center" spacing={2}>
-                        <Grid item xs={6}>
-                            <TextField
-                            required
-                            fullWidth
-                            id="filled-multiline-static"
-                            multiline
-                            placeholder="Placeholder"
-                            variant="filled"
-                            InputProps={{endAdornment: 
-                                <Button
-                                    startIcon={<HistoryEduIcon />}
-                                    >
-                                        Post</Button>}}
-                            />
-                        </Grid>
+                <Grid container justifyContent="center" spacing={2}>
+                    <Grid item xs={6}>
+                        <TextField
+                        required
+                        fullWidth
+                        id="filled-multiline-static"
+                        multiline
+                        placeholder="Placeholder"
+                        variant="filled"
+                        InputProps={{endAdornment: 
+                            <Button
+                                startIcon={<HistoryEduIcon />}
+                                >
+                                    Post</Button>}}
+                        />
                     </Grid>
+                </Grid>
             </Box>
             </Container>
         </ThemeProvider>
