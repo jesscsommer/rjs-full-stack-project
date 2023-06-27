@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import SignUpForm from "./SignUpForm";
 import SignInForm from "./SignInForm";
 import Profile from "./Profile";
-import PostForm from "./PostForm"
+import PostsContainer from "./PostsContainer";
+// import Nav from "./Nav";
 
 const App = () => {
-  return(
-    <>
-      {/* <SignUpForm />
-      <SignInForm />
-      <Profile /> */}
-      <PostForm />
-    </>
-  )
-}
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState([]);
+  const [isNavVisible, setIsNavVisible] = useState(false);
+
+  return (
+    <div className="app">
+      {/* <Nav /> */}
+      <Routes>
+        <Route path="/signup" element={<SignUpForm />} />
+        <Route path="/login" element={<SignInForm />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/" element={<PostsContainer />} />
+      </Routes>
+    </div>
+  );
+};
 
 export default App;
