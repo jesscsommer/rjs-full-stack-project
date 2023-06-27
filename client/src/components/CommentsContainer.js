@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 
 function CommentsContainer(post_id){
     const [comments, setComments] = useState([])
-    const [liked, setLiked] = useState(false)
+    const [likedComment, setLikedComment] = useState(false)
     useEffect(() => {
         fetch('http://localhost:5000/comments')
         .then(r => r.json())
@@ -10,8 +10,8 @@ function CommentsContainer(post_id){
         .catch(err => console.error(err))
     })
 
-    const handleLiked = () => {
-        setLiked(current => !current)
+    const handleLikedComment = () => {
+        setLikedComment(current => !current)
     }
 
     return(
@@ -20,8 +20,8 @@ function CommentsContainer(post_id){
                 return (<div className="comment">
                     <div>{comment.user_id}</div>
                     <div className='comment-text'>{comment[content]}</div>
-                    <button onClick={handleLiked}>
-                        {liked ? <div className="unlike">Heart</div> : <div className='like'>Heart</div>}
+                    <button onClick={handleLikedComment}>
+                        {likedComment ? <div className="unlike">Heart</div> : <div className='like'>Heart</div>}
                     </button>
                 </div>)
             })}
