@@ -36,6 +36,8 @@ const Profile = ({ currentUser }) => {
     .catch(err => console.error(err))
   }, [username])
 
+  if (!profileUser) return (<h1>Loading...</h1>)
+
   return (
     <div>
       <Box sx={{ display: 'flex' }}>
@@ -76,7 +78,7 @@ const Profile = ({ currentUser }) => {
           </ListItem>
         </List>
       </Drawer>
-      <ProfileEditModal />
+      {/* <ProfileEditModal /> */}
         <Box
           component="main"
           sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}

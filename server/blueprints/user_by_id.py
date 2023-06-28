@@ -19,6 +19,7 @@ class UserById(Resource):
             try:
                 data = request.get_json()
                 user_schema.validate(data)
+                # import ipdb; ipdb.set_trace()
 
                 updated_user = user_schema.load(data,
                                                 instance=user, partial=True)
