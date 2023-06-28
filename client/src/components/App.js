@@ -26,27 +26,50 @@ const App = () => {
         .catch((err) => console.error(err));
     }, []);
 
-    return (
-        <div className="app">
-        <HeaderBar currentUser={currentUser} />
-        <Routes>
-            <Route path="/signup" element={<SignUpForm />} />
-            <Route path="/login" element={<LogInForm />} />
-            <Route
-                path="/profile/:username"
-                element={<Profile currentUser={currentUser} />}
+  const handleSetUser = () =>
+    fetch("/check_session").then((res) => {
+      if (res.ok) {
+        res.json().then(setCurrentUser);
+      }
+    });
+
+  const handleSetPosts = () => {
+    fetch("/posts")
+      .then((r) => r.json())
+      .then(setPosts)
+      .catch((err) => console.error(err));
+  };
+
+  return (
+    <div className="app">
+      <HeaderBar currentUser={currentUser} handleSetUser={handleSetUser} />
+      <Routes>
+        <Route
+          path="/signup"
+          element={<SignUpForm handleSetUser={handleSetUser} />}
+        />
+        <Route
+          path="/login"
+          element={<LogInForm handleSetUser={handleSetUser} />}
+        />
+        <Route
+          path="/profile/:username"
+          element={<Profile currentUser={currentUser} />}
+        />
+        <Route
+          path="/"
+          element={
+            <PostsContainer
+              currentUser={currentUser}
+              posts={posts}
+              handleSetPosts={handleSetPosts}
             />
-            <Route
-                path="/"
-                element={
-                    <PostsContainer 
-                        currentUser={currentUser} 
-                        posts={posts} />
-                    }
-            />
-        </Routes>
-        </div>
-    );
+          }
+        />
+      </Routes>
+      {/* <RightSideBar /> */}
+    </div>
+  );
 };
 
 export default App;
