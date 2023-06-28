@@ -74,7 +74,6 @@ const Post = ({ currentUser, post }) => {
   };
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <Link to={`../profile/${post.user.username}`}>
         <CardHeader
           avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="post"></Avatar>}
           action={
@@ -84,9 +83,9 @@ const Post = ({ currentUser, post }) => {
           }
           title={post.user.name}
           subheader={post.user.username}
+          component={Link}
+          to={`/profile/${post.user.username}`}
         />
-      </Link>
-
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {post.content}
