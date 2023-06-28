@@ -28,9 +28,6 @@ const EditProfile = ({ profileUser }) => {
     const handleClose = () => setOpen(false);
 
     const [errors, setErrors] = useState([])
-
-    console.log("profile user: ")
-    console.log(profileUser)
     
     const userSchema = yup.object().shape({
         username: yup.string()

@@ -28,7 +28,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-function Post({ currentUser, post }) {
+const Post = ({ currentUser, post }) => {
   const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState(false);
   const [newComment, setNewComment] = useState([]);
