@@ -8,7 +8,7 @@ function PostsContainer({ currentUser, posts }) {
     <>
       {currentUser ? <PostForm /> : null}
       <div className="posts">
-        {posts.map((post) => (
+        {posts?.map((post) => (
           <Post
             key={post.id}
             content={post.content}
