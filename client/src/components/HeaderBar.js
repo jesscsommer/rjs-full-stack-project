@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -10,12 +10,11 @@ import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
-import { StyledEngineProvider } from "@mui/material/styles";
+import { useNavigate, Link } from "react-router-dom";
 
-const settings = ["Profile", "Account", "Logout"];
-
-export default function HeaderBar({ currentUser }) {
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+function HeaderBar({ currentUser }) {
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -25,9 +24,26 @@ export default function HeaderBar({ currentUser }) {
     setAnchorElUser(null);
   };
 
+  const logout = () => {
+    console.log("logout event");
+    fetch("/logout", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        navigate("/");
+      }
+    });
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar
+        position="fixed"
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      >
         <Toolbar>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
@@ -48,14 +64,18 @@ export default function HeaderBar({ currentUser }) {
           >
             LOGO
           </Typography>
-          <Button color="inherit">Home</Button>
+          <Button color="inherit" component={Link} to="/">
+            Home
+          </Button>
           {!currentUser ? (
-            <Button color="inherit">Login</Button>
+            <Button color="inherit" component={Link} to="/login">
+              Login
+            </Button>
           ) : (
             <>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt={currentUser.name} src={currentUser.avatar} />
+                  <Avatar alt={currentUser?.name} src={currentUser?.avatar} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -74,11 +94,27 @@ export default function HeaderBar({ currentUser }) {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem
+                  key="profile"
+                  onClick={() => {
+                    handleCloseUserMenu();
+                  }}
+                  component={Link}
+                  to={`/profile/${currentUser.username}`}
+                >
+                  <Typography textAlign="center">Profile</Typography>
+                </MenuItem>
+                <MenuItem
+                  key="logout"
+                  onClick={() => {
+                    handleCloseUserMenu();
+                    logout();
+                  }}
+                  component={Link}
+                  to="/"
+                >
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
               </Menu>
             </>
           )}
@@ -87,3 +123,5 @@ export default function HeaderBar({ currentUser }) {
     </Box>
   );
 }
+
+export default HeaderBar;

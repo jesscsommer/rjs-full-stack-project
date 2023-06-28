@@ -7,11 +7,11 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import EditIcon from "@mui/icons-material/Edit";
 import Avatar from "@mui/material/Avatar";
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
+import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
 
 import PostsContainer from "./PostsContainer";
-import EditProfile from "./EditProfile"
+import EditProfile from "./EditProfile";
 
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -19,73 +19,70 @@ import { useState, useEffect } from "react";
 const drawerHeight = 240;
 
 const Profile = ({ currentUser }) => {
-  const { username } = useParams()
-  const [profileUser, setProfileUser] = useState({})
+  const { username } = useParams();
+  const [profileUser, setProfileUser] = useState({});
 
   useEffect(() => {
     fetch(`/users/${username}`)
-    .then(res => {
-      if (res.ok) {
-        res.json()
-        .then(setProfileUser)
-      } else {
-        alert("No profile for that user")
-      }
-    })
-    .catch(err => console.error(err))
-  }, [username])
+      .then((res) => {
+        if (res.ok) {
+          res.json().then(setProfileUser);
+        } else {
+          alert("No profile for that user");
+        }
+      })
+      .catch((err) => console.error(err));
+  }, [username]);
 
-  if (!profileUser) return (<h1>Loading...</h1>)
+  if (!profileUser) return <h1>Loading...</h1>;
 
   return (
     <div>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: "flex" }}>
         <CssBaseline />
-      <Drawer
-        sx={{
-          height: drawerHeight,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
+        <Drawer
+          sx={{
             height: drawerHeight,
-            boxSizing: "border-box",
-          },
-        }}
-        variant="permanent"
-        anchor="top"
-      >
-        <Toolbar />
-        <List>
-          <ListItem>
-            <Avatar
-              alt={profileUser.username}
-              // src="/static/images/avatar/1.jpg"
-              sx={{ width: 56, height: 56 }}
-            />
-            <h1>{profileUser.name}</h1>
-          </ListItem>
-          <ListItem>
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              height: drawerHeight,
+              boxSizing: "border-box",
+            },
+          }}
+          variant="permanent"
+          anchor="top"
+        >
+          <Toolbar />
+          <List>
+            <ListItem>
+              <Avatar
+                alt={profileUser.username}
+                // src="/static/images/avatar/1.jpg"
+                sx={{ width: 56, height: 56 }}
+              />
+              <h1>{profileUser.name}</h1>
+            </ListItem>
+            <ListItem>
               <h3>{profileUser.username}</h3>
             </ListItem>
-          <ListItem>
-            <p>
-              {profileUser.bio}
-            </p>
-          </ListItem>
-          {currentUser?.id == profileUser?.id ? 
-            <ListItem disablePadding>
-              <ListItemIcon>
-                <EditIcon />
-              </ListItemIcon>
-              <EditProfile profileUser={profileUser} />
+            <ListItem>
+              <p>{profileUser.bio}</p>
             </ListItem>
-            : null}
-        </List>
-      </Drawer>
+            {currentUser?.id === profileUser?.id ? (
+              <ListItem disablePadding>
+                <ListItemIcon>
+                  <EditIcon />
+                </ListItemIcon>
+                <EditProfile profileUser={profileUser} />
+              </ListItem>
+            ) : null}
+          </List>
+        </Drawer>
         <Box
           component="main"
-          sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
+          sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
         >
-        <PostsContainer posts={profileUser.posts} />
+          <PostsContainer posts={profileUser.posts} />
         </Box>
       </Box>
     </div>
