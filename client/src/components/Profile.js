@@ -13,53 +13,55 @@ import ListItemText from "@mui/material/ListItemText";
 import EditIcon from "@mui/icons-material/Edit";
 import MailIcon from "@mui/icons-material/Mail";
 import Avatar from "@mui/material/Avatar";
+import PostsContainer from "./PostsContainer";
 
 const drawerWidth = 240;
 
 const Profile = () => {
   return (
-    <Drawer
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
+    <div>
+      <Drawer
+        sx={{
           width: drawerWidth,
-          boxSizing: "border-box",
-        },
-      }}
-      variant="permanent"
-      anchor="left"
-    >
-      <Toolbar />
-      <List>
-        <ListItem>
-          <Avatar
-            alt="Remy Sharp"
-            src="/static/images/avatar/1.jpg"
-            sx={{ width: 56, height: 56 }}
-          />
-          <h3>User name</h3>
-        </ListItem>
-        <ListItem>
-          <p>
-            This is the user's bio. This is the user's bio. This is the user's
-            bio. This is the user's bio. This is the user's bio. This is the
-            user's bio. This is the user's bio.
-          </p>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <EditIcon />
-            </ListItemIcon>
-            Edit
-            <ListItemText />
-          </ListItemButton>
-        </ListItem>
-      </List>
-    </Drawer>
-
-    // Render user's posts here
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            width: drawerWidth,
+            boxSizing: "border-box",
+          },
+        }}
+        variant="permanent"
+        anchor="left"
+      >
+        <Toolbar />
+        <List>
+          <ListItem>
+            <Avatar
+              alt="Remy Sharp"
+              src="/static/images/avatar/1.jpg"
+              sx={{ width: 56, height: 56 }}
+            />
+            <h3>User name</h3>
+          </ListItem>
+          <ListItem>
+            <p>
+              This is the user's bio. This is the user's bio. This is the user's
+              bio. This is the user's bio. This is the user's bio. This is the
+              user's bio. This is the user's bio.
+            </p>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <EditIcon />
+              </ListItemIcon>
+              Edit
+              <ListItemText />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Drawer>
+      {/* <PostsContainer /> */}
+    </div>
   );
 };
 

@@ -13,7 +13,7 @@ function PostsContainer() {
   // console.log(posts.map(post => console.log(post.content)))
   return (
     <div className="posts">
-      {posts.map(post => 
+      {posts.map((post) => (
         <Post
           key={post.id}
           content={post.content}
@@ -21,7 +21,7 @@ function PostsContainer() {
           post_likes={post.post_likes}
           post_id={post.post_id}
         />
-      )}
+      ))}
     </div>
   );
 }
