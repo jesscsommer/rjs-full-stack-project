@@ -27,7 +27,7 @@ const EditProfile = ({ profileUser }) => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const [errors, setErrors] =[]
+    const [errors, setErrors] = useState([])
 
     const userSchema = yup.object().shape({
         username: yup.string()
@@ -45,12 +45,22 @@ const EditProfile = ({ profileUser }) => {
         .max(200, "Bio must be at most 20 characters")
     })
 
+    const initialValues = {
+        username: profileUser.username
+    }
+    const u = profileUser.username
+
     const formik = useFormik({
-        initialValues: {profileUser},
+        initialValues: {
+            username: "",
+            name: "",
+            bio: "",
+            public_acct: true
+        },
         validationSchema: userSchema, 
         onSubmit: (values) => {
-            fetch("/login", {
-                method: "POST",
+            fetch(`/users/${profileUser.id}`, {
+                method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -78,6 +88,7 @@ const EditProfile = ({ profileUser }) => {
         >
             <Box 
                 component="form"
+                onSubmit={formik.handleSubmit}
                 sx={style}>
                 <Grid item xs={12}>
                     <TextField
@@ -86,9 +97,10 @@ const EditProfile = ({ profileUser }) => {
                     id="username"
                     label="Username"
                     name="username"
-                    // onChange={formik.handleChange}
+                    onChange={formik.handleChange}
+                    value={formik.values.username ? formik.values.username : profileUser.username}
                     />
-                    {/* <p style={{ color: "red" }}>{formik.errors.username}</p> */}
+                    <p style={{ color: "red" }}>{formik.errors.username}</p>
                 </Grid>
                 <Grid item xs={12}>
                     <TextField
@@ -97,9 +109,10 @@ const EditProfile = ({ profileUser }) => {
                     id="name"
                     label="Display name"
                     name="name"
-                    // onChange={formik.handleChange}
+                    value={formik.values.name ? formik.values.name : profileUser.name}
+                    onChange={formik.handleChange}
                     />
-                    {/* <p style={{ color: "red" }}>{formik.errors.name}</p> */}
+                    <p style={{ color: "red" }}>{formik.errors.name}</p>
                 </Grid>
                 <Grid item xs={12}>
                     <TextField
@@ -108,16 +121,16 @@ const EditProfile = ({ profileUser }) => {
                     id="bio"
                     label="Bio"
                     name="bio"
-                    // onChange={formik.handleChange}
+                    value={formik.values.bio ? formik.values.bio : profileUser.bio}
+                    onChange={formik.handleChange}
                     />
-                    {/* <p style={{ color: "red" }}>{formik.errors.bio}</p> */}
+                    <p style={{ color: "red" }}>{formik.errors.bio}</p>
                 </Grid>
-                {/* toggle for private or public account */}
                 <FormControlLabel 
                     control={
                         <Switch 
-                             // checked={checked}
-                            // onChange={handleChange}
+                            checked={formik.values.public_acct}
+                            onChange={formik.handleChange}
                             inputProps={{ 'aria-label': 'controlled' }}
                         />
                     } 
