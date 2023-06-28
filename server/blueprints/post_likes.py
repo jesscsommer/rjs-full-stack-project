@@ -23,19 +23,3 @@ class PostLikes(Resource):
             return make_response(jsonify(post_like_schema.dump(post_like)), 201)
         except Exception as e:
             return make_response({'error':[str(e)]}, 400)
-        
-    # def post(self):
-    #     try:
-    #         data = request.json
-    #         with db.session.begin():
-    #             #* Validate the data, if problems arise you'll see ValidationError
-    #             crew_member_schema.validate(data)
-    #             #* Deserialize the data with dump()
-    #             crew = crew_member_schema.load(data)
-    #             db.session.add(crew)
-        
-    #         #* Serialize the data and package your JSON response
-    #         serialized_crew = crew_member_schema.dump(crew)
-    #         return make_response(serialized_crew, 201)
-    #     except (ValidationError, ValueError) as e:
-    #         abort(400, str(e))
