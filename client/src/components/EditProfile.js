@@ -60,6 +60,7 @@ const EditProfile = ({ profileUser }) => {
         },
         validationSchema: userSchema, 
         onSubmit: (values) => {
+            console.log(values)
             fetch(`/users/${profileUser.id}`, {
                 method: "PATCH",
                 headers: {
