@@ -19,11 +19,13 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useFormik } from "formik";
 import * as yup from "yup";
 
+import Error from "./Error"
+
 const defaultTheme = createTheme();
 
 const SignUpForm = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState(null)
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -65,10 +67,10 @@ const SignUpForm = () => {
                     .then(data => console.log(data))
                 } else {
                     res.json()
-                    .then(error => setErrors(error.message))
+                    .then(err => setErrors(err.error))
                 }
             })
-            .catch(err => console.error(err))
+            .catch(err => setErrors("Sign up not successful, please try again"))
         }
     })
 
@@ -131,6 +133,7 @@ const SignUpForm = () => {
                     <p style={{ color: "red" }}>{formik.errors.password}</p>
                 </Grid>
                 </Grid>
+                { errors ? <Error msg={errors} /> : null }
                 <Button
                     type="submit"
                     fullWidth
