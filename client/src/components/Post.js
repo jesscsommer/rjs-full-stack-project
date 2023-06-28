@@ -16,6 +16,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddCommentIcon from "@mui/icons-material/AddComment";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import { Link } from "react-router-dom"
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -73,16 +74,18 @@ const Post = ({ currentUser, post }) => {
   };
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardHeader
-        avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="post"></Avatar>}
-        action={
-          <IconButton aria-label="follow user">
-            <PersonAddIcon />
-          </IconButton>
-        }
-        title={post.user.name}
-        subheader={post.user.username}
-      />
+      <Link to={`../profile/${post.user.username}`}>
+        <CardHeader
+          avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="post"></Avatar>}
+          action={
+            <IconButton aria-label="follow user">
+              <PersonAddIcon />
+            </IconButton>
+          }
+          title={post.user.name}
+          subheader={post.user.username}
+        />
+      </Link>
 
       <CardContent>
         <Typography variant="body2" color="text.secondary">
