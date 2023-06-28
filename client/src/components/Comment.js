@@ -12,8 +12,12 @@ function Comment({currentUser, comment}){
     const [newLikedComment, setNewLikedComment] = useState([])
 
     const handleLikedComment = () => {
+      if (currentUser){
         setLikedComment(current => !current)
         handleLikedCommentData()
+      } else {
+        alert('Please login first!')
+      }
     }
 
     const handleLikedCommentData = () => {
