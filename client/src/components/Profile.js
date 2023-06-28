@@ -14,23 +14,24 @@ import EditIcon from "@mui/icons-material/Edit";
 import MailIcon from "@mui/icons-material/Mail";
 import Avatar from "@mui/material/Avatar";
 import PostsContainer from "./PostsContainer";
+import ProfileEditModal from "./ProfileEditModal";
 
-const drawerWidth = 240;
+const drawerHeight = 240;
 
 const Profile = ({ currentUser }) => {
   return (
     <div>
       <Drawer
         sx={{
-          width: drawerWidth,
+          height: drawerHeight,
           flexShrink: 0,
           "& .MuiDrawer-paper": {
-            width: drawerWidth,
+            height: drawerHeight,
             boxSizing: "border-box",
           },
         }}
         variant="permanent"
-        anchor="left"
+        anchor="top"
       >
         <Toolbar />
         <List>
@@ -60,7 +61,8 @@ const Profile = ({ currentUser }) => {
           </ListItem>
         </List>
       </Drawer>
-      {/* <PostsContainer /> */}
+      <PostsContainer />
+      <ProfileEditModal />
     </div>
   );
 };
