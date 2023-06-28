@@ -11,12 +11,13 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import PostsContainer from "./PostsContainer";
+import ProfileEditModal from "./ProfileEditModal";
 import EditProfile from "./EditProfile"
 
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-const drawerWidth = 240;
+const drawerHeight = 240;
 
 const Profile = ({ currentUser }) => {
   const { username } = useParams()
@@ -41,15 +42,15 @@ const Profile = ({ currentUser }) => {
         <CssBaseline />
       <Drawer
         sx={{
-          width: drawerWidth,
+          height: drawerHeight,
           flexShrink: 0,
           "& .MuiDrawer-paper": {
-            width: drawerWidth,
+            height: drawerHeight,
             boxSizing: "border-box",
           },
         }}
         variant="permanent"
-        anchor="left"
+        anchor="top"
       >
         <Toolbar />
         <List>
@@ -75,6 +76,7 @@ const Profile = ({ currentUser }) => {
           </ListItem>
         </List>
       </Drawer>
+      <ProfileEditModal />
         <Box
           component="main"
           sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
