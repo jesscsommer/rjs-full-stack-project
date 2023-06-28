@@ -8,29 +8,40 @@ import LeftSideBar from "./LeftSideBar";
 import RightSideBar from "./RightSideBar";
 
 const App = () => {
-  const [currentUser, setCurrentUser] = useState([]);
+    const [currentUser, setCurrentUser] = useState([]);
+    const [posts, setPosts] = useState([]);
 
-  useEffect(() => {
-    fetch("/check_session").then((res) => {
-      if (res.ok) {
-        res.json().then(setCurrentUser);
-      }
-    });
-  }, []);
+    useEffect(() => {
+        fetch("/posts")
+        .then((r) => r.json())
+        .then(setPosts)
+        .catch((err) => console.error(err));
+    }, []);
 
-  return (
-    <div className="app">
-      {/* <LeftSideBar isLoggedIn={isLoggedIn}/> */}
-      <Routes>
-        <Route path="/signup" element={<SignUpForm />} />
-        <Route path="/login" element={<LogInForm />} />
-        <Route path="/profile" element={<Profile currentUser={currentUser} />} />
-        <Route path="/" element={<PostsContainer currentUser={currentUser} />} />
+    useEffect(() => {
+        fetch("/check_session").then((res) => {
+        if (res.ok) {
+            res.json().then(setCurrentUser);
+        }
+        });
+    }, []);
 
-      </Routes>
-      {/* <RightSideBar /> */}
-    </div>
-  );
-};
+    return (
+        <div className="app">
+        {/* <LeftSideBar isLoggedIn={isLoggedIn}/> */}
+        <Routes>
+            <Route path="/signup" element={<SignUpForm />} />
+            <Route path="/login" element={<LogInForm />} />
+            <Route path="/profile" element={<Profile currentUser={currentUser} />} />
+            <Route path="/" element={
+                <PostsContainer 
+                    currentUser={currentUser} 
+                    posts={posts} />
+                } />
+        </Routes>
+        {/* <RightSideBar /> */}
+        </div>
+    );
+    };
 
 export default App;
