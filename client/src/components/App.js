@@ -9,15 +9,15 @@ import RightSideBar from "./RightSideBar";
 import HeaderBar from "./HeaderBar";
 
 const App = () => {
-    const [currentUser, setCurrentUser] = useState([]);
-    const [posts, setPosts] = useState([]);
+  const [currentUser, setCurrentUser] = useState([]);
+  const [posts, setPosts] = useState([]);
 
-    useEffect(() => {
-        fetch("/posts")
-        .then((r) => r.json())
-        .then(setPosts)
-        .catch((err) => console.error(err));
-    }, []);
+  useEffect(() => {
+    fetch("/posts")
+      .then((r) => r.json())
+      .then(setPosts)
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     <div className="app">
@@ -25,21 +25,18 @@ const App = () => {
       <Routes>
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/login" element={<LogInForm />} />
-        <Route path="/profile/:username" element={
-                <Profile 
-                    currentUser={currentUser} />
-                } />
-        <Route path="/" element={
-                <PostsContainer 
-                    currentUser={currentUser} 
-                    posts={posts} />
-                } />
+        <Route
+          path="/profile/:username"
+          element={<Profile currentUser={currentUser} />}
+        />
+        <Route
+          path="/"
+          element={<PostsContainer currentUser={currentUser} posts={posts} />}
         />
       </Routes>
       {/* <RightSideBar /> */}
     </div>
   );
 };
-
 
 export default App;

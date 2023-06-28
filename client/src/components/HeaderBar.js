@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -10,12 +10,13 @@ import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
-import { StyledEngineProvider } from "@mui/material/styles";
+import { useNavigate, Link } from "react-router-dom";
 
 const settings = ["Profile", "Account", "Logout"];
 
-export default function HeaderBar({ currentUser }) {
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+function HeaderBar({ currentUser }) {
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -23,6 +24,10 @@ export default function HeaderBar({ currentUser }) {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const routeChange = () => {
+    navigate("/login");
   };
 
   return (
@@ -49,8 +54,10 @@ export default function HeaderBar({ currentUser }) {
             LOGO
           </Typography>
           <Button color="inherit">Home</Button>
-          {!currentUser ? (
-            <Button color="inherit">Login</Button>
+          {currentUser ? (
+            <Button color="inherit" onClick={routeChange}>
+              Login
+            </Button>
           ) : (
             <>
               <Tooltip title="Open settings">
@@ -87,3 +94,5 @@ export default function HeaderBar({ currentUser }) {
     </Box>
   );
 }
+
+export default HeaderBar;
