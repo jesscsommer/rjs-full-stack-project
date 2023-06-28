@@ -28,14 +28,33 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-function Post({ content, user, post_likes, post_id, post }) {
+function Post({ currentUser, post }) {
   const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState(false);
   const [newComment, setNewComment] = useState([]);
+  const [newLike, setNewLike] = useState([]);
 
   const handleLiked = () => {
     setLiked((current) => !current);
+    handleLikedData()
   };
+
+  const handleLikedData = () => {
+    if (liked) {
+      fetch(`/post_likes/${newLike.id}`,{
+        method: 'DELETE'
+      })
+    } else {
+      fetch("/post_likes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({post_id: post.id, user_id: currentUser.id}),
+      })
+        .then((res) => res.json())
+        .then((like) => setNewLike(like))
+        .catch((err) => console.error(err));
+    }
+  }
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -86,7 +105,7 @@ function Post({ content, user, post_likes, post_id, post }) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <CommentsContainer post={post} />
+          <CommentsContainer post={post} currentUser={currentUser} />
         </CardContent>
       </Collapse>
     </Card>
