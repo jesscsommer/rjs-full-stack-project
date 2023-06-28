@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState }from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
@@ -6,6 +6,9 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Switch from '@mui/material/Switch';
 import { FormControlLabel } from '@mui/material';
+
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 const style = {
     position: 'absolute',
@@ -20,9 +23,51 @@ const style = {
 };
 
 const EditProfile = ({ profileUser }) => {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const [errors, setErrors] =[]
+
+    const userSchema = yup.object().shape({
+        username: yup.string()
+        .min(5, "Username must be at least 5 characters")
+        .max(20, "Username must be at most 20 characters")
+        .test("valid-chs", "Username may only contain letters and numbers", 
+            (value) => {
+                return /^[A-z0-9]+$/.test(value)
+            })
+        .required("Username is required"),
+        name: yup.string()
+        .min(5, "Display name must be at least 5 characters")
+        .max(50, "Display name must be at most 20 characters"),
+        bio: yup.string()
+        .max(200, "Bio must be at most 20 characters")
+    })
+
+    const formik = useFormik({
+        initialValues: {profileUser},
+        validationSchema: userSchema, 
+        onSubmit: (values) => {
+            fetch("/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(values)
+            })
+            .then(res => {
+                if (res.ok) {
+                    res.json()
+                    .then(data => console.log(data))
+                } else {
+                    res.json()
+                    .then(error => setErrors(error.message))
+                }
+            })
+            .catch(err => console.error(err))
+        }
+    })
 
     return (
         <div>
