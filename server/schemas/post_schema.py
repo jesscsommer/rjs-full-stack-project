@@ -19,7 +19,7 @@ class PostSchema(ma.SQLAlchemySchema):
 
     post_likes = fields.Nested(PostLikeSchema, 
                                 only=("id", "url"), many=True)
-    user = fields.Nested(UserSchema, only=("id", "username", "url"))
+    user = fields.Nested(UserSchema, only=("id", "username", "name", "url"))
     comments = fields.Nested(CommentSchema, only=("id", "url"), many=True)
     content = fields.String(required=True, \
                             validate=validate.Length(min=1, max=150, \

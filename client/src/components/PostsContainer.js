@@ -2,21 +2,13 @@ import { useState, useEffect } from "react";
 import Post from "./Post";
 import PostForm from "./PostForm";
 
-function PostsContainer({ currentUser }) {
-  const [posts, setPosts] = useState([]);
+function PostsContainer({ currentUser, posts }) {
 
-  useEffect(() => {
-    fetch("/posts")
-      .then((r) => r.json())
-      .then((data) => setPosts(data))
-      .catch((err) => console.error(err));
-  }, []);
-  // console.log(posts.map(post => console.log(post.content)))
   return (
     <>
       {currentUser ? <PostForm /> : null}
       <div className="posts">
-      {posts.map(post => 
+      {posts?.map(post => 
 
         <Post
           key={post.id}
@@ -26,7 +18,7 @@ function PostsContainer({ currentUser }) {
           post_id={post.post_id}
           post={post}
         />
-      ))}
+      )}
     </div>
     </>
   );
