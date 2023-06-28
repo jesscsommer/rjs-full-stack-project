@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -21,7 +21,7 @@ import * as yup from "yup";
 
 const defaultTheme = createTheme();
 
-const SignUpForm = () => {
+const LogInForm = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState([])
 
@@ -52,7 +52,7 @@ const SignUpForm = () => {
         },
         validationSchema: userSchema, 
         onSubmit: (values) => {
-            fetch("/signup", {
+            fetch("/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -75,7 +75,7 @@ const SignUpForm = () => {
     return (
         <ThemeProvider theme={defaultTheme}>
             <Container component="main" maxWidth="xs">
-                <CssBaseline />
+            <CssBaseline />
             <Box
             sx={{
                 marginTop: 8,
@@ -88,14 +88,13 @@ const SignUpForm = () => {
                 <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-                Sign up
+                Log in
             </Typography>
             <Box 
                 component="form" 
                 onSubmit={formik.handleSubmit}
                 sx={{ mt: 3 }}>
-                <Grid container spacing={2}>
-                <Grid item xs={12}>
+            <Grid item xs={12}>
                     <TextField
                     required
                     fullWidth
@@ -130,27 +129,26 @@ const SignUpForm = () => {
                     />
                     <p style={{ color: "red" }}>{formik.errors.password}</p>
                 </Grid>
-                </Grid>
                 <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
                 >
-                    Sign Up
+                Log In
                 </Button>
-                <Grid container justifyContent="flex-end">
+                <Grid container>
                 <Grid item>
-                    <Link href="/login" variant="body2">
-                    Already have an account? Sign in
+                    <Link href="/signup" variant="body2">
+                    {"Don't have an account? Sign Up"}
                     </Link>
                 </Grid>
                 </Grid>
             </Box>
             </Box>
-            </Container>
-        </ThemeProvider>
+        </Container>
+    </ThemeProvider>
     )
 }
 
-export default SignUpForm;
+export default LogInForm;

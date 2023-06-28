@@ -56,3 +56,5 @@ migrations
 instance
 
 .env
+
+*.pyc

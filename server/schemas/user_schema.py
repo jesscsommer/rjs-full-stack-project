@@ -18,7 +18,7 @@ class UserSchema(ma.SQLAlchemySchema):
         load_instance = True
         ordered = True
         fields = ("id", "username", "name", "bio", "posts", "comments", 
-                    "follows", "followers", "url")
+                    "followers", "url")
 
     username = fields.String(required=True, \
                             validate=validate.Length(min=5, max=20, \
@@ -27,8 +27,6 @@ class UserSchema(ma.SQLAlchemySchema):
                         error="Bio must be less than 250 chars"))
     posts = fields.Nested("PostSchema", only=("id", "content", "url"), many=True)
     comments = fields.Nested(CommentSchema, only=("id", "url"), many=True)
-    follows = fields.Nested("UserSchema", 
-                            only=("id", "username", "url"), many=True)
     followers = fields.Nested("UserSchema", 
                             only=("id", "username", "url"), many=True)
 

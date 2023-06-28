@@ -17,7 +17,7 @@ import PostsContainer from "./PostsContainer";
 
 const drawerWidth = 240;
 
-const Profile = () => {
+const Profile = ({ currentUser }) => {
   return (
     <div>
       <Drawer
