@@ -36,8 +36,12 @@ const Post = ({ currentUser, post }) => {
   const [newLike, setNewLike] = useState([]);
 
   const handleLiked = () => {
-    setLiked((current) => !current);
-    handleLikedData()
+    if (currentUser){
+      setLiked((current) => !current);
+      handleLikedData()
+    } else {
+      alert('Please login first!')
+    }
   };
 
   const handleLikedData = () => {
