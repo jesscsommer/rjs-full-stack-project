@@ -17,6 +17,7 @@ class UserById(Resource):
     def patch(self, id):
         if user := db.session.get(User, id): 
             try:
+                # compare user to session["user_id"]
                 data = request.get_json()
                 user_schema.validate(data)
 

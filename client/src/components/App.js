@@ -12,6 +12,14 @@ const App = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
+    fetch("/check_session").then((res) => {
+      if (res.ok) {
+        res.json().then(setCurrentUser);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
     fetch("/posts")
       .then((r) => r.json())
       .then(setPosts)
