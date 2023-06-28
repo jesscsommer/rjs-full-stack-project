@@ -3,7 +3,7 @@ import Post from "./Post";
 import PostForm from "./PostForm";
 
 function PostsContainer({ currentUser, posts }) {
-
+  
   return (
     <>
       {currentUser ? <PostForm /> : null}
