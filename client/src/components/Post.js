@@ -1,54 +1,96 @@
 import { useState } from "react";
-import CommentForm from './CommentForm'
-import CommentsContainer from './CommentsContainer'
+import CommentForm from "./CommentForm";
+import CommentsContainer from "./CommentsContainer";
+import { styled } from "@mui/material/styles";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import Collapse from "@mui/material/Collapse";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import { red } from "@mui/material/colors";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import AddCommentIcon from "@mui/icons-material/AddComment";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
-function Post({content, user, post_likes, post_id}) {
-  const [showComments, setShowComments] = useState(true);
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
+function Post({ content, user, post_likes, post_id, post }) {
+  const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState(false);
-  const [newComment, setNewComment] = useState([])
+  const [newComment, setNewComment] = useState([]);
 
   const handleLiked = () => {
     setLiked((current) => !current);
   };
-  const handleShow = () => {
-    setShowComments((current) => !current);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
   };
 
   const handleSubmitComment = (e, submitComment) => {
-    e.preventDefault()
-    fetch('/comments', {
-        method: 'POST',
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(submitComment)
-    }).then(res => res.json())
-    .then(comment => setNewComment(comment))
-    .catch(err => console.error(err))
-  }
+    e.preventDefault();
+    fetch("/comments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(submitComment),
+    })
+      .then((res) => res.json())
+      .then((comment) => setNewComment(comment))
+      .catch((err) => console.error(err));
+  };
   return (
-    <div className="post">
-      <div>{user}</div>
-      <div className="comment-text">{content}</div>
-      <button onClick={handleLiked}>
-        {liked ? (
-          <div className="unlike">Heart{post_likes.length}</div>
-        ) : (
-          <div className="like">Heart{post_likes.length}</div>
-        )}
-      </button>
-      <CommentForm handleSubmitComment={handleSubmitComment}/>
-      <div>
-        {showComments ? (
-          <div>
-            <button onClick={handleShow} className="hide">Show</button>
-          </div>
-        ) : (
-          <div>
-            <button onClick={handleShow}>Hide</button>
-            <CommentsContainer post_id={post_id} />
-          </div>
-        )}
-      </div>
-    </div>)
+    <Card sx={{ maxWidth: 345 }}>
+      <CardHeader
+        avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="post"></Avatar>}
+        action={
+          <IconButton aria-label="follow user">
+            <PersonAddIcon />
+          </IconButton>
+        }
+        title={post.user.name}
+        subheader={post.user.username}
+      />
+
+      <CardContent>
+        <Typography variant="body2" color="text.secondary">
+          {post.content}
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+        <IconButton aria-label="add to likes" onClick={handleLiked}>
+          {post.post_likes.length}{" "}
+          {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        </IconButton>
+        <ExpandMore
+          expand={expanded}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="view comments"
+        >
+          <AddCommentIcon />
+        </ExpandMore>
+      </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <CommentsContainer post={post} />
+        </CardContent>
+      </Collapse>
+    </Card>
+  );
 }
 
 export default Post;
