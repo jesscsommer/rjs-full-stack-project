@@ -17,16 +17,18 @@ class UserById(Resource):
     def patch(self, id):
         if user := db.session.get(User, id): 
             try:
-                # compare user to session["user_id"]
-                data = request.get_json()
-                user_schema.validate(data)
+                current_user = db.session.get(User, session["user_id"])
+                if user == current_user:
+                    data = request.get_json()
+                    user_schema.validate(data)
 
-                updated_user = user_schema.load(data,
-                                                instance=user, partial=True)
-                db.session.commit()
+                    updated_user = user_schema.load(data,
+                                                    instance=user, partial=True)
+                    db.session.commit()
 
-                return make_response(user_schema.dump(updated_user), 200)
-            
+                    return make_response(user_schema.dump(updated_user), 200)
+                return make_response({'error': 'Unauthorized'}, 401)
+
             except Exception as e: 
                 db.session.rollback()
                 return make_response({"errors": [str(e)]}, 400)

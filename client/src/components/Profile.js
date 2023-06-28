@@ -11,7 +11,6 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import PostsContainer from "./PostsContainer";
-import ProfileEditModal from "./ProfileEditModal";
 import EditProfile from "./EditProfile"
 
 import { useParams } from "react-router-dom";
@@ -71,12 +70,10 @@ const Profile = ({ currentUser }) => {
               <ListItemIcon>
                 <EditIcon />
               </ListItemIcon>
-              {/* Add condition to only show edit option if profile user == current user*/}
-              <EditProfile profileUser={profileUser} />
+              {currentUser == profileUser ? <EditProfile profileUser={profileUser} /> : null}
           </ListItem>
         </List>
       </Drawer>
-      <ProfileEditModal />
         <Box
           component="main"
           sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
