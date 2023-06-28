@@ -52,7 +52,7 @@ function HeaderBar({ currentUser }) {
           <Button color="inherit" component={Link} to="/">
             Home
           </Button>
-          {currentUser ? (
+          {!currentUser ? (
             <Button color="inherit" component={Link} to="/login">
               Login
             </Button>
@@ -83,7 +83,7 @@ function HeaderBar({ currentUser }) {
                   key="profile"
                   onClick={handleCloseUserMenu}
                   component={Link}
-                  to={`/profile/${currentUser.id}`}
+                  to={`/profile/${currentUser?.id}`}
                 >
                   <Typography textAlign="center">Profile</Typography>
                 </MenuItem>
