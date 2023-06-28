@@ -25,14 +25,18 @@ function HeaderBar({ currentUser }) {
   };
 
   const logout = () => {
-    fetch("/logout").then((res) => {
+    console.log("logout event");
+    fetch("/logout", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
       if (res.ok) {
         navigate("/");
       }
     });
   };
-
-  debugger;
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -94,7 +98,6 @@ function HeaderBar({ currentUser }) {
                   key="profile"
                   onClick={() => {
                     handleCloseUserMenu();
-                    logout();
                   }}
                   component={Link}
                   to={`/profile/${currentUser.username}`}
@@ -103,7 +106,10 @@ function HeaderBar({ currentUser }) {
                 </MenuItem>
                 <MenuItem
                   key="logout"
-                  onClick={handleCloseUserMenu}
+                  onClick={() => {
+                    handleCloseUserMenu();
+                    logout();
+                  }}
                   component={Link}
                   to="/"
                 >
