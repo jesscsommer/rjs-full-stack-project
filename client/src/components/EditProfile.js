@@ -90,6 +90,21 @@ const EditProfile = ({ profileUser }) => {
         }
     })
 
+    const handleClick = () => {
+        fetch(`/users/${profileUser.id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(res => {
+            if (res.ok) {
+                console.log("success")
+            }
+        })
+        .catch(err => console.error(err))
+    }
+
     return (
         <div>
         <Button onClick={handleOpen}>Edit profile</Button>
@@ -154,6 +169,13 @@ const EditProfile = ({ profileUser }) => {
                 sx={{ mt: 3, mb: 2 }}
                 >
                 Save
+                </Button>
+                <Button
+                    variant="text"
+                    fullWidth
+                    color="error"
+                    onClick={handleClick}>
+                    Delete account
                 </Button>
             </Box>
         </Modal>
