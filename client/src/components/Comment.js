@@ -1,19 +1,50 @@
 import { useState } from 'react';
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
-function Comment({content, username}){
+function Comment({currentUser, comment}){
 
     const [likedComment, setLikedComment] = useState(false)
+    const [newLikedComment, setNewLikedComment] = useState([])
 
     const handleLikedComment = () => {
         setLikedComment(current => !current)
+        handleLikedCommentData()
+    }
+
+    const handleLikedCommentData = () => {
+        if (likedComment) {
+          fetch(`/comment_likes/${newLikedComment.id}`,{
+            method: 'DELETE'
+          })
+        } else {
+          fetch("/comment_likes", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({comment_id: comment.id, user_id: currentUser.id}),
+          })
+            .then((res) => res.json())
+            .then((like) => setNewLikedComment(like))
+            .catch((err) => console.error(err));
+        }
     }
     return (
         <div className="comment">
-            <div>{username}</div>
-            <div className='comment-text'>{content}</div>
-            <button onClick={handleLikedComment}>
-                {likedComment ? <div >Like</div> : <div >Unlike</div>}
-            </button>
+            <CardHeader
+                title={comment.user.username}
+            />
+            <CardContent>
+                <Typography variant="body2" color="text.secondary">
+                {comment.content}
+                </Typography>
+            </CardContent>
+            <IconButton onClick={handleLikedComment}>
+                {likedComment ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            </IconButton>
         </div>)
 }
 
