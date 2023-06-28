@@ -17,10 +17,16 @@ class UserById(Resource):
     def patch(self, id):
         if user := db.session.get(User, id): 
             try:
+<<<<<<< HEAD
                 current_user = db.session.get(User, session["user_id"])
                 if user == current_user:
                     data = request.get_json()
                     user_schema.validate(data)
+=======
+                data = request.get_json()
+                user_schema.validate(data)
+                # import ipdb; ipdb.set_trace()
+>>>>>>> 06ac92b52d0b2d15e6c146328b3dcb378b96eb28
 
                     updated_user = user_schema.load(data,
                                                     instance=user, partial=True)

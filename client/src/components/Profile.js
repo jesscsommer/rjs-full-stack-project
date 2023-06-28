@@ -35,6 +35,8 @@ const Profile = ({ currentUser }) => {
     .catch(err => console.error(err))
   }, [username])
 
+  if (!profileUser) return (<h1>Loading...</h1>)
+
   return (
     <div>
       <Box sx={{ display: 'flex' }}>
