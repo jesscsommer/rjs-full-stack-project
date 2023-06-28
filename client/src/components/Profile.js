@@ -58,11 +58,14 @@ const Profile = ({ currentUser }) => {
           <ListItem>
             <Avatar
               alt={profileUser.username}
-              src="/static/images/avatar/1.jpg"
+              // src="/static/images/avatar/1.jpg"
               sx={{ width: 56, height: 56 }}
             />
-            <h3>{profileUser.username}</h3>
+            <h1>{profileUser.name}</h1>
           </ListItem>
+          <ListItem>
+              <h3>{profileUser.username}</h3>
+            </ListItem>
           <ListItem>
             <p>
               {profileUser.bio}
