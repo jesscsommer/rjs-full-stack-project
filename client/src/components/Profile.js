@@ -66,12 +66,14 @@ const Profile = ({ currentUser }) => {
               {profileUser.bio}
             </p>
           </ListItem>
-          <ListItem disablePadding>
+          {currentUser?.id == profileUser?.id ? 
+            <ListItem disablePadding>
               <ListItemIcon>
                 <EditIcon />
               </ListItemIcon>
-              {currentUser == profileUser ? <EditProfile profileUser={profileUser} /> : null}
-          </ListItem>
+              <EditProfile profileUser={profileUser} />
+            </ListItem>
+            : null}
         </List>
       </Drawer>
         <Box

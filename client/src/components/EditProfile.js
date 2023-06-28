@@ -111,7 +111,7 @@ const EditProfile = ({ profileUser }) => {
                     id="name"
                     label="Display name"
                     name="name"
-                    value={formik.values.name ? formik.values.name : profileUser.name}
+                    value={formik.values.name ? formik.values.name : profileUser.name || ""}
                     onChange={formik.handleChange}
                     />
                     <p style={{ color: "red" }}>{formik.errors.name}</p>
@@ -123,12 +123,12 @@ const EditProfile = ({ profileUser }) => {
                     id="bio"
                     label="Bio"
                     name="bio"
-                    value={formik.values.bio ? formik.values.bio : profileUser.bio}
+                    value={formik.values.bio ? formik.values.bio : profileUser.bio || ""}
                     onChange={formik.handleChange}
                     />
                     <p style={{ color: "red" }}>{formik.errors.bio}</p>
                 </Grid>
-                <FormControlLabel 
+                {/* <FormControlLabel 
                     control={
                         <Switch 
                             checked={formik.values.public_acct}
@@ -137,7 +137,7 @@ const EditProfile = ({ profileUser }) => {
                             inputProps={{ 'aria-label': 'controlled' }}
                         />
                     } 
-                    label="Public account" />
+                    label="Public account" /> */}
                 <Button
                 type="submit"
                 fullWidth
