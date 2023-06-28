@@ -10,10 +10,11 @@ import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function HeaderBar({ currentUser }) {
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -22,6 +23,16 @@ function HeaderBar({ currentUser }) {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const logout = () => {
+    fetch("/logout").then((res) => {
+      if (res.ok) {
+        navigate("/");
+      }
+    });
+  };
+
+  debugger;
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -81,9 +92,12 @@ function HeaderBar({ currentUser }) {
               >
                 <MenuItem
                   key="profile"
-                  onClick={handleCloseUserMenu}
+                  onClick={() => {
+                    handleCloseUserMenu();
+                    logout();
+                  }}
                   component={Link}
-                  to={`/profile/${currentUser?.id}`}
+                  to={`/profile/${currentUser.username}`}
                 >
                   <Typography textAlign="center">Profile</Typography>
                 </MenuItem>
@@ -91,7 +105,7 @@ function HeaderBar({ currentUser }) {
                   key="logout"
                   onClick={handleCloseUserMenu}
                   component={Link}
-                  to="/logout"
+                  to="/"
                 >
                   <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
