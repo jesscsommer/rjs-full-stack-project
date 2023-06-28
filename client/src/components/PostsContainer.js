@@ -20,6 +20,7 @@ function PostsContainer() {
           user={post.user.username}
           post_likes={post.post_likes}
           post_id={post.post_id}
+          post={post}
         />
       ))}
     </div>

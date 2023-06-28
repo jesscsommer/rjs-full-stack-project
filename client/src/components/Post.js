@@ -12,10 +12,10 @@ import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import AddCommentIcon from "@mui/icons-material/AddComment";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -28,16 +28,17 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-function Post({ content, user, post_likes, post_id }) {
-  const [showComments, setShowComments] = useState(false);
+function Post({ content, user, post_likes, post_id, post }) {
+  const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState(false);
   const [newComment, setNewComment] = useState([]);
 
   const handleLiked = () => {
     setLiked((current) => !current);
   };
-  const handleShow = () => {
-    setShowComments(!showComments);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
   };
 
   const handleSubmitComment = (e, submitComment) => {
@@ -52,32 +53,43 @@ function Post({ content, user, post_likes, post_id }) {
       .catch((err) => console.error(err));
   };
   return (
-    <div className="post">
-      <div>{user}</div>
-      <div className="comment-text">{content}</div>
-      <button onClick={handleLiked}>
-        {liked ? (
-          <div className="unlike">Heart{post_likes.length}</div>
-        ) : (
-          <div className="like">Heart{post_likes.length}</div>
-        )}
-      </button>
-      <CommentForm handleSubmitComment={handleSubmitComment} />
-      <div>
-        {showComments ? (
-          <div>
-            <button onClick={handleShow} className="hide">
-              Show
-            </button>
-          </div>
-        ) : (
-          <div>
-            <button onClick={handleShow}>Hide</button>
-            <CommentsContainer post_id={post_id} />
-          </div>
-        )}
-      </div>
-    </div>
+    <Card sx={{ maxWidth: 345 }}>
+      <CardHeader
+        avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="post"></Avatar>}
+        action={
+          <IconButton aria-label="follow user">
+            <PersonAddIcon />
+          </IconButton>
+        }
+        title={post.user.name}
+        subheader={post.user.username}
+      />
+
+      <CardContent>
+        <Typography variant="body2" color="text.secondary">
+          {post.content}
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+        <IconButton aria-label="add to likes" onClick={handleLiked}>
+          {post.post_likes.length}{" "}
+          {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        </IconButton>
+        <ExpandMore
+          expand={expanded}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="view comments"
+        >
+          <AddCommentIcon />
+        </ExpandMore>
+      </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <CommentsContainer post={post} />
+        </CardContent>
+      </Collapse>
+    </Card>
   );
 }
 
