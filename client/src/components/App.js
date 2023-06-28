@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import SignUpForm from "./SignUpForm";
-import SignInForm from "./LogInForm";
+import LogInForm from "./LogInForm";
 import Profile from "./Profile";
 import PostsContainer from "./PostsContainer";
 // import Nav from "./Nav";
@@ -25,9 +25,9 @@ const App = () => {
       {/* <Nav /> */}
       <Routes>
         <Route path="/signup" element={<SignUpForm />} />
-        <Route path="/login" element={<SignInForm />} />
+        <Route path="/login" element={<LogInForm />} />
         <Route path="/profile" element={<Profile currentUser={currentUser} />} />
-        <Route path="/" element={<PostsContainer />} />
+        <Route path="/" element={<PostsContainer currentUser={currentUser} />} />
       </Routes>
     </div>
   );
