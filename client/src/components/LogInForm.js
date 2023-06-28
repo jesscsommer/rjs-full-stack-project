@@ -22,7 +22,7 @@ import * as yup from "yup";
 
 const defaultTheme = createTheme();
 
-const LogInForm = () => {
+const LogInForm = ({ handleSetUser }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
@@ -69,6 +69,7 @@ const LogInForm = () => {
         .then((res) => {
           if (res.ok) {
             res.json().then((data) => console.log(data));
+            handleSetUser();
             navigate("/");
           } else {
             res.json().then((error) => setErrors(error.message));

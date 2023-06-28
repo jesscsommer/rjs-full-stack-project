@@ -12,7 +12,7 @@ import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import { useNavigate, Link } from "react-router-dom";
 
-function HeaderBar({ currentUser }) {
+function HeaderBar({ currentUser, handleSetUser }) {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
 
@@ -28,11 +28,9 @@ function HeaderBar({ currentUser }) {
     console.log("logout event");
     fetch("/logout", {
       method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
     }).then((res) => {
       if (res.ok) {
+        handleSetUser();
         navigate("/");
       }
     });
