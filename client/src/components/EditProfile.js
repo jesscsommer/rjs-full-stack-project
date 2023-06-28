@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 import Switch from '@mui/material/Switch';
 import { FormControlLabel } from '@mui/material';
 
-import { useFormik } from "formik";
+import { Formik, useFormik } from "formik";
 import * as yup from "yup";
 
 const style = {
@@ -29,7 +29,9 @@ const EditProfile = ({ profileUser }) => {
 
     const [errors, setErrors] = useState([])
 
-    // yup values break because of the default values if you don't edit them
+    console.log("profile user: ")
+    console.log(profileUser)
+    
     const userSchema = yup.object().shape({
         username: yup.string()
         .min(5, "Username must be at least 5 characters")
@@ -37,8 +39,7 @@ const EditProfile = ({ profileUser }) => {
         .test("valid-chs", "Username may only contain letters and numbers", 
             (value) => {
                 return /^[A-z0-9]+$/.test(value)
-            })
-        .required("Username is required"),
+            }),
         name: yup.string()
         .min(5, "Display name must be at least 5 characters")
         .max(50, "Display name must be at most 20 characters"),
@@ -46,27 +47,35 @@ const EditProfile = ({ profileUser }) => {
         .max(200, "Bio must be at most 20 characters")
     })
 
-    const initialValues = {
-        username: profileUser.username
+    const find_updates = (values) => {
+        const new_obj = {}
+        for (const [key, value] of Object.entries(values)) {
+            if (value) {
+                new_obj[key] = value
+            }
+        }
+        console.log(new_obj)
+        return new_obj
     }
-    const u = profileUser.username
 
     const formik = useFormik({
         initialValues: {
-            username: "",
-            name: "",
-            bio: "",
-            public_acct: true
+            username: profileUser.username,
+            name: profileUser.name,
+            bio: profileUser.bio,
+            public_acct: profileUser.public_acct
         },
         validationSchema: userSchema, 
         onSubmit: (values) => {
+            console.log("values: ")
             console.log(values)
+            
             fetch(`/users/${profileUser.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(values)
+                body: JSON.stringify(find_updates(values))
             })
             .then(res => {
                 if (res.ok) {
@@ -111,7 +120,7 @@ const EditProfile = ({ profileUser }) => {
                     id="name"
                     label="Display name"
                     name="name"
-                    value={formik.values.name ? formik.values.name : profileUser.name}
+                    value={formik.values.name ? formik.values.name : profileUser.name || ""}
                     onChange={formik.handleChange}
                     />
                     <p style={{ color: "red" }}>{formik.errors.name}</p>
@@ -123,21 +132,21 @@ const EditProfile = ({ profileUser }) => {
                     id="bio"
                     label="Bio"
                     name="bio"
-                    value={formik.values.bio ? formik.values.bio : profileUser.bio}
+                    value={formik.values.bio ? formik.values.bio : profileUser.bio || ""}
                     onChange={formik.handleChange}
                     />
                     <p style={{ color: "red" }}>{formik.errors.bio}</p>
                 </Grid>
-                <FormControlLabel 
+                {/* <FormControlLabel 
                     control={
                         <Switch 
-                            checked={formik.values.public_acct}
+                            value={formik.values.public_acct ? formik.values.public_acct : profileUser.public_acct}
                             name="public_acct"
                             onChange={formik.handleChange}
                             inputProps={{ 'aria-label': 'controlled' }}
                         />
                     } 
-                    label="Public account" />
+                    label="Public account" /> */}
                 <Button
                 type="submit"
                 fullWidth

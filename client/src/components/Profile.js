@@ -11,7 +11,6 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import PostsContainer from "./PostsContainer";
-import ProfileEditModal from "./ProfileEditModal";
 import EditProfile from "./EditProfile"
 
 import { useParams } from "react-router-dom";
@@ -36,6 +35,8 @@ const Profile = ({ currentUser }) => {
     .catch(err => console.error(err))
   }, [username])
 
+  if (!profileUser) return (<h1>Loading...</h1>)
+
   return (
     <div>
       <Box sx={{ display: 'flex' }}>
@@ -57,26 +58,29 @@ const Profile = ({ currentUser }) => {
           <ListItem>
             <Avatar
               alt={profileUser.username}
-              src="/static/images/avatar/1.jpg"
+              // src="/static/images/avatar/1.jpg"
               sx={{ width: 56, height: 56 }}
             />
-            <h3>{profileUser.username}</h3>
+            <h1>{profileUser.name}</h1>
           </ListItem>
+          <ListItem>
+              <h3>{profileUser.username}</h3>
+            </ListItem>
           <ListItem>
             <p>
               {profileUser.bio}
             </p>
           </ListItem>
-          <ListItem disablePadding>
+          {currentUser?.id == profileUser?.id ? 
+            <ListItem disablePadding>
               <ListItemIcon>
                 <EditIcon />
               </ListItemIcon>
-              {/* Add condition to only show edit option if profile user == current user*/}
               <EditProfile profileUser={profileUser} />
-          </ListItem>
+            </ListItem>
+            : null}
         </List>
       </Drawer>
-      <ProfileEditModal />
         <Box
           component="main"
           sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
