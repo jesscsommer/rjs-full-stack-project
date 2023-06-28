@@ -9,7 +9,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import Avatar from "@mui/material/Avatar";
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
+
 import PostsContainer from "./PostsContainer";
+import EditProfile from "./EditProfile"
 
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -65,13 +67,11 @@ const Profile = ({ currentUser }) => {
             </p>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
               <ListItemIcon>
                 <EditIcon />
               </ListItemIcon>
-              Edit
-              <ListItemText />
-            </ListItemButton>
+              {/* Add condition to only show edit option if profile user == current user*/}
+              <EditProfile profileUser={profileUser} />
           </ListItem>
         </List>
       </Drawer>
