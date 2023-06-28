@@ -29,6 +29,7 @@ const EditProfile = ({ profileUser }) => {
 
     const [errors, setErrors] = useState([])
 
+    // yup values break because of the default values if you don't edit them
     const userSchema = yup.object().shape({
         username: yup.string()
         .min(5, "Username must be at least 5 characters")
@@ -130,6 +131,7 @@ const EditProfile = ({ profileUser }) => {
                     control={
                         <Switch 
                             checked={formik.values.public_acct}
+                            name="public_acct"
                             onChange={formik.handleChange}
                             inputProps={{ 'aria-label': 'controlled' }}
                         />

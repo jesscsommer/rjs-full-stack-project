@@ -1,4 +1,5 @@
-from blueprints import request, Resource, Blueprint, make_response, g, abort 
+from marshmallow import EXCLUDE
+from blueprints import request, session, Resource, Blueprint, make_response, g, abort 
 from config import app
 from models import db
 from models.user import User
@@ -17,15 +18,16 @@ class UserById(Resource):
         if user := user_schema.dump(db.session.get(User, id)): 
             try:
                 data = request.get_json()
-                for k, v in data.items(): 
-                    setattr(user, k, v)
+                user_schema.validate(data)
                 # import ipdb; ipdb.set_trace()
-                with app.app_context():
-                    import ipdb; ipdb.set_trace()
-                    db.session.add(user_schema.load(user))
-                    db.session.commit()
 
-                return make_response(user, 200)
+                updated_user = user_schema.load(data,
+                                                instance=user, partial=True)
+                # updated_user has correct data but it's not persisting to DB
+                import ipdb; ipdb.set_trace()
+                db.session.commit()
+
+                return make_response(updated_user, 200)
             except Exception as e: 
                 db.session.rollback()
                 return make_response({"errors": [str(e)]}, 400)
