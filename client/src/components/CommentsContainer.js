@@ -13,7 +13,7 @@ function CommentsContainer({post, currentUser}){
     return(
         <div className="comments">
             <div>
-            {comments.map(comment => <Comment key={comment.key} comment={comment} currentUser={currentUser} />)}
+            {comments.map(comment => <Comment key={comment.id} comment={comment} currentUser={currentUser} />)}
             </div>
         </div>
     )
