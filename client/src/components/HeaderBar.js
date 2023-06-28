@@ -10,13 +10,10 @@ import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
-import { useNavigate, Link } from "react-router-dom";
-
-const settings = ["Profile", "Account", "Logout"];
+import { Link } from "react-router-dom";
 
 function HeaderBar({ currentUser }) {
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -26,13 +23,12 @@ function HeaderBar({ currentUser }) {
     setAnchorElUser(null);
   };
 
-  const routeChange = () => {
-    navigate("/login");
-  };
-
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar
+        position="fixed"
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      >
         <Toolbar>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
@@ -53,16 +49,18 @@ function HeaderBar({ currentUser }) {
           >
             LOGO
           </Typography>
-          <Button color="inherit">Home</Button>
+          <Button color="inherit" component={Link} to="/">
+            Home
+          </Button>
           {currentUser ? (
-            <Button color="inherit" onClick={routeChange}>
+            <Button color="inherit" component={Link} to="/login">
               Login
             </Button>
           ) : (
             <>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt={currentUser.name} src={currentUser.avatar} />
+                  <Avatar alt={currentUser?.name} src={currentUser?.avatar} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -81,11 +79,22 @@ function HeaderBar({ currentUser }) {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem
+                  key="profile"
+                  onClick={handleCloseUserMenu}
+                  component={Link}
+                  to={`/profile/${currentUser.id}`}
+                >
+                  <Typography textAlign="center">Profile</Typography>
+                </MenuItem>
+                <MenuItem
+                  key="logout"
+                  onClick={handleCloseUserMenu}
+                  component={Link}
+                  to="/logout"
+                >
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
               </Menu>
             </>
           )}
