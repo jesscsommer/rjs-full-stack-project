@@ -19,10 +19,11 @@ const App = () => {
     }, []);
 
     useEffect(() => {
-        fetch("/check_session").then((res) => {
-        if (res.ok) {
-            res.json().then(setCurrentUser);
-        }
+        fetch("/check_session")
+        .then((res) => {
+            if (res.ok) {
+                res.json().then(setCurrentUser);
+            }
         });
     }, []);
 
@@ -32,7 +33,10 @@ const App = () => {
         <Routes>
             <Route path="/signup" element={<SignUpForm />} />
             <Route path="/login" element={<LogInForm />} />
-            <Route path="/profile" element={<Profile currentUser={currentUser} />} />
+            <Route path="/profile/:username" element={
+                <Profile 
+                    currentUser={currentUser} />
+                } />
             <Route path="/" element={
                 <PostsContainer 
                     currentUser={currentUser} 

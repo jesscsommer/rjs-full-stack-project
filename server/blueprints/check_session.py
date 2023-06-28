@@ -8,6 +8,6 @@ check_session_bp = Blueprint("check_session", __name__, url_prefix="/check_sessi
 class CheckSession(Resource):
     def get(self): 
         if id := session.get("user_id"):
-            user = db.session.get(User, id)
-            return make_response(user_schema.dump(user), 200)
+            if user := db.session.get(User, id):
+                return make_response(user_schema.dump(user), 200)
         return make_response({'error': 'Unauthorized'}, 401)

@@ -25,7 +25,7 @@ class UserSchema(ma.SQLAlchemySchema):
                             error="Username must be between 5 and 20 chars"))
     bio = fields.String(validate=validate.Length(max=250, \
                         error="Bio must be less than 250 chars"))
-    posts = fields.Nested("PostSchema", only=("id", "content", "url"), many=True)
+    posts = fields.Nested("PostSchema", only=("id", "content", "user", "url"), many=True)
     comments = fields.Nested(CommentSchema, only=("id", "url"), many=True)
     followers = fields.Nested("UserSchema", 
                             only=("id", "username", "url"), many=True)

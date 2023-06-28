@@ -72,7 +72,7 @@ function Post({ content, user, post_likes, post_id, post }) {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to likes" onClick={handleLiked}>
-          {post.post_likes.length}{" "}
+          {post.post_likes?.length}{" "}
           {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
         </IconButton>
         <ExpandMore
