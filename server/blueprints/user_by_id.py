@@ -19,29 +19,12 @@ class UserById(Resource):
             try:
                 data = request.get_json()
                 user_schema.validate(data)
-                # import ipdb; ipdb.set_trace()
 
-                # updated_user = user_schema.load(data,
-                #                                 instance=user, partial=True)
-                # # updated_user has correct data but it's not persisting to DB
-                # # import ipdb; ipdb.set_trace()
-                # db.session.commit()
-                
-                # serialized_user = user_schema.dump(updated_user)
-
-                # return make_response(serialized_user, 200)
-
-                for k, v in data.items():
-                    setattr(user, k, v)
-
-                # import ipdb; ipdb.set_trace()
-
-                # updated_user = user_schema.load(user)
-        
-                db.session.add(user)
+                updated_user = user_schema.load(data,
+                                                instance=user, partial=True)
                 db.session.commit()
 
-                return make_response(user_schema.dump(user), 200)
+                return make_response(user_schema.dump(updated_user), 200)
             
             except Exception as e: 
                 db.session.rollback()
