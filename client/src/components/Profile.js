@@ -16,7 +16,7 @@ import Avatar from "@mui/material/Avatar";
 
 const drawerWidth = 240;
 
-const Profile = () => {
+const Profile = ({ currentUser }) => {
   return (
     <Drawer
       sx={{
@@ -38,7 +38,7 @@ const Profile = () => {
             src="/static/images/avatar/1.jpg"
             sx={{ width: 56, height: 56 }}
           />
-          <h3>User name</h3>
+          <h3>{currentUser.username}</h3>
         </ListItem>
         <ListItem>
           <p>
