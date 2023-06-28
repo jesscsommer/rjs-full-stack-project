@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import Post from "./Post";
+import PostForm from "./PostForm";
 
-function PostsContainer() {
+function PostsContainer({ currentUser }) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -12,8 +13,11 @@ function PostsContainer() {
   }, []);
   // console.log(posts.map(post => console.log(post.content)))
   return (
-    <div className="posts">
-      {posts.map((post) => (
+    <>
+      {currentUser ? <PostForm /> : null}
+      <div className="posts">
+      {posts.map(post => 
+
         <Post
           key={post.id}
           content={post.content}
@@ -24,6 +28,7 @@ function PostsContainer() {
         />
       ))}
     </div>
+    </>
   );
 }
 

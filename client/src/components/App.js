@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import SignUpForm from "./SignUpForm";
-import SignInForm from "./LogInForm";
+import LogInForm from "./LogInForm";
 import Profile from "./Profile";
 import PostsContainer from "./PostsContainer";
 import LeftSideBar from "./LeftSideBar";
@@ -23,12 +23,10 @@ const App = () => {
       {/* <LeftSideBar isLoggedIn={isLoggedIn}/> */}
       <Routes>
         <Route path="/signup" element={<SignUpForm />} />
-        <Route path="/login" element={<SignInForm />} />
-        <Route
-          path="/profile"
-          element={<Profile currentUser={currentUser} />}
-        />
-        <Route path="/" element={<PostsContainer />} />
+        <Route path="/login" element={<LogInForm />} />
+        <Route path="/profile" element={<Profile currentUser={currentUser} />} />
+        <Route path="/" element={<PostsContainer currentUser={currentUser} />} />
+
       </Routes>
       {/* <RightSideBar /> */}
     </div>
