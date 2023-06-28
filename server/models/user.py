@@ -22,10 +22,10 @@ class User(db.Model):
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
     
     # relationships
-    comments = db.relationship("Comment", back_populates="user")
-    posts = db.relationship("Post", back_populates="user")
-    post_likes = db.relationship("PostLike", back_populates="user")
-    comment_likes = db.relationship("CommentLike", back_populates="user")
+    comments = db.relationship("Comment", back_populates="user", cascade="all, delete-orphan")
+    posts = db.relationship("Post", back_populates="user", cascade="all, delete-orphan")
+    post_likes = db.relationship("PostLike", back_populates="user", cascade="all, delete-orphan")
+    comment_likes = db.relationship("CommentLike", back_populates="user", cascade="all, delete-orphan")
 
     following = db.relationship(
         "User", lambda: user_following,

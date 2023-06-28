@@ -22,6 +22,8 @@ class UserById(Resource):
                     data = request.get_json()
                     user_schema.validate(data)
 
+                    # import ipdb; ipdb.set_trace()
+
                     updated_user = user_schema.load(data,
                                                     instance=user, partial=True)
                     db.session.commit()
@@ -29,6 +31,20 @@ class UserById(Resource):
                     return make_response(user_schema.dump(updated_user), 200)
                 return make_response({'error': 'Unauthorized'}, 401)
 
+            except Exception as e: 
+                db.session.rollback()
+                return make_response({"errors": [str(e)]}, 400)
+        return make_response({"error": "User not found"}, 404)
+    def delete(self, id):
+        if user := db.session.get(User, id): 
+            try:
+                current_user = db.session.get(User, session["user_id"])
+                if user == current_user:
+                    db.session.delete(user)
+                    db.session.commit()
+
+                    return make_response("", 204)
+                return make_response({'error': 'Unauthorized'}, 401)
             except Exception as e: 
                 db.session.rollback()
                 return make_response({"errors": [str(e)]}, 400)

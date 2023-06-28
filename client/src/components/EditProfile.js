@@ -28,9 +28,6 @@ const EditProfile = ({ profileUser }) => {
     const handleClose = () => setOpen(false);
 
     const [errors, setErrors] = useState([])
-
-    console.log("profile user: ")
-    console.log(profileUser)
     
     const userSchema = yup.object().shape({
         username: yup.string()
@@ -89,6 +86,21 @@ const EditProfile = ({ profileUser }) => {
             .catch(err => console.error(err))
         }
     })
+
+    const handleClick = () => {
+        fetch(`/users/${profileUser.id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(res => {
+            if (res.ok) {
+                console.log("success")
+            }
+        })
+        .catch(err => console.error(err))
+    }
 
     return (
         <div>
@@ -154,6 +166,13 @@ const EditProfile = ({ profileUser }) => {
                 sx={{ mt: 3, mb: 2 }}
                 >
                 Save
+                </Button>
+                <Button
+                    variant="text"
+                    fullWidth
+                    color="error"
+                    onClick={handleClick}>
+                    Delete account
                 </Button>
             </Box>
         </Modal>
