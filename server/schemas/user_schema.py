@@ -17,15 +17,17 @@ class UserSchema(ma.SQLAlchemySchema):
         model = User
         load_instance = True
         ordered = True
-        fields = ("id", "username", "name", "bio", "posts", "comments", 
-                    "followers", "url")
+        fields = ("id", "username", "name", "bio", "public_acct", "posts", 
+                "comments", "followers", "url")
 
     username = fields.String(required=True, \
                             validate=validate.Length(min=5, max=20, \
                             error="Username must be between 5 and 20 chars"))
+    name = fields.String(validate=validate.Length(min=5, max=50, \
+                        error="Display name must be between 5 and 50 chars"))
     bio = fields.String(validate=validate.Length(max=250, \
                         error="Bio must be less than 250 chars"))
-    posts = fields.Nested("PostSchema", only=("id", "content", "url"), many=True)
+    posts = fields.Nested("PostSchema", only=("id", "content", "user", "url"), many=True)
     comments = fields.Nested(CommentSchema, only=("id", "url"), many=True)
     followers = fields.Nested("UserSchema", 
                             only=("id", "username", "url"), many=True)
