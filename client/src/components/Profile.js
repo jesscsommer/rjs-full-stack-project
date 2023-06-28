@@ -53,17 +53,15 @@ const Profile = ({ currentUser }) => {
         <List>
           <ListItem>
             <Avatar
-              alt="Remy Sharp"
+              alt={profileUser.username}
               src="/static/images/avatar/1.jpg"
               sx={{ width: 56, height: 56 }}
             />
-            <h3>User name</h3>
+            <h3>{profileUser.username}</h3>
           </ListItem>
           <ListItem>
             <p>
-              This is the user's bio. This is the user's bio. This is the user's
-              bio. This is the user's bio. This is the user's bio. This is the
-              user's bio. This is the user's bio.
+              {profileUser.bio}
             </p>
           </ListItem>
           <ListItem disablePadding>
