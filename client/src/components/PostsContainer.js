@@ -16,18 +16,17 @@ function PostsContainer({ currentUser }) {
     <>
       {currentUser ? <PostForm /> : null}
       <div className="posts">
-      {posts.map(post => 
-
-        <Post
-          key={post.id}
-          content={post.content}
-          user={post.user.username}
-          post_likes={post.post_likes}
-          post_id={post.post_id}
-          post={post}
-        />
-      ))}
-    </div>
+        {posts.map((post) => (
+          <Post
+            key={post.id}
+            content={post.content}
+            user={post.user.username}
+            post_likes={post.post_likes}
+            post_id={post.post_id}
+            post={post}
+          />
+        ))}
+      </div>
     </>
   );
 }
