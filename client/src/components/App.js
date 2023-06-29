@@ -61,7 +61,7 @@ const App = () => {
             <PostsContainer
               currentUser={currentUser}
               posts={posts}
-              handleSetPosts={handleSetPosts}
+              setPosts={setPosts}
             />
           }
         />

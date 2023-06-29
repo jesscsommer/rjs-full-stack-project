@@ -16,6 +16,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddCommentIcon from "@mui/icons-material/AddComment";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Link } from "react-router-dom";
 
 const ExpandMore = styled((props) => {
@@ -29,7 +30,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const Post = ({ currentUser, post }) => {
+const Post = ({ currentUser, post, setPosts }) => {
   // const initial_liked = post.post_likes.find(like => like.user.id == currentUser.id)
   const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState([]);
@@ -37,7 +38,7 @@ const Post = ({ currentUser, post }) => {
   const [allLikes, setAllLikes] = useState(post.post_likes);
   const handleLiked = () => {
 
-    if (currentUser){
+  if (currentUser){
       setLiked((current) => !current);
       handleLikedData()
     } else {
@@ -90,6 +91,16 @@ const Post = ({ currentUser, post }) => {
       .then((comment) => setNewComment(comment))
       .catch((err) => console.error(err));
   };
+
+  const handlePostDelete = () => {
+    if (post.user.id == currentUser.id) {
+      fetch(`/posts/${post.id}`, {
+        method: 'DELETE',
+      }).then(setPosts(current => current.filter(item => item.id != post.id)))
+    } else {
+      alert("You are not allow to delete this post")
+    }
+  }
   
   return (
     <Card sx={{ maxWidth: 300, my: 2 }}>
@@ -123,6 +134,7 @@ const Post = ({ currentUser, post }) => {
         >
           <AddCommentIcon />
         </ExpandMore>
+        {post.user.id == currentUser.id ? <DeleteForeverIcon onClick={handlePostDelete} /> : <></>}
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>

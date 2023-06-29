@@ -17,7 +17,7 @@ import Error from "./Error";
 
 const defaultTheme = createTheme();
 
-const PostForm = () => {
+const PostForm = ({setPosts}) => {
     const [errors, setErrors] = useState(null)
 
     const postSchema = yup.object().shape({
@@ -58,7 +58,7 @@ const PostForm = () => {
             .then(res => {
                 if (res.ok) {
                     res.json()
-                    .then(data => console.log(data))
+                    .then(data => setPosts(current => [...current, data]))
                 } else {
                     res.json().then(error => setErrors(error.message))
                 }
