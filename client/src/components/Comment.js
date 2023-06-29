@@ -15,6 +15,7 @@ function Comment({currentUser, comment}){
       fetch("/comment_likes")
         .then((r) => r.json())
         .then(data => {
+
           setLikedComment(data.find(like => like.comment?.id == comment?.id && like.user?.id == currentUser?.id))
         })
         .catch((err) => console.error(err));
@@ -55,9 +56,12 @@ function Comment({currentUser, comment}){
                 {comment.content}
                 </Typography>
             </CardContent>
-            <IconButton onClick={handleLikedComment}>
-                {likedComment ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-            </IconButton>
+            { currentUser ? 
+              <IconButton onClick={handleLikedComment}>
+                  {likedComment ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              </IconButton>
+              : null }
+
         </div>)
 }
 

@@ -11,10 +11,12 @@ const App = () => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        fetch("/check_session").then((res) => {
-        if (res.ok) {
-            res.json().then(setCurrentUser);
-        }
+        fetch("/check_session")
+        .then((res) => {
+            if (res.ok) {
+                res.json()
+                .then(setCurrentUser);
+            } 
         });
     }, []);
 
@@ -24,13 +26,6 @@ const App = () => {
         .then(setPosts)
         .catch((err) => console.error(err));
     }, []);
-
-  const handleSetUser = () =>
-    fetch("/check_session").then((res) => {
-      if (res.ok) {
-        res.json().then(setCurrentUser);
-      }
-    });
 
   const handleSetPosts = () => {
     fetch("/posts")
@@ -46,24 +41,42 @@ const App = () => {
   }
 
   const handleSubmitPost = (data) => {
-    setPosts(current => [...current, data])
+    setPosts(current => [data, ...current])
+  }
+
+  const updateCurrentUser = (updated_user) => {
+    setCurrentUser(updated_user)
   }
 
   return (
     <div className="app">
-      <HeaderBar currentUser={currentUser} handleSetUser={handleSetUser} />
+      <HeaderBar
+            currentUser={currentUser}
+            updateCurrentUser={updateCurrentUser} />
       <Routes>
         <Route
           path="/signup"
-          element={<SignUpForm handleSetUser={handleSetUser} />}
+          element={
+            <SignUpForm 
+                currentUser={currentUser}
+                updateCurrentUser={updateCurrentUser} />
+            }
         />
         <Route
           path="/login"
-          element={<LogInForm handleSetUser={handleSetUser} />}
+          element={
+            <LogInForm 
+                currentUser={currentUser}
+                updateCurrentUser={updateCurrentUser} />
+            }
         />
         <Route
           path="/profile/:username"
-          element={<Profile currentUser={currentUser} />}
+          element={
+            <Profile 
+                currentUser={currentUser}
+                updateCurrentUser={updateCurrentUser}
+            />}
         />
         <Route
           path="/"

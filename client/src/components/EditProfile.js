@@ -1,4 +1,6 @@
 import { useState }from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
@@ -24,11 +26,13 @@ const style = {
     p: 4,
 };
 
-const EditProfile = ({ profileUser }) => {
-    const [currentUser, setCurrentUser] = useState(profileUser)
+const EditProfile = ({ profileUser, updateProfileUser, updateCurrentUser }) => {
+    const [editUser, setEditUser] = useState(profileUser)
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const navigate = useNavigate()
 
     const [errors, setErrors] = useState(null)
     
@@ -52,15 +56,14 @@ const EditProfile = ({ profileUser }) => {
 
     const formik = useFormik({
         initialValues: {
-            username: currentUser.username,
-            name: currentUser.name,
-            bio: currentUser.bio,
-            public_acct: currentUser.public_acct
+            username: editUser.username,
+            name: editUser.name,
+            bio: editUser.bio,
+            public_acct: editUser.public_acct
         },
         validationSchema: userSchema, 
         onSubmit: (values) => {
-            
-            fetch(`/users/${currentUser.id}`, {
+            fetch(`/users/${editUser.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"
@@ -70,7 +73,11 @@ const EditProfile = ({ profileUser }) => {
             .then(res => {
                 if (res.ok) {
                     res.json()
-                    .then(data => console.log(data))
+                    .then(data => {
+                        navigate(`/profile/${data.username}`)
+                        updateProfileUser(data)
+                        handleClose()
+                    })
                 } else {
                     res.json()
                     .then(err => setErrors(err.error))
@@ -81,7 +88,7 @@ const EditProfile = ({ profileUser }) => {
     })
 
     const handleClick = () => {
-        fetch(`/users/${profileUser.id}`, {
+        fetch(`/users/${editUser.id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
@@ -89,7 +96,8 @@ const EditProfile = ({ profileUser }) => {
         })
         .then(res => {
             if (res.ok) {
-                console.log("success")
+                updateCurrentUser(null)
+                navigate("/")
             }
         })
         .catch(err => setErrors("Account still active, please try again"))

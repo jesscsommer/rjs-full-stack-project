@@ -16,14 +16,11 @@ class UserById(Resource):
         return make_response({"error": "User not found"}, 404)
     def patch(self, id):
         if user := db.session.get(User, id): 
-            # import ipdb; ipdb.set_trace()
             try:
                 if user.id == session["user_id"]:
                     data = request.get_json()
                     data["id"] = user.id
                     user_schema.validate(data)
-
-                    # import ipdb; ipdb.set_trace()
 
                     updated_user = user_schema.load(data,
                                                     instance=user, partial=True)

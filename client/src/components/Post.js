@@ -145,14 +145,16 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
         </Typography>
       </CardContent>
       <CardActions sx={{ display: "flex", alignSelf: "flex-end" }}>
-        <IconButton aria-label="add to likes" onClick={handleLiked}>
-          {allLikes?.length}{" "}
-          {liked ? (
-            <FavoriteIcon sx={{ color: "red" }} />
-          ) : (
-            <FavoriteBorderIcon />
-          )}
-        </IconButton>
+        { currentUser ? 
+          <IconButton aria-label="add to likes" onClick={handleLiked}>
+            {allLikes?.length}{" "}
+            {liked ? (
+              <FavoriteIcon sx={{ color: "red" }} />
+            ) : (
+              <FavoriteBorderIcon />
+            )}
+          </IconButton>
+          : null }
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
@@ -161,6 +163,7 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
         >
           <AddCommentIcon />
         </ExpandMore>
+
         {post.user?.id === currentUser?.id ? <DeleteForeverIcon onClick={() => handlePostDelete(post.id)} /> : <></>}
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>

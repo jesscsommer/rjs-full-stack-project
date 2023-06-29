@@ -24,10 +24,14 @@ import Error from "./Error"
 
 const defaultTheme = createTheme();
 
-const SignUpForm = ({ handleSetUser }) => {
-    const [showPassword, setShowPassword] = useState(false);
-    const [errors, setErrors] = useState([]);
+const SignUpForm = ({ currentUser, updateCurrentUser }) => {
     const navigate = useNavigate();
+
+    if (currentUser) {
+        navigate("/")
+    }
+    const [showPassword, setShowPassword] = useState(false);
+    const [errors, setErrors] = useState(null);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -70,8 +74,11 @@ const SignUpForm = ({ handleSetUser }) => {
             })
             .then(res => {
                 if (res.ok) {
-                    handleSetUser();
-                    navigate("/");
+                    res.json()
+                    .then(data => {
+                        updateCurrentUser(data)
+                        navigate("/")
+                    })
                 } else {
                     res.json()
                     .then(err => setErrors(err.error))

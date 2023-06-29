@@ -10,7 +10,7 @@ posts_bp = Blueprint("posts", __name__, url_prefix="/posts")
 
 class Posts(Resource):
     def get(self):
-        posts = posts_schema.dump(Post.query.all())
+        posts = posts_schema.dump(Post.query.order_by(Post.created_at.desc()).all())
         return make_response(posts, 200)
     
     def post(self):

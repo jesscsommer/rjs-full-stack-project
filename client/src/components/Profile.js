@@ -18,9 +18,13 @@ import { useState, useEffect } from "react";
 
 const drawerHeight = 240;
 
-const Profile = ({ currentUser }) => {
+const Profile = ({ currentUser, updateCurrentUser }) => {
   const { username } = useParams();
-  const [profileUser, setProfileUser] = useState({});
+  const [profileUser, setProfileUser] = useState(null);
+  
+  const updateProfileUser = (updated_user) => {
+    setProfileUser(updated_user)
+  }
 
   useEffect(() => {
     fetch(`/users/${username}`)
@@ -32,7 +36,7 @@ const Profile = ({ currentUser }) => {
         }
       })
       .catch((err) => console.error(err));
-  }, [username]);
+  }, [username])
 
   if (!profileUser) return <h1>Loading...</h1>;
 
@@ -72,7 +76,10 @@ const Profile = ({ currentUser }) => {
                 <ListItemIcon>
                   <EditIcon />
                 </ListItemIcon>
-                <EditProfile profileUser={profileUser} />
+                <EditProfile 
+                  profileUser={profileUser}
+                  updateProfileUser={updateProfileUser} 
+                  updateCurrentUser={updateCurrentUser} />
               </ListItem>
             ) : null}
           </Box>
@@ -81,7 +88,9 @@ const Profile = ({ currentUser }) => {
           component="main"
           sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
         >
-          <PostsContainer posts={profileUser.posts} />
+          <PostsContainer 
+              posts={profileUser.posts}
+              currentUser={currentUser} />
         </Box>
       </Box>
     </div>
