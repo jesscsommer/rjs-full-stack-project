@@ -1,4 +1,5 @@
-import { useState } from "react";
+
+import { useState, useEffect } from 'react';
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
@@ -7,15 +8,26 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 function Comment({ currentUser, comment }) {
-  const [likedComment, setLikedComment] = useState(false);
-  const [newLikedComment, setNewLikedComment] = useState([]);
 
-  const handleLikedComment = () => {
-    if (currentUser) {
-      setLikedComment((current) => !current);
-      handleLikedCommentData();
-    } else {
-      alert("Please login first!");
+    const [likedComment, setLikedComment] = useState(false)
+    const [newLikedComment, setNewLikedComment] = useState([])
+
+    useEffect(() => {
+      fetch("/comment_likes")
+        .then((r) => r.json())
+        .then(data => {
+          setLikedComment(data.find(like => like.id == comment.comment_likes.map(like => like.id) && like.user.id == currentUser.id))
+        })
+        .catch((err) => console.error(err));
+    }, []);
+
+    const handleLikedComment = () => {
+      if (currentUser){
+        setLikedComment(current => !current)
+        handleLikedCommentData()
+      } else {
+        alert('Please login first!')
+      }
     }
   };
 
