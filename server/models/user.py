@@ -2,6 +2,7 @@ from .__init__ import db
 from config import bcrypt
 from sqlalchemy.ext.hybrid import hybrid_property
 
+
 user_following = db.Table(
     "user_following",
     db.Column("follower_id", db.Integer, db.ForeignKey("users.id")),
@@ -16,7 +17,7 @@ class User(db.Model):
     _password_hash = db.Column(db.String)
     name = db.Column(db.String, nullable=True)
     bio = db.Column(db.String, nullable=True)
-    profile_pic = db.Column(db.String)
+    profile_pic_num = db.Column(db.Integer)
     public_acct = db.Column(db.Boolean, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())

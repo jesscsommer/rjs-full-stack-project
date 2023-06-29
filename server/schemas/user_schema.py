@@ -17,8 +17,8 @@ class UserSchema(ma.SQLAlchemySchema):
         model = User
         load_instance = True
         ordered = True
-        fields = ("id", "username", "name", "bio", "public_acct", "posts", 
-                "comments", "followers", "url")
+        fields = ("id", "username", "name", "bio", "profile_pic_num", 
+                "public_acct", "posts", "comments", "followers", "url")
 
     username = fields.String(required=True, \
                             validate=validate.Length(min=5, max=20, \
