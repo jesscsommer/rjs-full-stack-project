@@ -31,9 +31,6 @@ class Comments(Resource):
 
                 db.session.add(new_comment)
                 db.session.commit()
-                # import ipdb
-
-                # ipdb.set_trace()
 
                 return make_response(comment_schema.dump(new_comment), 201)
         except Exception as e:
