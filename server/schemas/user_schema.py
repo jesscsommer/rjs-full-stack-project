@@ -24,9 +24,11 @@ class UserSchema(ma.SQLAlchemySchema):
                             validate=validate.Length(min=5, max=20, \
                             error="Username must be between 5 and 20 chars"))
     name = fields.String(validate=validate.Length(min=5, max=50, \
-                        error="Display name must be between 5 and 50 chars"))
+                        error="Display name must be between 5 and 50 chars"),
+                        allow_none=True)
     bio = fields.String(validate=validate.Length(max=250, \
-                        error="Bio must be less than 250 chars"))
+                        error="Bio must be less than 250 chars"),
+                        allow_none=True)
     posts = fields.Nested("PostSchema", only=("id", "content", "user", "url"), many=True)
     comments = fields.Nested(CommentSchema, only=("id", "url"), many=True)
     followers = fields.Nested("UserSchema", 
@@ -44,7 +46,8 @@ class UserSchema(ma.SQLAlchemySchema):
 
     @validates("username")
     def validates_username(self, username):
-        if User.query.filter(User.username == username).first():
-            raise ValidationError("That username is taken")
+        if user := User.query.filter(User.username == username).first():
+            if not user.id:
+                raise ValidationError("That username is taken")
         if not re.match(r"^[A-z0-9]+$", username):
             raise ValidationError("Username may only contain letters and digits")
