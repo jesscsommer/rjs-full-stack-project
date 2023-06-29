@@ -5,7 +5,7 @@ import Post from "./Post";
 import PostForm from "./PostForm";
 import { ImageList } from "@mui/material";
 
-function PostsContainer({ currentUser, posts }) {
+function PostsContainer({ currentUser, posts, handlePostDelete, handleSubmitPost}) {
   return (
     <div>
       <Box
@@ -15,11 +15,11 @@ function PostsContainer({ currentUser, posts }) {
           alignItems: "center",
         }}
       >
-        {currentUser ? <PostForm position /> : null}
+        {currentUser ? <PostForm handleSubmitPost={handleSubmitPost}/> : null}
 
         <ImageList className="posts" variant="masonry" cols={3} gap={15}>
           {posts?.map((post) => (
-            <Post key={post.id} post={post} currentUser={currentUser} />
+            <Post key={post.id} post={post} currentUser={currentUser} handlePostDelete={handlePostDelete}/>
           ))}
         </ImageList>
       </Box>
