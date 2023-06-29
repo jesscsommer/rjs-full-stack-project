@@ -26,7 +26,7 @@ const defaultTheme = createTheme();
 
 const SignUpForm = ({ handleSetUser }) => {
     const [showPassword, setShowPassword] = useState(false);
-    const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState(null);
     const navigate = useNavigate();
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);

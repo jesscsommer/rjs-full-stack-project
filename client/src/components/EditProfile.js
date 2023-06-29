@@ -1,4 +1,6 @@
 import { useState }from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
@@ -24,11 +26,12 @@ const style = {
     p: 4,
 };
 
-const EditProfile = ({ profileUser }) => {
+const EditProfile = ({ profileUser, updateProfileUser }) => {
     const [currentUser, setCurrentUser] = useState(profileUser)
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const navigate = useNavigate()
 
     const [errors, setErrors] = useState(null)
     
@@ -70,7 +73,11 @@ const EditProfile = ({ profileUser }) => {
             .then(res => {
                 if (res.ok) {
                     res.json()
-                    .then(data => console.log(data))
+                    .then(data => {
+                        navigate(`/profile/${data.username}`)
+                        updateProfileUser(data)
+                        handleClose()
+                    })
                 } else {
                     res.json()
                     .then(err => setErrors(err.error))
