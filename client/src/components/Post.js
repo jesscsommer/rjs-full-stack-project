@@ -16,7 +16,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddCommentIcon from "@mui/icons-material/AddComment";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -37,25 +37,25 @@ const Post = ({ currentUser, post }) => {
 
   const handleLiked = () => {
     setLiked((current) => !current);
-    handleLikedData()
+    handleLikedData();
   };
 
   const handleLikedData = () => {
     if (liked) {
-      fetch(`/post_likes/${newLike.id}`,{
-        method: 'DELETE'
-      })
+      fetch(`/post_likes/${newLike.id}`, {
+        method: "DELETE",
+      });
     } else {
       fetch("/post_likes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({post_id: post.id, user_id: currentUser.id}),
+        body: JSON.stringify({ post_id: post.id, user_id: currentUser.id }),
       })
         .then((res) => res.json())
         .then((like) => setNewLike(like))
         .catch((err) => console.error(err));
     }
-  }
+  };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -73,25 +73,25 @@ const Post = ({ currentUser, post }) => {
       .catch((err) => console.error(err));
   };
   return (
-    <Card sx={{ maxWidth: 345 }}>
-        <CardHeader
-          avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="post"></Avatar>}
-          action={
-            <IconButton aria-label="follow user">
-              <PersonAddIcon />
-            </IconButton>
-          }
-          title={post.user.name}
-          subheader={post.user.username}
-          component={Link}
-          to={`/profile/${post.user.username}`}
-        />
+    <Card sx={{ maxWidth: 300, my: 2 }}>
+      <CardHeader
+        avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="post"></Avatar>}
+        action={
+          <IconButton aria-label="follow user">
+            <PersonAddIcon />
+          </IconButton>
+        }
+        title={post.user.name}
+        subheader={post.user.username}
+        component={Link}
+        to={`/profile/${post.user.username}`}
+      />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {post.content}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions sx={{ display: "flex", alignSelf: "flex-end" }}>
         <IconButton aria-label="add to likes" onClick={handleLiked}>
           {post.post_likes?.length}{" "}
           {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
@@ -112,6 +112,6 @@ const Post = ({ currentUser, post }) => {
       </Collapse>
     </Card>
   );
-}
+};
 
 export default Post;
