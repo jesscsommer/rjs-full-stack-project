@@ -138,3 +138,4 @@ const PostForm = ({handleSubmitPost}) => {
         </ThemeProvider>
     )
 }
+export default PostForm
