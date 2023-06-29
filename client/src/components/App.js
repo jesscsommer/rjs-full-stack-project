@@ -6,6 +6,7 @@ import Profile from "./Profile";
 import PostsContainer from "./PostsContainer";
 import HeaderBar from "./HeaderBar";
 import Error404 from "./Error404";
+import PostForm from "./PostForm";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -85,12 +86,24 @@ const App = () => {
         <Route
           path="/"
           element={
-            <PostsContainer
-              currentUser={currentUser}
-              posts={posts}
-              handlePostDelete={handlePostDelete}
-              handleSubmitPost={handleSubmitPost}
-            />
+            currentUser ? (
+              [
+                <PostForm handleSubmitPost={handleSubmitPost} />,
+                <PostsContainer
+                  currentUser={currentUser}
+                  posts={posts}
+                  handlePostDelete={handlePostDelete}
+                  handleSubmitPost={handleSubmitPost}
+                />,
+              ]
+            ) : (
+              <PostsContainer
+                currentUser={currentUser}
+                posts={posts}
+                handlePostDelete={handlePostDelete}
+                handleSubmitPost={handleSubmitPost}
+              />
+            )
           }
         />
       </Routes>

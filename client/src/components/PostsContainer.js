@@ -20,8 +20,6 @@ function PostsContainer({
           alignItems: "center",
         }}
       >
-        {currentUser ? <PostForm handleSubmitPost={handleSubmitPost} /> : null}
-
         <ImageList
           className="posts"
           variant="masonry"
