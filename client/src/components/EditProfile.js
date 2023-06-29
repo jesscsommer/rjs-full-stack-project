@@ -28,6 +28,7 @@ const style = {
 
 const EditProfile = ({ profileUser, updateProfileUser, updateCurrentUser }) => {
     const [editUser, setEditUser] = useState(profileUser)
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -62,7 +63,6 @@ const EditProfile = ({ profileUser, updateProfileUser, updateCurrentUser }) => {
         },
         validationSchema: userSchema, 
         onSubmit: (values) => {
-            
             fetch(`/users/${editUser.id}`, {
                 method: "PATCH",
                 headers: {
