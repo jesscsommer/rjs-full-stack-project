@@ -13,10 +13,12 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { syllable } from "syllable";
 
+import Error from "./Error";
+
 const defaultTheme = createTheme();
 
 const PostForm = () => {
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState(null)
 
     const postSchema = yup.object().shape({
         line1: yup.string()
@@ -61,7 +63,7 @@ const PostForm = () => {
                     res.json().then(error => setErrors(error.message))
                 }
             })
-            .catch(err => console.error(err))
+            .catch(error => setErrors("Haiku not created, please try again"))
         }
     })
     return(
@@ -116,6 +118,7 @@ const PostForm = () => {
                         onChange={formik.handleChange}
                         />
                         <p style={{ color: "red" }}>{formik.errors.line3}</p>
+                        { errors ? <Error msg={errors} /> : null}
                         <Button 
                             type="submit"
                             fullWidth

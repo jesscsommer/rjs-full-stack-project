@@ -20,11 +20,13 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
+import Error from "./Error";
+
 const defaultTheme = createTheme();
 
 const LogInForm = ({ handleSetUser }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState(null);
   const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -36,19 +38,9 @@ const LogInForm = ({ handleSetUser }) => {
   const userSchema = yup.object().shape({
     username: yup
       .string()
-      .min(5, "Username must be at least 5 characters")
-      .max(20, "Username must be at most 20 characters")
-      .test(
-        "valid-chs",
-        "Username may only contain letters and numbers",
-        (value) => {
-          return /^[A-z0-9]+$/.test(value);
-        }
-      )
       .required("Username is required"),
     password: yup
       .string()
-      .min(10, "Password must be at least 10 characters")
       .required("Password is required"),
   });
 
@@ -72,10 +64,10 @@ const LogInForm = ({ handleSetUser }) => {
             handleSetUser();
             navigate("/");
           } else {
-            res.json().then((error) => setErrors(error.message));
+            res.json().then(err => setErrors(err.error));
           }
         })
-        .catch((err) => console.error(err));
+        .catch(err => setErrors(err.error));
     },
   });
 
@@ -134,6 +126,7 @@ const LogInForm = ({ handleSetUser }) => {
               />
               <p style={{ color: "red" }}>{formik.errors.password}</p>
             </Grid>
+            { errors ? <Error msg={errors} /> : null }
             <Button
               type="submit"
               fullWidth
