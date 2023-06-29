@@ -26,8 +26,8 @@ const style = {
     p: 4,
 };
 
-const EditProfile = ({ profileUser, updateProfileUser }) => {
-    const [currentUser, setCurrentUser] = useState(profileUser)
+const EditProfile = ({ profileUser, updateProfileUser, updateCurrentUser }) => {
+    const [editUser, setEditUser] = useState(profileUser)
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -55,15 +55,15 @@ const EditProfile = ({ profileUser, updateProfileUser }) => {
 
     const formik = useFormik({
         initialValues: {
-            username: currentUser.username,
-            name: currentUser.name,
-            bio: currentUser.bio,
-            public_acct: currentUser.public_acct
+            username: editUser.username,
+            name: editUser.name,
+            bio: editUser.bio,
+            public_acct: editUser.public_acct
         },
         validationSchema: userSchema, 
         onSubmit: (values) => {
             
-            fetch(`/users/${currentUser.id}`, {
+            fetch(`/users/${editUser.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"
@@ -88,7 +88,7 @@ const EditProfile = ({ profileUser, updateProfileUser }) => {
     })
 
     const handleClick = () => {
-        fetch(`/users/${profileUser.id}`, {
+        fetch(`/users/${editUser.id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
@@ -96,7 +96,8 @@ const EditProfile = ({ profileUser, updateProfileUser }) => {
         })
         .then(res => {
             if (res.ok) {
-                console.log("success")
+                updateCurrentUser(null)
+                navigate("/")
             }
         })
         .catch(err => setErrors("Account still active, please try again"))

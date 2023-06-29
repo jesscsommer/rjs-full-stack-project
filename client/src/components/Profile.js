@@ -18,7 +18,7 @@ import { useState, useEffect } from "react";
 
 const drawerHeight = 240;
 
-const Profile = ({ currentUser }) => {
+const Profile = ({ currentUser, updateCurrentUser }) => {
   const { username } = useParams();
   const [profileUser, setProfileUser] = useState(null);
   
@@ -78,7 +78,8 @@ const Profile = ({ currentUser }) => {
                 </ListItemIcon>
                 <EditProfile 
                   profileUser={profileUser}
-                  updateProfileUser={updateProfileUser} />
+                  updateProfileUser={updateProfileUser} 
+                  updateCurrentUser={updateCurrentUser} />
               </ListItem>
             ) : null}
           </Box>

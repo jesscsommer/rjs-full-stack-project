@@ -72,7 +72,11 @@ const App = () => {
         />
         <Route
           path="/profile/:username"
-          element={<Profile currentUser={currentUser} />}
+          element={
+            <Profile 
+                currentUser={currentUser}
+                updateCurrentUser={updateCurrentUser}
+            />}
         />
         <Route
           path="/"
