@@ -60,7 +60,6 @@ const Post = ({ currentUser, post }) => {
 
   const handleLikedData = () => {
     if (liked) {
-      // debugger
       fetch(`/post_likes/${liked.id}`, {
         method: "DELETE",
       }).then(setAllLikes(allLikes.filter((like) => like.id !== liked.id)));
@@ -126,7 +125,7 @@ const Post = ({ currentUser, post }) => {
   const randCardColor =
     cardColors[Math.floor(Math.random() * cardColors.length)];
   return (
-    <Card sx={{ maxWidth: 345, bgcolor: randCardColor }}>
+    <Card sx={{ maxWidth: 345, bgcolor: randCardColor, my: 2 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: randAvaColor }} aria-label="post"></Avatar>
@@ -140,14 +139,13 @@ const Post = ({ currentUser, post }) => {
         subheader={post.user.username}
         component={Link}
         to={`/profile/${post.user.username}`}
-        inputProps={{ disableUnderline: "true" }}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {post.content}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions sx={{ display: "flex", alignSelf: "flex-end" }}>
         <IconButton aria-label="add to likes" onClick={handleLiked}>
           {allLikes?.length}{" "}
           {liked ? (
