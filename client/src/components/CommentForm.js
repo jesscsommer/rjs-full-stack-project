@@ -1,32 +1,53 @@
-import AddReactionOutlinedIcon from "@mui/icons-material/AddReactionOutlined";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import { useState } from "react";
 
-function CommentForm({ post_id, user_id, handleSubmitComment }) {
-  const initialCommentForm = {
-    post_id: { post_id },
-    user_id: { user_id },
+function CommentForm({ post, currentUser, handleNewComment }) {
+  const [comment, setComment] = useState({
+    post: post,
+    user: currentUser,
     content: "",
-  };
-  const [submitComment, setSubmitComment] = useState(initialCommentForm);
+  });
 
-  const handleAddComment = (e) => {
-    setSubmitComment({ ...submitComment, [e.target.name]: e.target.value });
+  const handleCommentChange = (e) => {
+    setComment({ ...comment, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmitComment = (e) => {
+    e.preventDefault();
+    const newComment = {
+      content: comment.content,
+      post_id: post.id,
+      user_id: currentUser.id,
+    };
+    debugger;
+    fetch("/comments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newComment),
+    })
+      .then((res) => res.json())
+      .then((newComment) => console.log(newComment))
+      .catch((err) => console.error(err));
+    handleNewComment(comment);
+
+    setComment({
+      post: post,
+      user: currentUser,
+      content: "",
+    });
   };
 
   return (
-    <div class="new-comment">
-      <form onSubmit={(e) => handleSubmitComment(e, submitComment)}>
-        <span>
-          <AddReactionOutlinedIcon />
-        </span>
+    <div className="new-comment">
+      <form onSubmit={handleSubmitComment}>
         <input
-          onChange={handleAddComment}
+          onChange={handleCommentChange}
           placeholder="Add a Comment ..."
           name="content"
+          value={comment.content}
         ></input>
         <button>
-          <AddBoxOutlinedIcon />
+          <AddBoxOutlinedIcon fontSize="inherit" />
         </button>
       </form>
     </div>
