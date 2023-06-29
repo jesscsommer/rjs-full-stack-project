@@ -30,30 +30,27 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const Post = ({ currentUser, post, setPosts }) => {
+const Post = ({ currentUser, post, handlePostDelete }) => {
   // const initial_liked = post.post_likes.find(like => like.user.id == currentUser.id)
   const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState([]);
   const [newComment, setNewComment] = useState([]);
   const [allLikes, setAllLikes] = useState(post.post_likes);
-  const handleLiked = () => {
-
-  if (currentUser){
-      setLiked((current) => !current);
-      handleLikedData()
-    } else {
-      alert('Please login first!')
-    }
-  };
 
   useEffect(() => {
     fetch("/post_likes")
       .then((r) => r.json())
-      .then(data => {
-        setLiked(data.find(like => like.post.id == post.id && like.user.id == currentUser.id))
-      })
+      .then(dataList => {debugger})
       .catch((err) => console.error(err));
   }, []);
+
+  const handleLiked = () => {
+    if (currentUser){
+        handleLikedData()
+      } else {
+        alert('Please login first!')
+      }
+    };
 
   const handleLikedData = () => {
     if (liked) {
@@ -61,6 +58,7 @@ const Post = ({ currentUser, post, setPosts }) => {
         method: 'DELETE'
       })
       .then(setAllLikes(allLikes.filter(like => like.id !== liked.id)))
+      .then(setLiked(false))
     } else {
       fetch("/post_likes", {
         method: "POST",
@@ -91,16 +89,6 @@ const Post = ({ currentUser, post, setPosts }) => {
       .then((comment) => setNewComment(comment))
       .catch((err) => console.error(err));
   };
-
-  const handlePostDelete = () => {
-    if (post.user.id == currentUser.id) {
-      fetch(`/posts/${post.id}`, {
-        method: 'DELETE',
-      }).then(setPosts(current => current.filter(item => item.id != post.id)))
-    } else {
-      alert("You are not allow to delete this post")
-    }
-  }
   
   return (
     <Card sx={{ maxWidth: 300, my: 2 }}>
@@ -134,7 +122,7 @@ const Post = ({ currentUser, post, setPosts }) => {
         >
           <AddCommentIcon />
         </ExpandMore>
-        {post.user.id == currentUser.id ? <DeleteForeverIcon onClick={handlePostDelete} /> : <></>}
+        {post.user.id == currentUser.id ? <DeleteForeverIcon onClick={() => handlePostDelete(post.id)} /> : <></>}
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
