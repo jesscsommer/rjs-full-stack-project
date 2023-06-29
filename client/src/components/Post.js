@@ -125,7 +125,7 @@ const Post = ({ currentUser, post }) => {
   const randCardColor =
     cardColors[Math.floor(Math.random() * cardColors.length)];
   return (
-    <Card sx={{ maxWidth: 345, bgcolor: randCardColor, my: 2 }}>
+    <Card sx={{ maxWidth: 345, bgcolor: randCardColor, my: 2, marginTop: "0" }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: randAvaColor }} aria-label="post"></Avatar>
