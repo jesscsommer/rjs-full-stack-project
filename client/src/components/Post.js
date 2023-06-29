@@ -47,7 +47,7 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
     fetch("/post_likes")
       .then((r) => r.json())
       .then((data) => {
-        const post_like = data.find((like) => like.post.id === post.id && like.user.id === currentUser.id)
+        const post_like = data.find((like) => like.post.id === post.id && like.user.id === currentUser?.id)
         if (post_like){
           setLiked(post_like)
         }

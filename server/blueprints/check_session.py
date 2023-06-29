@@ -10,4 +10,4 @@ class CheckSession(Resource):
         if id := session.get("user_id"):
             if user := db.session.get(User, id):
                 return make_response(user_schema.dump(user), 200)
-        return make_response({'error': 'Unauthorized'}, 401)
+        # return make_response({'error': 'Unauthorized'}, 401)

@@ -24,7 +24,7 @@ import Error from "./Error";
 
 const defaultTheme = createTheme();
 
-const LogInForm = ({ handleSetUser }) => {
+const LogInForm = ({ currentUser, updateCurrentUser }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState(null);
   const navigate = useNavigate();
@@ -60,9 +60,11 @@ const LogInForm = ({ handleSetUser }) => {
       })
         .then((res) => {
           if (res.ok) {
-            res.json().then((data) => console.log(data));
-            handleSetUser();
-            navigate("/");
+            res.json()
+            .then(data => {
+                updateCurrentUser(data)
+                navigate("/")
+            })
           } else {
             res.json().then(err => setErrors(err.error));
           }
