@@ -53,7 +53,6 @@ const App = () => {
         currentUser={currentUser}
         updateCurrentUser={updateCurrentUser}
       />
-      <Error404 />
       <Routes>
         <Route
           path="/signup"
@@ -82,7 +81,7 @@ const App = () => {
             />
           }
         />
-        {/* <Route path="/404" element={<Error404 />} /> */}
+        <Route path="/404" element={<Error404 />} />
         <Route
           path="/"
           element={

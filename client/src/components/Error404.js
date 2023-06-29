@@ -2,8 +2,11 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { green, lightBlue } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 export default function Error404() {
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={{
@@ -22,6 +25,9 @@ export default function Error404() {
         <p>Lost in the vast digital void,</p>
         <p>Haiku whispers fade.</p>
       </Typography>
+      <Button variant="contained" color="primary" onClick={() => navigate(-1)}>
+        Go Back
+      </Button>
     </Box>
   );
 }
