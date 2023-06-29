@@ -25,6 +25,7 @@ const style = {
 };
 
 const EditProfile = ({ profileUser }) => {
+    const [currentUser, setCurrentUser] = useState(profileUser)
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -38,40 +39,33 @@ const EditProfile = ({ profileUser }) => {
         .test("valid-chs", "Username may only contain letters and numbers", 
             (value) => {
                 return /^[A-z0-9]+$/.test(value)
-            }),
+            })
+        .required("Username is required"),
         name: yup.string()
         .min(5, "Display name must be at least 5 characters")
-        .max(50, "Display name must be at most 20 characters"),
+        .max(50, "Display name must be at most 50 characters")
+        .notRequired(),
         bio: yup.string()
-        .max(200, "Bio must be at most 20 characters")
+        .max(200, "Bio must be at most 200 characters")
+        .notRequired()
     })
-
-    const find_updates = (values) => {
-        const new_obj = {}
-        for (const [key, value] of Object.entries(values)) {
-            if (value) {
-                new_obj[key] = value
-            }
-        }
-        return new_obj
-    }
 
     const formik = useFormik({
         initialValues: {
-            username: profileUser.username,
-            name: profileUser.name,
-            bio: profileUser.bio,
-            public_acct: profileUser.public_acct
+            username: currentUser.username,
+            name: currentUser.name,
+            bio: currentUser.bio,
+            public_acct: currentUser.public_acct
         },
         validationSchema: userSchema, 
         onSubmit: (values) => {
             
-            fetch(`/users/${profileUser.id}`, {
+            fetch(`/users/${currentUser.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(find_updates(values))
+                body: JSON.stringify(values)
             })
             .then(res => {
                 if (res.ok) {
@@ -120,7 +114,7 @@ const EditProfile = ({ profileUser }) => {
                     label="Username"
                     name="username"
                     onChange={formik.handleChange}
-                    value={formik.values.username ? formik.values.username : profileUser.username}
+                    value={formik.values.username}
                     />
                     <p style={{ color: "red" }}>{formik.errors.username}</p>
                 </Grid>
@@ -130,7 +124,7 @@ const EditProfile = ({ profileUser }) => {
                     id="name"
                     label="Display name"
                     name="name"
-                    value={formik.values.name ? formik.values.name : profileUser.name}
+                    value={formik.values.name}
                     onChange={formik.handleChange}
                     />
                     <p style={{ color: "red" }}>{formik.errors.name}</p>
@@ -142,7 +136,7 @@ const EditProfile = ({ profileUser }) => {
                     id="bio"
                     label="Bio"
                     name="bio"
-                    value={formik.values.bio ? formik.values.bio : profileUser.bio}
+                    value={formik.values.bio}
                     onChange={formik.handleChange}
                     />
                     <p style={{ color: "red" }}>{formik.errors.bio}</p>
