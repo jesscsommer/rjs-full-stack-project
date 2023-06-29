@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -20,23 +20,26 @@ const defaultTheme = createTheme();
 const PostForm = ({handleSubmitPost}) => {
     const [errors, setErrors] = useState(null)
 
-    const postSchema = yup.object().shape({
-        line1: yup.string()
-        .test("is-5-syallables", "Line 1 must be 5 syllables", (value) => {
-            return syllable(value) == 5
-        })
-        .required("Line 1 is required"), 
-        line2: yup.string()
-        .test("is-7-syllables", "Line 2 must be 7 syllables", (value) => {
-            return syllable(value) == 7
-        })
-        .required("Line 2 is required"), 
-        line3: yup.string()
-        .test("is-5-syallables", "Line 3 must be 5 syllables", (value) => {
-            return syllable(value) == 5
-        })
-        .required("Line 3 is required")
-    })
+  const postSchema = yup.object().shape({
+    line1: yup
+      .string()
+      .test("is-5-syallables", "Line 1 must be 5 syllables", (value) => {
+        return syllable(value) == 5;
+      })
+      .required("Line 1 is required"),
+    line2: yup
+      .string()
+      .test("is-7-syllables", "Line 2 must be 7 syllables", (value) => {
+        return syllable(value) == 7;
+      })
+      .required("Line 2 is required"),
+    line3: yup
+      .string()
+      .test("is-5-syallables", "Line 3 must be 5 syllables", (value) => {
+        return syllable(value) == 5;
+      })
+      .required("Line 3 is required"),
+  });
 
     const formik = useFormik({
         initialValues: {
@@ -135,5 +138,3 @@ const PostForm = ({handleSubmitPost}) => {
         </ThemeProvider>
     )
 }
-
-export default PostForm

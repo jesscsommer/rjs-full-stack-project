@@ -38,33 +38,33 @@ function HeaderBar({ currentUser, handleSetUser }) {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-      >
+      <AppBar position="fixed" sx={{ zIndex: 9999 }}>
         <Toolbar>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
-          <Button color="inherit" component={Link} to="/">
-            Home
-          </Button>
+          <Box sx={{ flexGrow: 0 }}>
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href=""
+              sx={{
+                bgcolor: "green",
+                mr: 2,
+                flexGrow: 1,
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              LOGO
+            </Typography>
+          </Box>
+          <Box sx={{ flexGrow: 1 }}>
+            <Button color="inherit" component={Link} to="/">
+              Home
+            </Button>
+          </Box>
           {!currentUser ? (
             <Button color="inherit" component={Link} to="/login">
               Login
@@ -111,7 +111,7 @@ function HeaderBar({ currentUser, handleSetUser }) {
                   component={Link}
                   to="/"
                 >
-                  <Typography textAlign="center">Logout</Typography>
+                  <Typography textAlign="right">Logout</Typography>
                 </MenuItem>
               </Menu>
             </>

@@ -9,11 +9,15 @@ function PostsContainer({ currentUser, posts, handlePostDelete, handleSubmitPost
   return (
     <div>
       <Box
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
         {currentUser ? <PostForm handleSubmitPost={handleSubmitPost}/> : null}
 
-        <ImageList className="posts" variant="masonry" cols={4} gap={15}>
+        <ImageList className="posts" variant="masonry" cols={3} gap={15}>
           {posts?.map((post) => (
             <Post key={post.id} post={post} currentUser={currentUser} handlePostDelete={handlePostDelete}/>
           ))}
