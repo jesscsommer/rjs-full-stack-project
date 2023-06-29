@@ -44,7 +44,7 @@ class UserSchema(ma.SQLAlchemySchema):
 
     @validates("username")
     def validates_username(self, username):
-        if User.query.filter(User.username == username).first():
+        if not self.id and User.query.filter(User.username == username).first():
             raise ValidationError("That username is taken")
         if not re.match(r"^[A-z0-9]+$", username):
             raise ValidationError("Username may only contain letters and digits")
