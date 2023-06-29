@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import CommentForm from "./CommentForm";
 import CommentsContainer from "./CommentsContainer";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
@@ -14,7 +13,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddCommentIcon from "@mui/icons-material/AddComment";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Link } from "react-router-dom";
 
 const ExpandMore = styled((props) => {
@@ -35,11 +34,11 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
   const [newComment, setNewComment] = useState([]);
   const [allLikes, setAllLikes] = useState(post.post_likes);
   const handleLiked = () => {
-    if (currentUser){
+    if (currentUser) {
       setLiked((current) => !current);
-      handleLikedData()
+      handleLikedData();
     } else {
-      alert('Please login first!')
+      alert("Please login first!");
     }
   };
 
@@ -47,16 +46,18 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
     fetch("/post_likes")
       .then((r) => r.json())
       .then((data) => {
-        const post_like = data.find((like) => like.post.id === post.id && like.user.id === currentUser.id)
-        if (post_like){
-          setLiked(post_like)
+        const post_like = data.find(
+          (like) => like.post.id === post.id && like.user.id === currentUser.id
+        );
+        if (post_like) {
+          setLiked(post_like);
         }
-        // setLiked(
-        //   data.find(
-        //     (like) =>
-        //       like.post.id === post.id && like.user.id === currentUser.id
-        //   )
-        // );
+        setLiked(
+          data.find(
+            (like) =>
+              like.post.id === post.id && like.user.id === currentUser.id
+          )
+        );
       })
       .catch((err) => console.error(err));
   }, []);
@@ -165,7 +166,11 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
         >
           <AddCommentIcon />
         </ExpandMore>
-        {post.user.id === currentUser.id ? <DeleteForeverIcon onClick={() => handlePostDelete(post.id)} /> : <></>}
+        {post.user.id === currentUser.id ? (
+          <DeleteForeverIcon onClick={() => handlePostDelete(post.id)} />
+        ) : (
+          <></>
+        )}
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>

@@ -14,6 +14,10 @@ const theme = createTheme({
   },
 });
 function Error() {
-  return <></>;
+  return (
+    <>
+      <Box sx={{ bgcolor: primary }}></Box>
+    </>
+  );
 }
 export default Error;
