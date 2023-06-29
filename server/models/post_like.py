@@ -10,3 +10,10 @@ class PostLike(db.Model):
     
     post = db.relationship("Post", back_populates="post_likes")
     user = db.relationship("User", back_populates="post_likes")
+
+    def __repr__(self):
+        return (
+            f"Post-Like #{self.id}: "
+            + f"Post #{self.post_id}"
+            + f"User #{self.user_id}: {self.user.username}"
+        )

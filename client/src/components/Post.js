@@ -34,6 +34,8 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
   const [newComment, setNewComment] = useState([]);
   const [allLikes, setAllLikes] = useState(post.post_likes);
 
+  const haiku_lines = post.content.split("\n")
+
   useEffect(() => {
     fetch("/post_likes")
       .then((r) => r.json())
@@ -129,11 +131,6 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
         avatar={
           <Avatar sx={{ bgcolor: randAvaColor }} aria-label="post"></Avatar>
         }
-        action={
-          <IconButton aria-label="follow user">
-            <PersonAddIcon />
-          </IconButton>
-        }
         title={post.user.name}
         subheader={post.user.username}
         component={Link}
@@ -141,7 +138,13 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {post.content}
+          {haiku_lines[0]}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {haiku_lines[1]}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {haiku_lines[2]}
         </Typography>
       </CardContent>
       <CardActions sx={{ display: "flex", alignSelf: "flex-end" }}>
