@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
@@ -6,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
-function Comment({currentUser, comment}){
+function Comment({ currentUser, comment }) {
 
     const [likedComment, setLikedComment] = useState(false)
     const [newLikedComment, setNewLikedComment] = useState([])
@@ -28,22 +29,25 @@ function Comment({currentUser, comment}){
         alert('Please login first!')
       }
     }
+  };
 
-    const handleLikedCommentData = () => {
-        if (likedComment) {
-          fetch(`/comment_likes/${newLikedComment.id}`,{
-            method: 'DELETE'
-          })
-        } else {
-          fetch("/comment_likes", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({comment_id: comment.id, user_id: currentUser.id}),
-          })
-            .then((res) => res.json())
-            .then((like) => setNewLikedComment(like))
-            .catch((err) => console.error(err));
-        }
+  const handleLikedCommentData = () => {
+    if (likedComment) {
+      fetch(`/comment_likes/${newLikedComment.id}`, {
+        method: "DELETE",
+      });
+    } else {
+      fetch("/comment_likes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          comment_id: comment.id,
+          user_id: currentUser.id,
+        }),
+      })
+        .then((res) => res.json())
+        .then((like) => setNewLikedComment(like))
+        .catch((err) => console.error(err));
     }
     return (
         <div className="comment">
@@ -63,4 +67,4 @@ function Comment({currentUser, comment}){
         </div>)
 }
 
-export default Comment
+export default Comment;
