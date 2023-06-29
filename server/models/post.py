@@ -11,3 +11,9 @@ class Post(db.Model):
     user = db.relationship("User", back_populates="posts")
     comments = db.relationship("Comment", back_populates="post")
     post_likes = db.relationship("PostLike", back_populates="post")
+
+    def __repr__(self):
+        return (
+            f"Post #{self.id}: "
+            + f"{self.content}"
+        )

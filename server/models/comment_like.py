@@ -10,3 +10,10 @@ class CommentLike(db.Model):
     
     comment = db.relationship("Comment", back_populates="comment_likes")
     user = db.relationship("User", back_populates="comment_likes")
+
+    def __repr__(self):
+        return (
+            f"Comment-Like #{self.id}: "
+            + f"Comment #{self.comment_id}"
+            + f"User #{self.user_id}: {self.user.username}"
+        )
