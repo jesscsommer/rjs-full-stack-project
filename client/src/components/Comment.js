@@ -55,9 +55,11 @@ function Comment({currentUser, comment}){
                 {comment.content}
                 </Typography>
             </CardContent>
-            <IconButton onClick={handleLikedComment}>
-                {likedComment ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-            </IconButton>
+            { currentUser ? 
+              <IconButton onClick={handleLikedComment}>
+                  {likedComment ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              </IconButton>
+              : null }
         </div>)
 }
 
