@@ -7,6 +7,7 @@ import PostsContainer from "./PostsContainer";
 import HeaderBar from "./HeaderBar";
 import Error404 from "./Error404";
 import PostForm from "./PostForm";
+import SuccessfulDelete from "./SuccessfulDelete";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -83,6 +84,7 @@ const App = () => {
           }
         />
         <Route path="/404" element={<Error404 />} />
+        <Route path="/account_deletion" element={<SuccessfulDelete />} />
         <Route
           path="/"
           element={
