@@ -20,6 +20,8 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
+import Error from "./Error"
+
 const defaultTheme = createTheme();
 
 const SignUpForm = ({ handleSetUser }) => {
@@ -64,20 +66,27 @@ const SignUpForm = ({ handleSetUser }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
-      })
-        .then((res) => {
-          if (res.ok) {
-            res.json().then((data) => console.log(data));
-            handleSetUser();
-            navigate("/");
-          } else {
-            res.json().then((error) => setErrors(error.message));
-          }
-        })
-        .catch((err) => console.error(err));
-    },
-  });
+        validationSchema: userSchema, 
+        onSubmit: (values) => {
+            fetch("/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(values)
+            })
+            .then(res => {
+                if (res.ok) {
+                     handleSetUser();
+                     navigate("/");
+                } else {
+                    res.json()
+                    .then(err => setErrors(err.error))
+                }
+            })
+            .catch(err => setErrors("Sign up not successful, please try again"))
+        }
+    })
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -136,6 +145,7 @@ const SignUpForm = ({ handleSetUser }) => {
                 <p style={{ color: "red" }}>{formik.errors.password}</p>
               </Grid>
             </Grid>
+            { errors ? <Error msg={errors} /> : null }
             <Button
               type="submit"
               fullWidth
@@ -147,7 +157,7 @@ const SignUpForm = ({ handleSetUser }) => {
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/login" variant="body2">
-                  Already have an account? Sign in
+                  Already have an account? Log in
                 </Link>
               </Grid>
             </Grid>

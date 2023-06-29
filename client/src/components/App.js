@@ -8,23 +8,23 @@ import RightSideBar from "./RightSideBar";
 import HeaderBar from "./HeaderBar";
 
 const App = () => {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [posts, setPosts] = useState([]);
+    const [currentUser, setCurrentUser] = useState(null);
+    const [posts, setPosts] = useState([]);
 
-  useEffect(() => {
-    fetch("/check_session").then((res) => {
-      if (res.ok) {
-        res.json().then(setCurrentUser);
-      }
-    });
-  }, []);
+    useEffect(() => {
+        fetch("/check_session").then((res) => {
+        if (res.ok) {
+            res.json().then(setCurrentUser);
+        }
+        });
+    }, []);
 
-  useEffect(() => {
-    fetch("/posts")
-      .then((r) => r.json())
-      .then(setPosts)
-      .catch((err) => console.error(err));
-  }, []);
+    useEffect(() => {
+        fetch("/posts")
+        .then((r) => r.json())
+        .then(setPosts)
+        .catch((err) => console.error(err));
+    }, []);
 
   const handleSetUser = () =>
     fetch("/check_session").then((res) => {

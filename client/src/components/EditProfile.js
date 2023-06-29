@@ -10,6 +10,8 @@ import { FormControlLabel } from '@mui/material';
 import { Formik, useFormik } from "formik";
 import * as yup from "yup";
 
+import Error from "./Error"
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -27,7 +29,7 @@ const EditProfile = ({ profileUser }) => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState(null)
     
     const userSchema = yup.object().shape({
         username: yup.string()
@@ -51,7 +53,6 @@ const EditProfile = ({ profileUser }) => {
                 new_obj[key] = value
             }
         }
-        console.log(new_obj)
         return new_obj
     }
 
@@ -64,8 +65,6 @@ const EditProfile = ({ profileUser }) => {
         },
         validationSchema: userSchema, 
         onSubmit: (values) => {
-            console.log("values: ")
-            console.log(values)
             
             fetch(`/users/${profileUser.id}`, {
                 method: "PATCH",
@@ -80,10 +79,10 @@ const EditProfile = ({ profileUser }) => {
                     .then(data => console.log(data))
                 } else {
                     res.json()
-                    .then(error => setErrors(error.message))
+                    .then(err => setErrors(err.error))
                 }
             })
-            .catch(err => console.error(err))
+            .catch(err => setErrors("Profile not updated, please try again"))
         }
     })
 
@@ -99,7 +98,7 @@ const EditProfile = ({ profileUser }) => {
                 console.log("success")
             }
         })
-        .catch(err => console.error(err))
+        .catch(err => setErrors("Account still active, please try again"))
     }
 
     return (
@@ -127,12 +126,11 @@ const EditProfile = ({ profileUser }) => {
                 </Grid>
                 <Grid item xs={12}>
                     <TextField
-                    required
                     fullWidth
                     id="name"
                     label="Display name"
                     name="name"
-                    value={formik.values.name ? formik.values.name : profileUser.name || ""}
+                    value={formik.values.name ? formik.values.name : profileUser.name}
                     onChange={formik.handleChange}
                     />
                     <p style={{ color: "red" }}>{formik.errors.name}</p>
@@ -144,7 +142,7 @@ const EditProfile = ({ profileUser }) => {
                     id="bio"
                     label="Bio"
                     name="bio"
-                    value={formik.values.bio ? formik.values.bio : profileUser.bio || ""}
+                    value={formik.values.bio ? formik.values.bio : profileUser.bio}
                     onChange={formik.handleChange}
                     />
                     <p style={{ color: "red" }}>{formik.errors.bio}</p>
@@ -159,6 +157,7 @@ const EditProfile = ({ profileUser }) => {
                         />
                     } 
                     label="Public account" /> */}
+                { errors ? <Error msg={errors} /> : null}
                 <Button
                 type="submit"
                 fullWidth
