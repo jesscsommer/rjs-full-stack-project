@@ -89,6 +89,7 @@ const Post = ({ currentUser, post }) => {
       .then((comment) => setNewComment(comment))
       .catch((err) => console.error(err));
   };
+  
   return (
     <Card sx={{ maxWidth: 345 }}>
         <CardHeader

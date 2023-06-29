@@ -12,6 +12,9 @@ class Signup(Resource):
 
             username = data.get("username")
             password = data.get("password")
+
+            if User.query.filter(User.username == username).first(): 
+                return make_response({"error": "Username must be unique"}, 400)
             
             new_user = User(username=username, public_acct=True)
             new_user.password_hash = password 
@@ -23,4 +26,4 @@ class Signup(Resource):
 
             return make_response(user_schema.dump(new_user), 201)
         except Exception as e: 
-            return make_response({"errors": [str(e)]}, 422)
+            return make_response({"error": [str(e)]}, 422)
