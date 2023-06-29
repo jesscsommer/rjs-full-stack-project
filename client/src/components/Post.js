@@ -29,7 +29,6 @@ const ExpandMore = styled((props) => {
 }));
 
 const Post = ({ currentUser, post, handlePostDelete }) => {
-  // const initial_liked = post.post_likes.find(like => like.user.id == currentUser.id)
   const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState(false);
   const [newComment, setNewComment] = useState([]);
