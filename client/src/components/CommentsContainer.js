@@ -4,6 +4,7 @@ import CommentForm from "./CommentForm";
 
 function CommentsContainer({ post, currentUser }) {
   const [comments, setComments] = useState([]);
+
   useEffect(() => {
     fetch("/comments")
       .then((r) => r.json())
@@ -15,9 +16,19 @@ function CommentsContainer({ post, currentUser }) {
       .catch((err) => console.error(err));
   }, []);
 
+  const handleNewComment = (newComment) => {
+    setComments([newComment, ...comments]);
+  };
+
   return (
     <div className="comments">
-      {currentUser ? <CommentForm /> : null}
+      {currentUser ? (
+        <CommentForm
+          post={post}
+          currentUser={currentUser}
+          handleNewComment={handleNewComment}
+        />
+      ) : null}
 
       <div>
         {comments.map((comment) => (

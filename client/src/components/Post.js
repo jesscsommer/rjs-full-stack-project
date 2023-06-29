@@ -47,6 +47,7 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
       })
       .catch((err) => console.error(err));
   }, []);
+  console.log(post.post_likes.user.id)
 
   const handleLiked = () => {
     if (currentUser){
