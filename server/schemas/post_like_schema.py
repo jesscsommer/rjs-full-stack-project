@@ -12,7 +12,7 @@ class PostLikeSchema(ma.SQLAlchemySchema):
         model = PostLike
         load_instance = True
         ordered = True
-        fields = ("id", "post", "user", "url")
+        fields = ("id", "post", "user", "user_id", "url")
 
     post = fields.Nested("PostSchema", only=("id", "url"))
     user = fields.Nested("UserSchema", only=("id", "username", "url"))

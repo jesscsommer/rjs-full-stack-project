@@ -29,41 +29,23 @@ const ExpandMore = styled((props) => {
 }));
 
 const Post = ({ currentUser, post, handlePostDelete }) => {
+  const [currentPost, setCurrentPost] = useState(post)
+  const post_like_for_user = currentPost.post_likes.find(pl => pl.user_id == currentUser.id)
   const [expanded, setExpanded] = useState(false);
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(post_like_for_user)
   const [newComment, setNewComment] = useState([]);
-  const [allLikes, setAllLikes] = useState(post.post_likes);
+  const [numLikes, setNumLikes] = useState(currentPost.post_likes.length)
 
   const haiku_lines = post.content.split("\n")
-
-  useEffect(() => {
-    fetch("/post_likes")
-      .then((r) => r.json())
-      .then((data) => {
-        setLiked(
-          data.find(
-            (like) =>
-              like.post?.id == post?.id && like.user?.id == currentUser?.id
-          )
-        );
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
-  const handleLiked = () => {
-    if (currentUser){
-      setLiked((current) => !current);
-      handleLikedData()
-    } else {
-      alert('Please login first!')
-    }
-  };
 
   const handleLikedData = () => {
     if (liked) {
       fetch(`/post_likes/${liked.id}`, {
         method: "DELETE",
-      }).then(setAllLikes(allLikes.filter((like) => like.id !== liked.id)));
+      }).then(res => {
+        setNumLikes(numLikes => numLikes - 1)
+        setLiked(like => !like);
+      });
     } else {
       fetch("/post_likes", {
         method: "POST",
@@ -71,9 +53,9 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
         body: JSON.stringify({ post_id: post.id, user_id: currentUser.id }),
       })
         .then((res) => res.json())
-        .then((like) => {
-          setAllLikes((current) => [...current, like]);
-          setLiked(like);
+        .then((data) => {
+          setNumLikes(numLikes => numLikes + 1)
+          setLiked(like => data);
         })
         .catch((err) => console.error(err));
     }
@@ -153,8 +135,8 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
       </CardContent>
       <CardActions sx={{ display: "flex", alignSelf: "flex-end" }}>
         { currentUser ? 
-          <IconButton aria-label="add to likes" onClick={handleLiked}>
-            {allLikes?.length}{" "}
+          <IconButton aria-label="add to likes" onClick={handleLikedData}>
+            {numLikes}{" "}
             {liked ? (
               <FavoriteIcon sx={{ color: "red" }} />
             ) : (
