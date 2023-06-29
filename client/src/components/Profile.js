@@ -38,7 +38,7 @@ const Profile = ({ currentUser }) => {
 
   return (
     <div>
-      <Box sx={{ display: "flex" }}>
+      <Box>
         <CssBaseline />
         <Drawer
           sx={{
@@ -53,18 +53,17 @@ const Profile = ({ currentUser }) => {
           anchor="top"
         >
           <Toolbar />
-          <List>
-            <ListItem>
-              <Avatar
-                alt={profileUser.username}
-                // src="/static/images/avatar/1.jpg"
-                sx={{ width: 56, height: 56 }}
-              />
+          <Box>
+            <Avatar
+              alt={profileUser.username}
+              // src="/static/images/avatar/1.jpg"
+              sx={{ width: 56, height: 56 }}
+            />
+            <Box>
               <h1>{profileUser.name}</h1>
-            </ListItem>
-            <ListItem>
+
               <h3>{profileUser.username}</h3>
-            </ListItem>
+            </Box>
             <ListItem>
               <p>{profileUser.bio}</p>
             </ListItem>
@@ -76,7 +75,7 @@ const Profile = ({ currentUser }) => {
                 <EditProfile profileUser={profileUser} />
               </ListItem>
             ) : null}
-          </List>
+          </Box>
         </Drawer>
         <Box
           component="main"
