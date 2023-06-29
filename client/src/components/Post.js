@@ -28,11 +28,25 @@ const ExpandMore = styled((props) => {
 }));
 
 const Post = ({ currentUser, post, handlePostDelete }) => {
-  // const initial_liked = post.post_likes.find(like => like.user.id == currentUser.id)
   const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState(false);
   const [newComment, setNewComment] = useState([]);
   const [allLikes, setAllLikes] = useState(post.post_likes);
+
+  useEffect(() => {
+    fetch("/post_likes")
+      .then((r) => r.json())
+      .then((data) => {
+        setLiked(
+          data.find(
+            (like) =>
+              like.post?.id == post?.id && like.user?.id == currentUser?.id
+          )
+        );
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
   const handleLiked = () => {
     if (currentUser) {
       setLiked((current) => !current);
@@ -41,26 +55,6 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
       alert("Please login first!");
     }
   };
-
-  useEffect(() => {
-    fetch("/post_likes")
-      .then((r) => r.json())
-      .then((data) => {
-        const post_like = data.find(
-          (like) => like.post.id === post.id && like.user.id === currentUser.id
-        );
-        if (post_like) {
-          setLiked(post_like);
-        }
-        setLiked(
-          data.find(
-            (like) =>
-              like.post.id === post.id && like.user.id === currentUser.id
-          )
-        );
-      })
-      .catch((err) => console.error(err));
-  }, []);
 
   const handleLikedData = () => {
     if (liked) {
@@ -83,18 +77,6 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
   };
   const handleExpandClick = () => {
     setExpanded(!expanded);
-  };
-
-  const handleSubmitComment = (e, submitComment) => {
-    e.preventDefault();
-    fetch("/comments", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(submitComment),
-    })
-      .then((res) => res.json())
-      .then((comment) => setNewComment(comment))
-      .catch((err) => console.error(err));
   };
 
   const avatarColors = [
@@ -166,7 +148,7 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
         >
           <AddCommentIcon />
         </ExpandMore>
-        {post.user.id === currentUser.id ? (
+        {post.user?.id === currentUser?.id ? (
           <DeleteForeverIcon onClick={() => handlePostDelete(post.id)} />
         ) : (
           <></>
