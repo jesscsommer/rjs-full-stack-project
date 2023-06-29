@@ -66,7 +66,7 @@ if __name__ == '__main__':
         
         posts = []
 
-        for _ in range(25):
+        for _ in range(100):
             post = Post(
                     content=" \n".join([rc(five_syllables), 
                                         rc(seven_syllables), rc(five_syllables)]),

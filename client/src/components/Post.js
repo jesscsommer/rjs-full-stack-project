@@ -36,30 +36,33 @@ const Post = ({ currentUser, post }) => {
   const [newComment, setNewComment] = useState([]);
   const [allLikes, setAllLikes] = useState(post.post_likes);
   const handleLiked = () => {
-
-    if (currentUser){
+    if (currentUser) {
       setLiked((current) => !current);
-      handleLikedData()
+      handleLikedData();
     } else {
-      alert('Please login first!')
+      alert("Please login first!");
     }
   };
 
   useEffect(() => {
     fetch("/post_likes")
       .then((r) => r.json())
-      .then(data => {
-        setLiked(data.find(like => like.post.id == post.id && like.user.id == currentUser.id))
+      .then((data) => {
+        setLiked(
+          data.find(
+            (like) =>
+              like.post.id === post.id && like.user.id === currentUser.id
+          )
+        );
       })
       .catch((err) => console.error(err));
   }, []);
 
   const handleLikedData = () => {
     if (liked) {
-      fetch(`/post_likes/${liked.id}`,{
-        method: 'DELETE'
-      })
-      .then(setAllLikes(allLikes.filter(like => like.id !== liked.id)))
+      fetch(`/post_likes/${liked.id}`, {
+        method: "DELETE",
+      }).then(setAllLikes(allLikes.filter((like) => like.id !== liked.id)));
     } else {
       fetch("/post_likes", {
         method: "POST",
@@ -68,13 +71,12 @@ const Post = ({ currentUser, post }) => {
       })
         .then((res) => res.json())
         .then((like) => {
-          setAllLikes(current => [...current, like])
-          setLiked(like)
+          setAllLikes((current) => [...current, like]);
+          setLiked(like);
         })
         .catch((err) => console.error(err));
     }
-  }
-
+  };
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -90,11 +92,44 @@ const Post = ({ currentUser, post }) => {
       .then((comment) => setNewComment(comment))
       .catch((err) => console.error(err));
   };
-  
+
+  const avatarColors = [
+    "#F44336",
+    "#E91E63",
+    "#9C27B0",
+    "#673AB7",
+    "#3F51B5",
+    "#2196F3",
+    "#03A9F4",
+    "#00BCD4",
+    "#009688",
+    "#4CAF50",
+  ];
+
+  const cardColors = [
+    "#CFD8DC",
+    "#A1887F",
+    "#FF8A65",
+    "#FFB74D",
+    "#FFD54F",
+    "#FFF176",
+    "#DCE775",
+    "#AED581",
+    "#80CBC4",
+    "#81D4FA",
+  ];
+
+  const randAvaColor =
+    avatarColors[Math.floor(Math.random() * avatarColors.length)];
+
+  const randCardColor =
+    cardColors[Math.floor(Math.random() * cardColors.length)];
   return (
-    <Card sx={{ maxWidth: 300, my: 2 }}>
+    <Card sx={{ maxWidth: 345, bgcolor: randCardColor, my: 2, marginTop: "0" }}>
       <CardHeader
-        avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="post"></Avatar>}
+        avatar={
+          <Avatar sx={{ bgcolor: randAvaColor }} aria-label="post"></Avatar>
+        }
         action={
           <IconButton aria-label="follow user">
             <PersonAddIcon />
@@ -113,7 +148,11 @@ const Post = ({ currentUser, post }) => {
       <CardActions sx={{ display: "flex", alignSelf: "flex-end" }}>
         <IconButton aria-label="add to likes" onClick={handleLiked}>
           {allLikes?.length}{" "}
-          {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          {liked ? (
+            <FavoriteIcon sx={{ color: "red" }} />
+          ) : (
+            <FavoriteBorderIcon />
+          )}
         </IconButton>
         <ExpandMore
           expand={expanded}
