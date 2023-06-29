@@ -8,5 +8,5 @@ comments_bp = Blueprint("comments", __name__, url_prefix="/comments")
 
 class Comments(Resource):
     def get(self):
-        comments = comments_schema.dump(Comment.query.all())
+        comments = comments_schema.dump(Comment.query.order_by(Comment.created_at.desc()).all())
         return make_response(comments, 200)

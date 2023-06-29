@@ -41,7 +41,7 @@ const App = () => {
   }
 
   const handleSubmitPost = (data) => {
-    setPosts(current => [...current, data])
+    setPosts(current => [data, ...current])
   }
 
   const updateCurrentUser = (updated_user) => {

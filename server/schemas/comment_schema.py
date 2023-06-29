@@ -20,8 +20,8 @@ class CommentSchema(ma.SQLAlchemySchema):
     post = fields.Nested("PostSchema", only=("id", "url"))
     user = fields.Nested("UserSchema", only=("id", "username", "url"))
     content = fields.String(required=True, \
-                            validate=validate.Length(min=1, max=50, \
-                            error="Comment must be less than 50 chars"))
+                            validate=validate.Length(min=1, max=200, \
+                            error="Comment must be less than 200 chars"))
 
     url = ma.Hyperlinks(
         {
