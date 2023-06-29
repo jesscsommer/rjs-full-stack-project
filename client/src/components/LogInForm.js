@@ -25,9 +25,16 @@ import Error from "./Error";
 const defaultTheme = createTheme();
 
 const LogInForm = ({ currentUser, updateCurrentUser }) => {
+
+  const navigate = useNavigate();
+
+  if (currentUser) {
+        navigate("/")
+    }
+
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState(null);
-  const navigate = useNavigate();
+  
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
