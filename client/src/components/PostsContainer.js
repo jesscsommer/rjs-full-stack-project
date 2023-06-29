@@ -13,7 +13,7 @@ function PostsContainer({ currentUser, posts, setPosts}) {
       >
         {currentUser ? <PostForm setPosts={setPosts}/> : null}
 
-        <ImageList className="posts" variant="masonry" cols={4} gap={15}>
+        <ImageList className="posts" variant="masonry" cols={3} gap={15}>
           {posts?.map((post) => (
             <Post key={post.id} post={post} currentUser={currentUser} setPosts={setPosts}/>
           ))}
