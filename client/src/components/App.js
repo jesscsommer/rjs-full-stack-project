@@ -4,7 +4,6 @@ import SignUpForm from "./SignUpForm";
 import LogInForm from "./LogInForm";
 import Profile from "./Profile";
 import PostsContainer from "./PostsContainer";
-import RightSideBar from "./RightSideBar";
 import HeaderBar from "./HeaderBar";
 
 const App = () => {
