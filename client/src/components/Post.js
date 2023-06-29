@@ -129,7 +129,11 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
     <Card sx={{ maxWidth: 345, bgcolor: randCardColor, my: 2, marginTop: "0" }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: randAvaColor }} aria-label="post"></Avatar>
+          <Avatar 
+            sx={{ bgcolor: randAvaColor }} 
+            alt={`${post.user.username} avatar`}
+            src={`../${post.user.profile_pic_num}.png`}
+            aria-label="post" />
         }
         title={post.user.name}
         subheader={post.user.username}

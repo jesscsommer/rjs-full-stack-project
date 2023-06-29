@@ -28,14 +28,25 @@ if __name__ == "__main__":
         CommentLike.query.delete()
 
         print("Creating users ...")
-        u1 = User(username="ren123", name="Ren", public_acct=True)
+        u1 = User(
+            username="ren123", 
+            name="Ren", 
+            profile_pic_num=1, 
+            public_acct=True
+        )
 
-        u2 = User(username="shiyao456", name="Shiyao", public_acct=True)
+        u2 = User(
+            username="shiyao456", 
+            name="Shiyao", 
+            profile_pic_num=2, 
+            public_acct=True
+        )
 
         u3 = User(
             username="jess789",
             name="Jess",
             bio="haikus from grey haze \n from pacific northwest rain \n and coffee pools, drink",
+            profile_pic_num=3,
             public_acct=True,
         )
 

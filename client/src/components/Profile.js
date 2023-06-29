@@ -60,7 +60,7 @@ const Profile = ({ currentUser, updateCurrentUser }) => {
           <Box>
             <Avatar
               alt={profileUser.username}
-              // src="/static/images/avatar/1.jpg"
+              src={`../${profileUser.profile_pic_num}.png`}
               sx={{ width: 56, height: 56 }}
             />
             <Box>
