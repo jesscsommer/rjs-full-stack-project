@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CommentForm from "./CommentForm";
 import CommentsContainer from "./CommentsContainer";
 import { styled } from "@mui/material/styles";
@@ -30,11 +30,11 @@ const ExpandMore = styled((props) => {
 }));
 
 const Post = ({ currentUser, post }) => {
+  // const initial_liked = post.post_likes.find(like => like.user.id == currentUser.id)
   const [expanded, setExpanded] = useState(false);
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState([]);
   const [newComment, setNewComment] = useState([]);
-  const [newLike, setNewLike] = useState([]);
-
+  const [allLikes, setAllLikes] = useState(post.post_likes);
   const handleLiked = () => {
     if (currentUser){
       setLiked((current) => !current);
@@ -44,11 +44,22 @@ const Post = ({ currentUser, post }) => {
     }
   };
 
+  useEffect(() => {
+    fetch("/post_likes")
+      .then((r) => r.json())
+      .then(data => {
+        setLiked(data.find(like => like.post.id == post.id && like.user.id == currentUser.id))
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
   const handleLikedData = () => {
     if (liked) {
-      fetch(`/post_likes/${newLike.id}`,{
+      // debugger
+      fetch(`/post_likes/${liked.id}`,{
         method: 'DELETE'
       })
+      .then(setAllLikes(allLikes.filter(like => like.id !== liked.id)))
     } else {
       fetch("/post_likes", {
         method: "POST",
@@ -56,11 +67,13 @@ const Post = ({ currentUser, post }) => {
         body: JSON.stringify({post_id: post.id, user_id: currentUser.id}),
       })
         .then((res) => res.json())
-        .then((like) => setNewLike(like))
+        .then((like) => {
+          setAllLikes(current => [...current, like])
+          setLiked(like)
+        })
         .catch((err) => console.error(err));
     }
   }
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -97,7 +110,7 @@ const Post = ({ currentUser, post }) => {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to likes" onClick={handleLiked}>
-          {post.post_likes?.length}{" "}
+          {allLikes?.length}{" "}
           {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
         </IconButton>
         <ExpandMore
