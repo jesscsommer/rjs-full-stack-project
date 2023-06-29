@@ -39,6 +39,16 @@ const App = () => {
       .catch((err) => console.error(err));
   };
 
+  const handlePostDelete = (id) => {
+    fetch(`/posts/${id}`, {
+      method: 'DELETE',
+    }).then(setPosts(current => current.filter(item => item.id !== id)))
+  }
+
+  const handleSubmitPost = (data) => {
+    setPosts(current => [...current, data])
+  }
+
   return (
     <div className="app">
       <HeaderBar currentUser={currentUser} handleSetUser={handleSetUser} />
@@ -61,7 +71,8 @@ const App = () => {
             <PostsContainer
               currentUser={currentUser}
               posts={posts}
-              handleSetPosts={handleSetPosts}
+              handlePostDelete={handlePostDelete}
+              handleSubmitPost={handleSubmitPost}
             />
           }
         />

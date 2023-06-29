@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
@@ -10,6 +10,15 @@ function Comment({currentUser, comment}){
 
     const [likedComment, setLikedComment] = useState(false)
     const [newLikedComment, setNewLikedComment] = useState([])
+
+    useEffect(() => {
+      fetch("/comment_likes")
+        .then((r) => r.json())
+        .then(data => {
+          setLikedComment(data.find(like => like.id == comment.comment_likes.map(like => like.id) && like.user.id == currentUser.id))
+        })
+        .catch((err) => console.error(err));
+    }, []);
 
     const handleLikedComment = () => {
       if (currentUser){
