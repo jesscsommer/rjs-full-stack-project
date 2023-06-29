@@ -16,7 +16,7 @@ import EditProfile from "./EditProfile";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-const drawerHeight = 240;
+const drawerHeight = 300;
 
 const Profile = ({ currentUser, updateCurrentUser }) => {
   const { username } = useParams();

@@ -97,7 +97,7 @@ const EditProfile = ({ profileUser, updateProfileUser, updateCurrentUser }) => {
         .then(res => {
             if (res.ok) {
                 updateCurrentUser(null)
-                navigate("/")
+                navigate("/account_deletion")
             }
         })
         .catch(err => setErrors("Account still active, please try again"))
