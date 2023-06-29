@@ -44,6 +44,8 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
       .catch((err) => console.error(err));
   }, []);
 
+  // dataList.find(data => data.post.id===post.id && data.user.id===currentUser.id)
+
   const handleLiked = () => {
     if (currentUser){
         handleLikedData()
