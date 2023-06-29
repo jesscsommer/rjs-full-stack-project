@@ -43,20 +43,19 @@ function HeaderBar({ currentUser, updateCurrentUser }) {
             <Typography
               variant="h5"
               noWrap
-              component="a"
-              href=""
+              component={Link}
+              to="/"
               sx={{
-                bgcolor: "green",
                 mr: 2,
                 flexGrow: 1,
-                fontFamily: "monospace",
+                fontFamily: "cursive",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
                 color: "inherit",
                 textDecoration: "none",
               }}
             >
-              LOGO
+              HaikuHaven
             </Typography>
           </Box>
           <Box sx={{ flexGrow: 1 }}>

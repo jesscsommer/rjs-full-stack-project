@@ -135,7 +135,7 @@ const PostForm = ({ handleSubmitPost }) => {
                 sx={{ mt: 3, mb: 2 }}
                 startIcon={<HistoryEduIcon />}
               >
-                Post
+                Post Haiku
               </Button>
             </Grid>
           </Grid>

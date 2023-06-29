@@ -19,7 +19,6 @@ function CommentForm({ post, currentUser, handleNewComment }) {
       post_id: post.id,
       user_id: currentUser.id,
     };
-    debugger;
     fetch("/comments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
