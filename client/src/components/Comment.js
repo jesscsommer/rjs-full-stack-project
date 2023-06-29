@@ -15,7 +15,7 @@ function Comment({currentUser, comment}){
       fetch("/comment_likes")
         .then((r) => r.json())
         .then(data => {
-          setLikedComment(data.find(like => like.id == comment.comment_likes.map(like => like.id) && like.user.id == currentUser.id))
+          setLikedComment(data.find(like => like.comment.id == comment.id && like.user.id == currentUser.id))
         })
         .catch((err) => console.error(err));
     }, []);
@@ -31,7 +31,7 @@ function Comment({currentUser, comment}){
 
     const handleLikedCommentData = () => {
         if (likedComment) {
-          fetch(`/comment_likes/${newLikedComment.id}`,{
+          fetch(`/comment_likes/${likedComment.id}`,{
             method: 'DELETE'
           })
         } else {
@@ -41,7 +41,7 @@ function Comment({currentUser, comment}){
             body: JSON.stringify({comment_id: comment.id, user_id: currentUser.id}),
           })
             .then((res) => res.json())
-            .then((like) => setNewLikedComment(like))
+            .then((like) => setLikedComment(like))
             .catch((err) => console.error(err));
         }
     }

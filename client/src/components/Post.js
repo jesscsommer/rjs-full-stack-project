@@ -33,6 +33,21 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
   const [liked, setLiked] = useState(false);
   const [newComment, setNewComment] = useState([]);
   const [allLikes, setAllLikes] = useState(post.post_likes);
+
+  useEffect(() => {
+    fetch("/post_likes")
+      .then((r) => r.json())
+      .then((data) => {
+        setLiked(
+          data.find(
+            (like) =>
+              like.post.id == post.id && like.user.id == currentUser.id
+          )
+        );
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
   const handleLiked = () => {
     if (currentUser){
       setLiked((current) => !current);
@@ -41,24 +56,6 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
       alert('Please login first!')
     }
   };
-
-  useEffect(() => {
-    fetch("/post_likes")
-      .then((r) => r.json())
-      .then((data) => {
-        const post_like = data.find((like) => like.post.id === post.id && like.user.id === currentUser.id)
-        if (post_like){
-          setLiked(post_like)
-        }
-        // setLiked(
-        //   data.find(
-        //     (like) =>
-        //       like.post.id === post.id && like.user.id === currentUser.id
-        //   )
-        // );
-      })
-      .catch((err) => console.error(err));
-  }, []);
 
   const handleLikedData = () => {
     if (liked) {

@@ -15,7 +15,7 @@ function CommentForm({ post_id, user_id, handleSubmitComment }) {
   };
 
   return (
-    <div class="new-comment">
+    <div className="new-comment">
       <form onSubmit={(e) => handleSubmitComment(e, submitComment)}>
         <span>
           <AddReactionOutlinedIcon />
