@@ -88,7 +88,9 @@ const Profile = ({ currentUser, updateCurrentUser }) => {
           component="main"
           sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
         >
-          <PostsContainer posts={profileUser.posts} />
+          <PostsContainer 
+              posts={profileUser.posts}
+              currentUser={currentUser} />
         </Box>
       </Box>
     </div>
