@@ -16,7 +16,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddCommentIcon from "@mui/icons-material/AddComment";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -36,19 +36,24 @@ const Post = ({ currentUser, post }) => {
   const [newComment, setNewComment] = useState([]);
   const [allLikes, setAllLikes] = useState(post.post_likes);
   const handleLiked = () => {
-    if (currentUser){
+    if (currentUser) {
       setLiked((current) => !current);
-      handleLikedData()
+      handleLikedData();
     } else {
-      alert('Please login first!')
+      alert("Please login first!");
     }
   };
 
   useEffect(() => {
     fetch("/post_likes")
       .then((r) => r.json())
-      .then(data => {
-        setLiked(data.find(like => like.post.id == post.id && like.user.id == currentUser.id))
+      .then((data) => {
+        setLiked(
+          data.find(
+            (like) =>
+              like.post.id === post.id && like.user.id === currentUser.id
+          )
+        );
       })
       .catch((err) => console.error(err));
   }, []);
@@ -56,24 +61,23 @@ const Post = ({ currentUser, post }) => {
   const handleLikedData = () => {
     if (liked) {
       // debugger
-      fetch(`/post_likes/${liked.id}`,{
-        method: 'DELETE'
-      })
-      .then(setAllLikes(allLikes.filter(like => like.id !== liked.id)))
+      fetch(`/post_likes/${liked.id}`, {
+        method: "DELETE",
+      }).then(setAllLikes(allLikes.filter((like) => like.id !== liked.id)));
     } else {
       fetch("/post_likes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({post_id: post.id, user_id: currentUser.id}),
+        body: JSON.stringify({ post_id: post.id, user_id: currentUser.id }),
       })
         .then((res) => res.json())
         .then((like) => {
-          setAllLikes(current => [...current, like])
-          setLiked(like)
+          setAllLikes((current) => [...current, like]);
+          setLiked(like);
         })
         .catch((err) => console.error(err));
     }
-  }
+  };
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -89,21 +93,55 @@ const Post = ({ currentUser, post }) => {
       .then((comment) => setNewComment(comment))
       .catch((err) => console.error(err));
   };
-  
+
+  const avatarColors = [
+    "#F44336",
+    "#E91E63",
+    "#9C27B0",
+    "#673AB7",
+    "#3F51B5",
+    "#2196F3",
+    "#03A9F4",
+    "#00BCD4",
+    "#009688",
+    "#4CAF50",
+  ];
+
+  const cardColors = [
+    "#CFD8DC",
+    "#A1887F",
+    "#FF8A65",
+    "#FFB74D",
+    "#FFD54F",
+    "#FFF176",
+    "#DCE775",
+    "#AED581",
+    "#80CBC4",
+    "#81D4FA",
+  ];
+
+  const randAvaColor =
+    avatarColors[Math.floor(Math.random() * avatarColors.length)];
+
+  const randCardColor =
+    cardColors[Math.floor(Math.random() * cardColors.length)];
   return (
-    <Card sx={{ maxWidth: 345 }}>
-        <CardHeader
-          avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="post"></Avatar>}
-          action={
-            <IconButton aria-label="follow user">
-              <PersonAddIcon />
-            </IconButton>
-          }
-          title={post.user.name}
-          subheader={post.user.username}
-          component={Link}
-          to={`/profile/${post.user.username}`}
-        />
+    <Card sx={{ maxWidth: 345, bgcolor: randCardColor }}>
+      <CardHeader
+        avatar={
+          <Avatar sx={{ bgcolor: randAvaColor }} aria-label="post"></Avatar>
+        }
+        action={
+          <IconButton aria-label="follow user">
+            <PersonAddIcon />
+          </IconButton>
+        }
+        title={post.user.name}
+        subheader={post.user.username}
+        component={Link}
+        to={`/profile/${post.user.username}`}
+        inputProps={{ disableUnderline: "true" }}
+      />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {post.content}
@@ -112,7 +150,11 @@ const Post = ({ currentUser, post }) => {
       <CardActions disableSpacing>
         <IconButton aria-label="add to likes" onClick={handleLiked}>
           {allLikes?.length}{" "}
-          {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          {liked ? (
+            <FavoriteIcon sx={{ color: "red" }} />
+          ) : (
+            <FavoriteBorderIcon />
+          )}
         </IconButton>
         <ExpandMore
           expand={expanded}
@@ -130,6 +172,6 @@ const Post = ({ currentUser, post }) => {
       </Collapse>
     </Card>
   );
-}
+};
 
 export default Post;
