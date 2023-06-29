@@ -48,7 +48,7 @@ const PostForm = ({handleSubmitPost}) => {
             line3: ""
         }, 
         validationSchema: postSchema, 
-        onSubmit: (values) => {
+        onSubmit: (values, {resetForm}) => {
             fetch("/posts", {
                 method: "POST",
                 headers: {
@@ -61,7 +61,10 @@ const PostForm = ({handleSubmitPost}) => {
             .then(res => {
                 if (res.ok) {
                     res.json()
-                    .then(data => handleSubmitPost(data))
+                    .then(data => {
+                        handleSubmitPost(data)
+                        resetForm({values: formik.initialValues})
+                    })
                 } else {
                     res.json().then(error => setErrors(error.message))
                 }

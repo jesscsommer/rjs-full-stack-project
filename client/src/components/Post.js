@@ -165,7 +165,7 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
         >
           <AddCommentIcon />
         </ExpandMore>
-        {post.user.id === currentUser.id ? <DeleteForeverIcon onClick={() => handlePostDelete(post.id)} /> : <></>}
+        {post.user.id === currentUser?.id ? <DeleteForeverIcon onClick={() => handlePostDelete(post.id)} /> : <></>}
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
