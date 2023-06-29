@@ -1,5 +1,6 @@
 import Comment from "./Comment";
 import { useState, useEffect } from "react";
+import CommentForm from "./CommentForm";
 
 function CommentsContainer({ post, currentUser }) {
   const [comments, setComments] = useState([]);
@@ -16,6 +17,8 @@ function CommentsContainer({ post, currentUser }) {
 
   return (
     <div className="comments">
+      {currentUser ? <CommentForm /> : null}
+
       <div>
         {comments.map((comment) => (
           <Comment

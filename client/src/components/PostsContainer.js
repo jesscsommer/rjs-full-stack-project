@@ -9,9 +9,13 @@ function PostsContainer({ currentUser, posts }) {
   return (
     <div>
       <Box
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
-        {currentUser ? <PostForm /> : null}
+        {currentUser ? <PostForm position /> : null}
 
         <ImageList className="posts" variant="masonry" cols={3} gap={15}>
           {posts?.map((post) => (
