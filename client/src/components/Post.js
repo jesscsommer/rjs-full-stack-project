@@ -47,12 +47,16 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
     fetch("/post_likes")
       .then((r) => r.json())
       .then((data) => {
-        setLiked(
-          data.find(
-            (like) =>
-              like.post.id === post.id && like.user.id === currentUser.id
-          )
-        );
+        const post_like = data.find((like) => like.post.id === post.id && like.user.id === currentUser.id)
+        if (post_like){
+          setLiked(post_like)
+        }
+        // setLiked(
+        //   data.find(
+        //     (like) =>
+        //       like.post.id === post.id && like.user.id === currentUser.id
+        //   )
+        // );
       })
       .catch((err) => console.error(err));
   }, []);
@@ -161,7 +165,7 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
         >
           <AddCommentIcon />
         </ExpandMore>
-        {post.user.id == currentUser.id ? <DeleteForeverIcon onClick={() => handlePostDelete(post.id)} /> : <></>}
+        {post.user.id === currentUser.id ? <DeleteForeverIcon onClick={() => handlePostDelete(post.id)} /> : <></>}
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>

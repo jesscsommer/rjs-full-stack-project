@@ -42,7 +42,7 @@ const App = () => {
   const handlePostDelete = (id) => {
     fetch(`/posts/${id}`, {
       method: 'DELETE',
-    }).then(setPosts(current => current.filter(item => item.id != id)))
+    }).then(setPosts(current => current.filter(item => item.id !== id)))
   }
 
   const handleSubmitPost = (data) => {
