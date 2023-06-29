@@ -15,7 +15,7 @@ function Comment({currentUser, comment}){
       fetch("/comment_likes")
         .then((r) => r.json())
         .then(data => {
-          setLikedComment(data.find(like => like.comment.id == comment.id && like.user.id == currentUser.id))
+          setLikedComment(data.find(like => like.comment?.id == comment?.id && like.user?.id == currentUser?.id))
         })
         .catch((err) => console.error(err));
     }, []);

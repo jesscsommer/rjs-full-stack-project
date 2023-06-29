@@ -41,13 +41,12 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
         setLiked(
           data.find(
             (like) =>
-              like.post.id == post.id && like.user.id == currentUser.id
+              like.post?.id == post?.id && like.user?.id == currentUser?.id
           )
         );
       })
       .catch((err) => console.error(err));
   }, []);
-  console.log(post.post_likes.user.id)
 
   const handleLiked = () => {
     if (currentUser){
@@ -162,7 +161,7 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
         >
           <AddCommentIcon />
         </ExpandMore>
-        {post.user.id === currentUser.id ? <DeleteForeverIcon onClick={() => handlePostDelete(post.id)} /> : <></>}
+        {post.user?.id === currentUser?.id ? <DeleteForeverIcon onClick={() => handlePostDelete(post.id)} /> : <></>}
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
