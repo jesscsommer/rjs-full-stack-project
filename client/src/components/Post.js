@@ -126,13 +126,13 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
         to={`/profile/${post.user.username}`}
       />
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body1" color="text.secondary">
           {haiku_lines[0]}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body1" color="text.secondary">
           {haiku_lines[1]}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body1" color="text.secondary">
           {haiku_lines[2]}
         </Typography>
       </CardContent>

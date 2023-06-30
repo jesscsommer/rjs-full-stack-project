@@ -55,9 +55,9 @@ function Comment({ currentUser, comment }) {
   };
   return (
     <div className="comment">
-      <CardHeader header={comment.user.username} />
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2">{comment.user.username}</Typography>
+        <Typography variant="body1" color="text.secondary">
           {comment.content}
         </Typography>
       </CardContent>

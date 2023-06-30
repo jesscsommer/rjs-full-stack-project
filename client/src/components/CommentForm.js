@@ -1,5 +1,8 @@
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+import { TextField } from "@mui/material";
+import Button from "@mui/material/Button";
 import { useState } from "react";
+import SendIcon from "@mui/icons-material/Send";
 
 function CommentForm({ post, currentUser, handleNewComment }) {
   const [comment, setComment] = useState({
@@ -38,16 +41,15 @@ function CommentForm({ post, currentUser, handleNewComment }) {
 
   return (
     <div className="new-comment">
-      <form onSubmit={handleSubmitComment}>
-        <input
+      <form onSubmit={handleSubmitComment} style={{ display: "flex" }}>
+        <TextField
+          sx={{ bgcolor: "lightGrey" }}
           onChange={handleCommentChange}
           placeholder="Add a Comment ..."
           name="content"
           value={comment.content}
-        ></input>
-        <button>
-          <AddBoxOutlinedIcon fontSize="inherit" />
-        </button>
+        ></TextField>
+        <Button variant="contained">{<SendIcon />}</Button>
       </form>
     </div>
   );
