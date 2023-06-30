@@ -1,46 +1,35 @@
-# Getting Started with Create React App
+### Phase 4 Full-Stack Application Project 
+# HaiKu
+![Alt text](markdown/Screenshot_2023-06-29_at_3.32.07_PM.png)
+## User Stories
+---
+Welcome to Haiky, the ultimate platform for haiku enthusiasts and poets alike!
 
-## Installation Instructions and Available Scripts
-If you haven't already, fork and clone this lab into your local environment. Remember to fork a copy into your GitHub account first, then clone from that copy. Navigate into its directory in the terminal, then run `code` . to open the files in Visual Studio Code.
+Our intuitive app is designed to be your poetic sanctuary, where you can effortlessly compose and share your haikus with fellow wordsmiths. Whether you're a seasoned haiku master or a budding poet, appname provides the perfect canvas for your lyrical expressions.
+
+As a user, you will be able to:
+* Sign up for an account
+* Log in to the site and remain logged in
+* Log out
+* Edit your own profile
+* View all the haiku post
+* Create a new haiku and publish it
+* delete your own post
+* Like a haiku or cancel your like
+* Add a review to a haiku post, or even like/unlike other's review
+* Check people's profile page
 
 
-Install any dependencies you know you'll need for your project! You can do this straight from the command line:
+## Table Setup
+---
+![Alt text](<markdown/Social Network.png>)
+The file server/models.py defines the model classes without relationships. Use the following commands to create the initial database app.db:
 ```bash
-pipenv install
+export FLASK_APP=server/app.py
+flask db init
+flask db upgrade head
 ```
-```bash
-pipenv shell
-```
 
-Navigate into server, then run
-```bash
-python app.py
-```
-to start the application.
-
-
-```bash
-npm start -- prefix client
-```
-Run the Json server.
-Open http://localhost:4000 to view it in your browser.
-
-```bash
-npm run build
-```
-Builds the app for production to the build folder.
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-```bash
-npm run eject
-```
-Note: this is a one-way operation. Once you `eject`, you can’t go back!
-
-## Learn More
-You can learn more in 
-[Create a New React App](https://legacy.reactjs.org/docs/create-a-new-react-app.html)
-[MUI](https://mui.com/design-kits/)
-
-## Licensing
-MIT License
-Copyright (c) [2023] [[Ren Blake](https://github.com/rcblake), [Jessica Sommerville](https://github.com/jesscsommer), [Shiyao Zhai](https://github.com/RRZhai)]
+## Wireframe
+---
+![Alt text](<markdown/Screenshot 2023-06-29 at 3.25.17 PM.png>)
