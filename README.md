@@ -1,9 +1,9 @@
 ### Phase 4 Full-Stack Application Project 
-# HaiKu
+# HaikuHaven
 ![Alt text](markdown/Screenshot_2023-06-29_at_3.32.07_PM.png)
 ## User Stories
 ---
-Welcome to Haiky, the ultimate platform for haiku enthusiasts and poets alike!
+Welcome to HaikuHaven, the ultimate platform for haiku enthusiasts and poets alike!
 
 Our intuitive app is designed to be your poetic sanctuary, where you can effortlessly compose and share your haikus with fellow wordsmiths. Whether you're a seasoned haiku master or a budding poet, appname provides the perfect canvas for your lyrical expressions.
 
@@ -22,7 +22,7 @@ As a user, you will be able to:
 
 ## Table Setup
 ---
-![Alt text](<markdown/Social Network.png>)
+![Alt text](<markdown/Screenshot 2023-06-30 at 8.22.15 AM.png>)
 The file server/models.py defines the model classes without relationships. Use the following commands to create the initial database app.db:
 ```bash
 export FLASK_APP=server/app.py
