@@ -23,7 +23,7 @@ from blueprints.posts import Posts, posts_schema
 from blueprints.post_by_id import PostById
 from blueprints.post_likes import PostLikes
 from blueprints.post_like_by_id import PostLikeById
-from blueprints.users import Users
+from blueprints.users import Users, users_schema
 from blueprints.user_by_id import UserById
 from blueprints.user_by_name import UserByName
 from blueprints.signup import Signup
@@ -64,6 +64,19 @@ def sort_posts_by_likes():
         } for post in query]
 
     return make_response(posts_by_like, 200)
+
+@app.route("/liked-posts-by/<int:userid>")
+def get_likers_for_posts(userid):
+    query = User.query \
+            .join(User.post_likes) \
+            .group_by(PostLike.user_id) \
+            .join(PostLike.post) \
+            .group_by(PostLike.post_id) \
+            .filter(Post.user_id == userid)
+
+    unique_users = { user["username"] for user in users_schema.dump(query) } 
+    
+    return make_response(list(unique_users), 200)
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
