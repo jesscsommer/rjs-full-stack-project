@@ -69,13 +69,11 @@ def sort_posts_by_likes():
 def get_likers_for_posts(userid):
     query = User.query \
             .join(User.post_likes) \
-            .group_by(PostLike.user_id) \
             .join(PostLike.post) \
-            .group_by(PostLike.post_id) \
             .filter(Post.user_id == userid)
 
     unique_users = { user["username"] for user in users_schema.dump(query) } 
-    
+
     return make_response(list(unique_users), 200)
 
 if __name__ == '__main__':
