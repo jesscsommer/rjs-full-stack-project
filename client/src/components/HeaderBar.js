@@ -71,7 +71,7 @@ function HeaderBar({ currentUser, updateCurrentUser }) {
             <>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt={currentUser?.name} src={currentUser?.avatar} />
+                  <Avatar alt={currentUser?.username} src={`../${currentUser.profile_pic_num}.png`} />
                 </IconButton>
               </Tooltip>
               <Menu

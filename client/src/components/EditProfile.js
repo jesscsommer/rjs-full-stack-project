@@ -56,10 +56,10 @@ const EditProfile = ({ profileUser, updateProfileUser, updateCurrentUser }) => {
 
     const formik = useFormik({
         initialValues: {
-            username: editUser.username,
-            name: editUser.name,
-            bio: editUser.bio,
-            public_acct: editUser.public_acct
+            username: editUser?.username,
+            name: editUser?.name,
+            bio: editUser?.bio,
+            public_acct: editUser?.public_acct
         },
         validationSchema: userSchema, 
         onSubmit: (values) => {
@@ -97,7 +97,7 @@ const EditProfile = ({ profileUser, updateProfileUser, updateCurrentUser }) => {
         .then(res => {
             if (res.ok) {
                 updateCurrentUser(null)
-                navigate("/")
+                navigate("/account_deletion")
             }
         })
         .catch(err => setErrors("Account still active, please try again"))
