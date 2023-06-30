@@ -24,7 +24,7 @@ This social network for haikus has a React frontend and a Python with Flask back
 
 The `models` directory defines these relationships between classes and a SQLite database. Run the following commands from the server directory to create the initial database.
 
-11. `export FLASK_APP=server/app.py`
+11. `export FLASK_APP=app.py`
 12. `flask db init`
 13. `flask db upgrade head`
 14. Run `python seed.py` to seed the database
