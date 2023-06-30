@@ -14,7 +14,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddCommentIcon from "@mui/icons-material/AddComment";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Link } from "react-router-dom";
 
 const ExpandMore = styled((props) => {
@@ -29,22 +29,24 @@ const ExpandMore = styled((props) => {
 }));
 
 const Post = ({ currentUser, post, handlePostDelete }) => {
-  const [currentPost, setCurrentPost] = useState(post)
-  const post_like_for_user = currentPost.post_likes?.find(pl => pl.user_id == currentUser?.id)
+  const [currentPost, setCurrentPost] = useState(post);
+  const post_like_for_user = currentPost.post_likes?.find(
+    (pl) => pl.user_id == currentUser?.id
+  );
   const [expanded, setExpanded] = useState(false);
-  const [liked, setLiked] = useState(post_like_for_user)
+  const [liked, setLiked] = useState(post_like_for_user);
   const [newComment, setNewComment] = useState([]);
-  const [numLikes, setNumLikes] = useState(currentPost.post_likes?.length)
+  const [numLikes, setNumLikes] = useState(currentPost.post_likes?.length);
 
-  const haiku_lines = post.content.split("\n")
+  const haiku_lines = post.content.split("\n");
 
   const handleLikedData = () => {
     if (liked) {
       fetch(`/post_likes/${liked.id}`, {
         method: "DELETE",
-      }).then(res => {
-        setNumLikes(numLikes => numLikes - 1)
-        setLiked(like => !like);
+      }).then((res) => {
+        setNumLikes((numLikes) => numLikes - 1);
+        setLiked((like) => !like);
       });
     } else {
       fetch("/post_likes", {
@@ -54,8 +56,8 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          setNumLikes(numLikes => numLikes + 1)
-          setLiked(like => data);
+          setNumLikes((numLikes) => numLikes + 1);
+          setLiked((like) => data);
         })
         .catch((err) => console.error(err));
     }
@@ -111,11 +113,12 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
     <Card sx={{ maxWidth: 345, bgcolor: randCardColor, my: 2, marginTop: "0" }}>
       <CardHeader
         avatar={
-          <Avatar 
-            sx={{ bgcolor: randAvaColor }} 
+          <Avatar
+            sx={{ bgcolor: randAvaColor }}
             alt={`${post.user.username} avatar`}
             src={`../${post.user.profile_pic_num}.png`}
-            aria-label="post" />
+            aria-label="post"
+          />
         }
         title={post.user.name}
         subheader={post.user.username}
@@ -123,18 +126,18 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
         to={`/profile/${post.user.username}`}
       />
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body1" color="text.secondary">
           {haiku_lines[0]}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body1" color="text.secondary">
           {haiku_lines[1]}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body1" color="text.secondary">
           {haiku_lines[2]}
         </Typography>
       </CardContent>
       <CardActions sx={{ display: "flex", alignSelf: "flex-end" }}>
-        { currentUser ? 
+        {currentUser ? (
           <IconButton aria-label="add to likes" onClick={handleLikedData}>
             {numLikes}{" "}
             {liked ? (
@@ -143,7 +146,7 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
               <FavoriteBorderIcon />
             )}
           </IconButton>
-          : null }
+        ) : null}
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
@@ -153,7 +156,11 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
           <AddCommentIcon />
         </ExpandMore>
 
-        {post.user?.id === currentUser?.id ? <DeleteForeverIcon onClick={() => handlePostDelete(post.id)} /> : <></>}
+        {post.user?.id === currentUser?.id ? (
+          <DeleteForeverIcon onClick={() => handlePostDelete(post.id)} />
+        ) : (
+          <></>
+        )}
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
