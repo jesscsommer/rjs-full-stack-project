@@ -43,5 +43,5 @@ MIT License
 Copyright (c) 2023 
 
 [Ren Blake](https://github.com/rcblake) <br>
-[Jess Sommerville](https://github.com/jesscsommer) <br>[Shiyao Zhai](https://github.com/RRZhai)
-
+[Jess Sommerville](https://github.com/jesscsommer) <br>
+[Shiyao Zhai](https://github.com/RRZhai)
