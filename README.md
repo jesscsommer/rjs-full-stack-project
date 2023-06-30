@@ -1,11 +1,13 @@
 ### Phase 4 Full-Stack Application Project 
+
+
 # HaikuHaven
 ![Alt text](markdown/Screenshot_2023-06-29_at_3.32.07_PM.png)
 ## User Stories
 ---
 Welcome to HaikuHaven, the ultimate platform for haiku enthusiasts and poets alike!
 
-Our intuitive app is designed to be your poetic sanctuary, where you can effortlessly compose and share your haikus with fellow wordsmiths. Whether you're a seasoned haiku master or a budding poet, appname provides the perfect canvas for your lyrical expressions.
+Our intuitive app is designed to be your poetic sanctuary, where you can effortlessly compose and share your haikus with fellow wordsmiths. Whether you're a seasoned haiku master or a budding poet, HaikuHaven provides the perfect canvas for your lyrical expressions.
 
 As a user, you will be able to:
 * Sign up for an account
