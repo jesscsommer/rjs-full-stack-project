@@ -15,7 +15,7 @@ class PostSchema(ma.SQLAlchemySchema):
         model = Post
         load_instance = True
         ordered = True
-        fields = ("id", "content", "user", "comments", "post_likes", "url")
+        fields = ("id", "content", "user", "user_id", "comments", "post_likes", "url")
 
     post_likes = fields.Nested(PostLikeSchema, 
                                 only=("id", "user_id", "url"), many=True)

@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request
+from flask import request, make_response
 from flask_restful import Resource
 
 # Local imports
@@ -19,7 +19,7 @@ from blueprints.comment_likes import CommentLikes
 from blueprints.comment_like_by_id import CommentLikeById
 from blueprints.comments import Comments
 from blueprints.comment_by_id import CommentById
-from blueprints.posts import Posts
+from blueprints.posts import Posts, posts_schema
 from blueprints.post_by_id import PostById
 from blueprints.post_likes import PostLikes
 from blueprints.post_like_by_id import PostLikeById
@@ -47,14 +47,23 @@ api.add_resource(Login, "/login")
 api.add_resource(Logout, "/logout")
 api.add_resource(CheckSession, "/check_session")
 
-# This will go in the post/patch routes after the form has been created
-# saving file name for db
-# pic_filename = secure_filename()
-# pic_name = str(uuid.uuid1()) + "_" + pic_filename
-# saving the image 
-# pic_save = request.file["profile_pic"]
-# pic_save.profile_pic.save(os.path.join(app.config["UPLOAD_PATH"]),pic_name)
-# pic_save.profile_pic = pic_name
+@app.route("/posts/sort-by-likes")
+def sort_posts_by_likes():
+    query = Post.query \
+    .join(Post.post_likes) \
+    .group_by(Post.id) \
+    .order_by(db.func.count(Post.post_likes).desc()) \
+    .with_entities(Post.id, Post.content, Post.user_id, \
+                    db.func.count(Post.post_likes).label("like_count"))
+    
+    posts_by_like = [{
+        "id": post.id,
+        "content": post.content,
+        "user_id": post.user_id,
+        "like_count": post.like_count
+        } for post in query]
+
+    return make_response(posts_by_like, 200)
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
