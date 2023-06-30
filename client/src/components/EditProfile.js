@@ -27,7 +27,6 @@ const style = {
 };
 
 const EditProfile = ({ profileUser, updateProfileUser, updateCurrentUser }) => {
-    const [editUser, setEditUser] = useState(profileUser)
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -56,14 +55,15 @@ const EditProfile = ({ profileUser, updateProfileUser, updateCurrentUser }) => {
 
     const formik = useFormik({
         initialValues: {
-            username: editUser?.username,
-            name: editUser?.name,
-            bio: editUser?.bio,
-            public_acct: editUser?.public_acct
+            username: profileUser?.username,
+            name: profileUser?.name,
+            bio: profileUser?.bio,
+            public_acct: profileUser?.public_acct
         },
+        enableReinitialize: true,
         validationSchema: userSchema, 
         onSubmit: (values) => {
-            fetch(`/users/${editUser.id}`, {
+            fetch(`/users/${profileUser.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"
@@ -88,7 +88,7 @@ const EditProfile = ({ profileUser, updateProfileUser, updateCurrentUser }) => {
     })
 
     const handleClick = () => {
-        fetch(`/users/${editUser.id}`, {
+        fetch(`/users/${profileUser.id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
