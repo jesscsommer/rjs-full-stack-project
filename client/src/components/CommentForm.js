@@ -16,7 +16,6 @@ function CommentForm({ post, currentUser, handleNewComment }) {
   };
 
   const handleSubmitComment = (e) => {
-    console.log("new comment clicked!")
     e.preventDefault();
     const newComment = {
       content: comment.content,
