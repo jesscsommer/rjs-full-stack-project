@@ -1,46 +1,27 @@
-# Getting Started with Create React App
+# Haiku Haven
 
-## Installation Instructions and Available Scripts
-If you haven't already, fork and clone this lab into your local environment. Remember to fork a copy into your GitHub account first, then clone from that copy. Navigate into its directory in the terminal, then run `code` . to open the files in Visual Studio Code.
-
-
-Install any dependencies you know you'll need for your project! You can do this straight from the command line:
-```bash
-pipenv install
-```
-```bash
-pipenv shell
-```
-
-Navigate into server, then run
-```bash
-python app.py
-```
-to start the application.
+👋 hai there! Haiku Haven is a social network where you can effortlessly compose and share your haikus with fellow wordsmiths.
 
 
-```bash
-npm start -- prefix client
-```
-Run the Json server.
-Open http://localhost:4000 to view it in your browser.
+![Home page of a social media app with a grid of haikus](./public/HaikuHaven.png)
 
-```bash
-npm run build
-```
-Builds the app for production to the build folder.
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## User Stories
+---
 
-```bash
-npm run eject
-```
-Note: this is a one-way operation. Once you `eject`, you can’t go back!
+As a user, you will be able to:
+* Sign up for an account
+* Log in to the site and remain logged in
+* Log out
+* Edit your own profile
+* View other user profiles 
+* View all the haiku posts
+* Create a new haiku and publish it
+* Delete your own post
+* Like a haiku or remove your like
+* Add a comment to a haiku post, or even like/unlike other's comment
 
-## Learn More
-You can learn more in 
-[Create a New React App](https://legacy.reactjs.org/docs/create-a-new-react-app.html)
-[MUI](https://mui.com/design-kits/)
 
-## Licensing
-MIT License
-Copyright (c) [2023] [[Ren Blake](https://github.com/rcblake), [Jessica Sommerville](https://github.com/jesscsommer), [Shiyao Zhai](https://github.com/RRZhai)]
+## References and Acknowledgements
+[Securing your session key](https://morgvanny.com/securing-your-session-key-in-flask/)<br>
+[Animal icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/animal)<br>
+[Implement following/followers](https://stackoverflow.com/questions/23622922/how-to-implement-following-followers-relationship-in-sqlalchemy)
