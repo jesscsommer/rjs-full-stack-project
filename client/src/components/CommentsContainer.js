@@ -21,7 +21,7 @@ function CommentsContainer({ post, currentUser }) {
   };
 
   return (
-    <div className="comments">
+    <div className="comments" sx={{ maxWidth: 345 }}>
       {currentUser ? (
         <CommentForm
           post={post}
