@@ -83,7 +83,6 @@ const App = () => {
             />
           }
         />
-        <Route path="/404" element={<Error404 />} />
         <Route path="/account_deletion" element={<SuccessfulDelete />} />
         <Route
           path="/"
@@ -108,6 +107,7 @@ const App = () => {
             )
           }
         />
+        <Route path="*" element={<Error404 />} />
       </Routes>
       {/* <RightSideBar /> */}
     </div>

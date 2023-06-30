@@ -56,10 +56,10 @@ const EditProfile = ({ profileUser, updateProfileUser, updateCurrentUser }) => {
 
     const formik = useFormik({
         initialValues: {
-            username: editUser.username,
-            name: editUser.name,
-            bio: editUser.bio,
-            public_acct: editUser.public_acct
+            username: editUser?.username,
+            name: editUser?.name,
+            bio: editUser?.bio,
+            public_acct: editUser?.public_acct
         },
         validationSchema: userSchema, 
         onSubmit: (values) => {

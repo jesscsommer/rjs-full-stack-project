@@ -25,8 +25,8 @@ export default function Error404() {
         <p>Lost in the vast digital void,</p>
         <p>Haiku whispers fade.</p>
       </Typography>
-      <Button variant="contained" color="primary" onClick={() => navigate(-1)}>
-        Go Back
+      <Button variant="contained" color="primary" onClick={() => navigate("/")}>
+        Go Home
       </Button>
     </Box>
   );

@@ -13,12 +13,13 @@ import CssBaseline from "@mui/material/CssBaseline";
 import PostsContainer from "./PostsContainer";
 import EditProfile from "./EditProfile";
 
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const drawerHeight = 240;
 
 const Profile = ({ currentUser, updateCurrentUser }) => {
+  const navigate = useNavigate()
   const { username } = useParams();
   const [profileUser, setProfileUser] = useState(null);
 
@@ -32,13 +33,11 @@ const Profile = ({ currentUser, updateCurrentUser }) => {
         if (res.ok) {
           res.json().then(setProfileUser);
         } else {
-          alert("No profile for that user");
+          navigate("/404");
         }
       })
       .catch((err) => console.error(err));
   }, [username]);
-
-  if (!profileUser) return <h1>Loading...</h1>;
 
   return (
     <div>
@@ -59,17 +58,17 @@ const Profile = ({ currentUser, updateCurrentUser }) => {
           <Toolbar />
           <Box>
             <Avatar
-              alt={profileUser.username}
-              src={`../${profileUser.profile_pic_num}.png`}
+              alt={profileUser?.username}
+              src={`../${profileUser?.profile_pic_num}.png`}
               sx={{ width: 56, height: 56 }}
             />
             <Box>
-              <h1>{profileUser.name}</h1>
+              <h1>{profileUser?.name}</h1>
 
-              <h3>{profileUser.username}</h3>
+              <h3>{profileUser?.username}</h3>
             </Box>
             <ListItem>
-              <p>{profileUser.bio}</p>
+              <p>{profileUser?.bio}</p>
             </ListItem>
             {currentUser?.id === profileUser?.id ? (
               <ListItem disablePadding>
@@ -89,7 +88,7 @@ const Profile = ({ currentUser, updateCurrentUser }) => {
           component="main"
           sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
         >
-          <PostsContainer posts={profileUser.posts} currentUser={currentUser} />
+          <PostsContainer posts={profileUser?.posts} currentUser={currentUser} />
         </Box>
       </Box>
     </div>

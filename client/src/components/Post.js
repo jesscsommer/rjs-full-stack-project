@@ -30,11 +30,11 @@ const ExpandMore = styled((props) => {
 
 const Post = ({ currentUser, post, handlePostDelete }) => {
   const [currentPost, setCurrentPost] = useState(post)
-  const post_like_for_user = currentPost.post_likes.find(pl => pl.user_id == currentUser?.id)
+  const post_like_for_user = currentPost.post_likes?.find(pl => pl.user_id == currentUser?.id)
   const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState(post_like_for_user)
   const [newComment, setNewComment] = useState([]);
-  const [numLikes, setNumLikes] = useState(currentPost.post_likes.length)
+  const [numLikes, setNumLikes] = useState(currentPost.post_likes?.length)
 
   const haiku_lines = post.content.split("\n")
 
