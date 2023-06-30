@@ -20,7 +20,7 @@ This social network for haikus has a React frontend and a Python with Flask back
 
 ### Configuring the database
 
-![ERM diagram for users, posts, likes, comments, and follows](<markdown/Social Network.png>)
+![ERM diagram for users, posts, likes, comments, and follows](<markdown/Screenshot 2023-06-30 at 8.22.15 AM.png>)
 
 The `models` directory defines these relationships between classes and a SQLite database. Run the following commands from the server directory to create the initial database.
 
