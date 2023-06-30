@@ -16,6 +16,7 @@ function CommentForm({ post, currentUser, handleNewComment }) {
   };
 
   const handleSubmitComment = (e) => {
+    console.log("new comment clicked!")
     e.preventDefault();
     const newComment = {
       content: comment.content,
@@ -49,7 +50,7 @@ function CommentForm({ post, currentUser, handleNewComment }) {
           name="content"
           value={comment.content}
         ></TextField>
-        <Button variant="contained">{<SendIcon />}</Button>
+        <Button type="submit" variant="contained">{<SendIcon />}</Button>
       </form>
     </div>
   );
