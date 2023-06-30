@@ -18,14 +18,24 @@ This social network for haikus has a React frontend and a Python with Flask back
 9. Copy the result into the `.env` file as the value for the secret key
 10. Make sure `.env` is added to your `.gitignore`
 
+### Configuring the database
+
+![ERM diagram for users, posts, likes, comments, and follows](<markdown/Social Network.png>)
+
+The `models` directory defines these relationships between classes and a SQLite database. Run the following commands from the server directory to create the initial database.
+
+11. `export FLASK_APP=server/app.py`
+12. `flask db init`
+13. `flask db upgrade head`
+14. Run `python seed.py` to seed the database
+
 ### Starting the server 
-11. Run `python seed.py` to seed the database
-12. Run `python app.py` to start the server 
+15. Run `python app.py` to start the server 
 
 ### Starting the client
-13. In another terminal, `cd` into the client directory
-14. Run `npm install` to install dependencies 
-15. Run `npm start` to open the app in the browser
+16. In another terminal, `cd` into the client directory
+17. Run `npm install` to install dependencies 
+18. Run `npm start` to open the app in the browser
 
 
 ## Licensing

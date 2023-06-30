@@ -1,5 +1,7 @@
-### Phase 4 Full-Stack Application Project 
-# HaiKu
+# Haiku Haven
+
+👋 hai there! Haiku Haven is a social network for sharing haikus with 
+
 ![Alt text](markdown/Screenshot_2023-06-29_at_3.32.07_PM.png)
 ## User Stories
 ---
