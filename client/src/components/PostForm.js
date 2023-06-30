@@ -83,7 +83,7 @@ const PostForm = ({ handleSubmitPost }) => {
           component="form"
           onSubmit={formik.handleSubmit}
           sx={{
-            marginTop: addMargin ? "80px" : null,
+            marginTop: "20px",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",

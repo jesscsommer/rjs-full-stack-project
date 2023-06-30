@@ -15,11 +15,10 @@ import EditProfile from "./EditProfile";
 
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-
-const drawerHeight = 300;
+import { Typography } from "@mui/material";
 
 const Profile = ({ currentUser, updateCurrentUser }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { username } = useParams();
   const [profileUser, setProfileUser] = useState(null);
 
@@ -40,41 +39,61 @@ const Profile = ({ currentUser, updateCurrentUser }) => {
   }, [username]);
 
   return (
-    <div>
-      <Box>
-        <CssBaseline />
-        <Drawer
-          sx={{
-            height: drawerHeight,
-            flexShrink: 0,
-            "& .MuiDrawer-paper": {
-              height: drawerHeight,
-              boxSizing: "border-box",
-            },
-          }}
-          variant="permanent"
-          anchor="top"
-        >
-          <Toolbar />
+    <Box>
+      <Drawer
+        sx={{
+          "& .MuiDrawer-paper": {
+            height: 250,
+            boxSizing: "border-box",
+            marginTop: "60px",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            border: "none",
+            width: "100vw",
+            position: "sticky",
+          },
+        }}
+        variant="permanent"
+      >
+        <Box sx={{ display: "flex", width: "800px", marginInline: "auto" }}>
+          <Avatar
+            alt={profileUser?.username}
+            src={`../${profileUser?.profile_pic_num}.png`}
+            sx={{ width: 200, height: 200 }}
+          />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              width: 150,
+              maxWidth: 350,
+              alignItems: "left",
+              mx: "auto",
+              my: "auto",
+            }}
+          >
+            <Typography variant="subtitle2">name:</Typography>
+            <Typography variant="h6">{profileUser?.name}</Typography>
+            <Typography variant="subtitle2">username:</Typography>
+            <Typography variant="h6">{profileUser?.username}</Typography>
+          </Box>
           <Box>
-            <Avatar
-              alt={profileUser?.username}
-              src={`../${profileUser?.profile_pic_num}.png`}
-              sx={{ width: 56, height: 56 }}
-            />
-            <Box>
-              <h1>{profileUser?.name}</h1>
+            <Typography variant="subtitle2">bio:</Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                width: 300,
+                my: "auto",
+                mx: "auto",
+                alignContent: "center",
+              }}
+            >
+              {profileUser?.bio}
+            </Typography>
 
-              <h3>{profileUser?.username}</h3>
-            </Box>
-            <ListItem>
-              <p>{profileUser?.bio}</p>
-            </ListItem>
             {currentUser?.id === profileUser?.id ? (
               <ListItem disablePadding>
-                <ListItemIcon>
-                  <EditIcon />
-                </ListItemIcon>
                 <EditProfile
                   profileUser={profileUser}
                   updateProfileUser={updateProfileUser}
@@ -83,15 +102,11 @@ const Profile = ({ currentUser, updateCurrentUser }) => {
               </ListItem>
             ) : null}
           </Box>
-        </Drawer>
-        <Box
-          component="main"
-          sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
-        >
-          <PostsContainer posts={profileUser?.posts} currentUser={currentUser} />
         </Box>
-      </Box>
-    </div>
+      </Drawer>
+
+      <PostsContainer posts={profileUser?.posts} currentUser={currentUser} />
+    </Box>
   );
 };
 

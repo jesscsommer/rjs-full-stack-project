@@ -36,87 +36,88 @@ function HeaderBar({ currentUser, updateCurrentUser }) {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" sx={{ zIndex: 9999 }}>
-        <Toolbar>
-          <Box sx={{ flexGrow: 0 }}>
-            <Typography
-              variant="h5"
-              noWrap
-              component={Link}
-              to="/"
-              sx={{
-                mr: 2,
-                flexGrow: 1,
-                fontFamily: "cursive",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
+    <AppBar sx={{ zIndex: 9999, position: "sticky", top: 0 }}>
+      <Toolbar>
+        <Box sx={{ flexGrow: 0 }}>
+          <Typography
+            variant="h5"
+            noWrap
+            component={Link}
+            to="/"
+            sx={{
+              mr: 2,
+              flexGrow: 1,
+              fontFamily: "cursive",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            HaikuHaven
+          </Typography>
+        </Box>
+        <Box sx={{ flexGrow: 1 }}>
+          <Button color="inherit" component={Link} to="/">
+            Home
+          </Button>
+        </Box>
+        {!currentUser ? (
+          <Button color="inherit" component={Link} to="/login">
+            Login
+          </Button>
+        ) : (
+          <>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar
+                  alt={currentUser?.username}
+                  src={`../${currentUser.profile_pic_num}.png`}
+                />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
               }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
             >
-              HaikuHaven
-            </Typography>
-          </Box>
-          <Box sx={{ flexGrow: 1 }}>
-            <Button color="inherit" component={Link} to="/">
-              Home
-            </Button>
-          </Box>
-          {!currentUser ? (
-            <Button color="inherit" component={Link} to="/login">
-              Login
-            </Button>
-          ) : (
-            <>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt={currentUser?.username} src={`../${currentUser.profile_pic_num}.png`} />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+              <MenuItem
+                key="profile"
+                onClick={() => {
+                  handleCloseUserMenu();
                 }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
+                component={Link}
+                to={`/profile/${currentUser.username}`}
               >
-                <MenuItem
-                  key="profile"
-                  onClick={() => {
-                    handleCloseUserMenu();
-                  }}
-                  component={Link}
-                  to={`/profile/${currentUser.username}`}
-                >
-                  <Typography textAlign="center">Profile</Typography>
-                </MenuItem>
-                <MenuItem
-                  key="logout"
-                  onClick={() => {
-                    handleCloseUserMenu();
-                    logout();
-                  }}
-                  component={Link}
-                  to="/"
-                >
-                  <Typography textAlign="right">Logout</Typography>
-                </MenuItem>
-              </Menu>
-            </>
-          )}
-        </Toolbar>
-      </AppBar>
-    </Box>
+                <Typography textAlign="center">Profile</Typography>
+              </MenuItem>
+              <MenuItem
+                key="logout"
+                onClick={() => {
+                  handleCloseUserMenu();
+                  logout();
+                }}
+                component={Link}
+                to="/"
+              >
+                <Typography textAlign="right">Logout</Typography>
+              </MenuItem>
+            </Menu>
+          </>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 }
 

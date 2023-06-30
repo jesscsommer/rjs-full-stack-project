@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
+import { useLocation } from "react-router-dom";
 
 import Post from "./Post";
 import PostForm from "./PostForm";
@@ -11,6 +12,9 @@ function PostsContainer({
   handlePostDelete,
   handleSubmitPost,
 }) {
+  const location = useLocation();
+  const addMargin = location.pathname === "/profile/:username";
+
   return (
     <div>
       <Box
@@ -25,7 +29,9 @@ function PostsContainer({
           variant="masonry"
           cols={3}
           gap={15}
-          sx={{ marginTop: currentUser ? null : "80px" }}
+          sx={{
+            marginTop: addMargin ? "305px" : null,
+          }}
         >
           {posts?.map((post) => (
             <Post
