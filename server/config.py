@@ -17,7 +17,12 @@ import os
 # Local imports
 
 # Instantiate app, set attributes
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_url_path="",
+    static_folder="../client/build",
+    template_folder="../client/build"
+)
 
 load_dotenv(".env")
 app.secret_key=environ.get("SECRET_KEY")
