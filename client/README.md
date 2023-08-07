@@ -2,7 +2,6 @@
 
 👋 hai there! Haiku Haven is a social network where you can effortlessly compose and share your haikus with fellow wordsmiths.
 
-
 ![Home page of a social media app with a grid of haikus](./public/HaikuHaven.png)
 
 ## User Stories

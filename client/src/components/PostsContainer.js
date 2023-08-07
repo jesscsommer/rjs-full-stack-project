@@ -5,13 +5,15 @@ import { useLocation } from "react-router-dom";
 import Post from "./Post";
 import PostForm from "./PostForm";
 import { ImageList } from "@mui/material";
+import { v4 as uuid } from "uuid";
 
-function PostsContainer({
+const PostsContainer = ({
   currentUser,
   posts,
   handlePostDelete,
   handleSubmitPost,
-}) {
+  updateProfileUser
+}) => {
   const location = useLocation();
   const addMargin = location.pathname === "/profile/:username";
 
@@ -35,10 +37,11 @@ function PostsContainer({
         >
           {posts?.map((post) => (
             <Post
-              key={post.id}
+              key={uuid()}
               post={post}
               currentUser={currentUser}
               handlePostDelete={handlePostDelete}
+              updateProfileUser={updateProfileUser}
             />
           ))}
         </ImageList>

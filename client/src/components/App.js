@@ -80,6 +80,7 @@ const App = () => {
             <Profile
               currentUser={currentUser}
               updateCurrentUser={updateCurrentUser}
+              handlePostDelete={handlePostDelete}
             />
           }
         />

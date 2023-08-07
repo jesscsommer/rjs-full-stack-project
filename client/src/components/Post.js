@@ -28,7 +28,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const Post = ({ currentUser, post, handlePostDelete }) => {
+const Post = ({ currentUser, post, handlePostDelete, updateProfileUser }) => {
   const [currentPost, setCurrentPost] = useState(post);
   const post_like_for_user = currentPost.post_likes?.find(
     (pl) => pl.user_id == currentUser?.id
@@ -109,6 +109,7 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
 
   const randCardColor =
     cardColors[Math.floor(Math.random() * cardColors.length)];
+
   return (
     <Card sx={{ maxWidth: 345, bgcolor: randCardColor, my: 2, marginTop: "0" }}>
       <CardHeader
@@ -157,7 +158,9 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
         </ExpandMore>
 
         {post.user?.id === currentUser?.id ? (
-          <DeleteForeverIcon onClick={() => handlePostDelete(post.id)} />
+          <DeleteForeverIcon onClick={() => {
+            handlePostDelete(post.id)
+          }} />
         ) : (
           <></>
         )}

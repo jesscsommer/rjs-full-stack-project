@@ -101,8 +101,9 @@ const PostForm = ({ handleSubmitPost }) => {
                 variant="standard"
                 margin="normal"
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
-              <p style={{ color: "red" }}>{formik.errors.line1}</p>
+              {formik.errors.line1 && formik.touched.line1 ? <p style={{ color: "red" }}>{formik.errors.line1}</p> : null}
               <TextField
                 required
                 fullWidth
@@ -113,8 +114,9 @@ const PostForm = ({ handleSubmitPost }) => {
                 variant="standard"
                 margin="normal"
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
-              <p style={{ color: "red" }}>{formik.errors.line2}</p>
+              {formik.errors.line2 && formik.touched.line2 ? <p style={{ color: "red" }}>{formik.errors.line2}</p> : null}
               <TextField
                 required
                 fullWidth
@@ -125,8 +127,9 @@ const PostForm = ({ handleSubmitPost }) => {
                 variant="standard"
                 margin="normal"
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
-              <p style={{ color: "red" }}>{formik.errors.line3}</p>
+              {formik.errors.line3 && formik.touched.line3 ? <p style={{ color: "red" }}>{formik.errors.line3}</p> : null}
               {errors ? <Error msg={errors} /> : null}
               <Button
                 type="submit"
