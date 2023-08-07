@@ -42,14 +42,14 @@ const Post = ({ currentUser, post, handlePostDelete, updateProfileUser }) => {
 
   const handleLikedData = () => {
     if (liked) {
-      fetch(`/post_likes/${liked.id}`, {
+      fetch(`/api/v1/post_likes/${liked.id}`, {
         method: "DELETE",
       }).then((res) => {
         setNumLikes((numLikes) => numLikes - 1);
         setLiked((like) => !like);
       });
     } else {
-      fetch("/post_likes", {
+      fetch("/api/v1/post_likes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ post_id: post.id, user_id: currentUser.id }),
@@ -68,7 +68,7 @@ const Post = ({ currentUser, post, handlePostDelete, updateProfileUser }) => {
 
   const handleSubmitComment = (e, submitComment) => {
     e.preventDefault();
-    fetch("/comments", {
+    fetch("/api/v1/comments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(submitComment),

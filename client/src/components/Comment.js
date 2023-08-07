@@ -11,7 +11,7 @@ function Comment({ currentUser, comment }) {
   const [newLikedComment, setNewLikedComment] = useState([]);
 
   useEffect(() => {
-    fetch("/comment_likes")
+    fetch("/api/v1/comment_likes")
       .then((r) => r.json())
       .then((data) => {
         setLikedComment(
@@ -36,11 +36,11 @@ function Comment({ currentUser, comment }) {
 
   const handleLikedCommentData = () => {
     if (likedComment) {
-      fetch(`/comment_likes/${likedComment.id}`, {
+      fetch(`/api/v1/comment_likes/${likedComment.id}`, {
         method: "DELETE",
       });
     } else {
-      fetch("/comment_likes", {
+      fetch("/api/v1/comment_likes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

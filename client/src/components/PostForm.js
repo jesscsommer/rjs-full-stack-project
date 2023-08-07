@@ -50,7 +50,7 @@ const PostForm = ({ handleSubmitPost }) => {
     },
     validationSchema: postSchema,
     onSubmit: (values, { resetForm }) => {
-      fetch("/posts", {
+      fetch("/api/v1/posts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

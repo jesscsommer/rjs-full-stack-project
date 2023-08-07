@@ -65,7 +65,7 @@ const SignUpForm = ({ currentUser, updateCurrentUser }) => {
         },
         validationSchema: userSchema,
         onSubmit: (values) => {
-            fetch("/signup", {
+            fetch("/api/v1/signup", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

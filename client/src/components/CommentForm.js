@@ -22,7 +22,7 @@ function CommentForm({ post, currentUser, handleNewComment }) {
       post_id: post.id,
       user_id: currentUser.id,
     };
-    fetch("/comments", {
+    fetch("/api/v1/comments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newComment),

@@ -33,7 +33,7 @@ const Profile = ({ currentUser, updateCurrentUser, handlePostDelete }) => {
   }
 
   useEffect(() => {
-    fetch(`/users/${username}`)
+    fetch(`/api/v1/users/${username}`)
       .then((res) => {
         if (res.ok) {
           res.json().then(data => {

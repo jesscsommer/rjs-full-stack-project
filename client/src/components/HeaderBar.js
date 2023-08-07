@@ -25,7 +25,7 @@ function HeaderBar({ currentUser, updateCurrentUser }) {
   };
 
   const logout = () => {
-    fetch("/logout", {
+    fetch("/api/v1/logout", {
       method: "DELETE",
     }).then((res) => {
       if (res.ok) {
