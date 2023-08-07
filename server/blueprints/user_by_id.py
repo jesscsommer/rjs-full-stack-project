@@ -19,7 +19,6 @@ class UserById(Resource):
             try:
                 if user.id == session["user_id"]:
                     data = request.get_json()
-                    data["id"] = user.id
                     user_schema.validate(data)
 
                     updated_user = user_schema.load(data,

@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, make_response
+from flask import request, make_response, render_template
 from flask_restful import Resource
 
 # Local imports
@@ -46,6 +46,17 @@ api.add_resource(Signup, "/signup")
 api.add_resource(Login, "/login")
 api.add_resource(Logout, "/logout")
 api.add_resource(CheckSession, "/check_session")
+
+@app.route("/")
+@app.route("/login")
+@app.route("/signup")
+@app.route("/profile/<string:username>")
+@app.route("/account_deletion")
+@app.route("/404")
+def index(id=0, username=""): 
+    return render_template("index.html")
+
+
 
 @app.route("/posts/sort-by-likes")
 def sort_posts_by_likes():

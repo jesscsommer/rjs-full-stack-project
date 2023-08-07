@@ -17,20 +17,29 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Typography } from "@mui/material";
 
-const Profile = ({ currentUser, updateCurrentUser }) => {
+const Profile = ({ currentUser, updateCurrentUser, handlePostDelete }) => {
   const navigate = useNavigate();
   const { username } = useParams();
   const [profileUser, setProfileUser] = useState(null);
+  const [profilePosts, setProfilePosts] = useState(null);
 
   const updateProfileUser = (updated_user) => {
     setProfileUser(updated_user);
   };
 
+  const handleProfilePostDelete = (id) => {
+    handlePostDelete(id);
+    setProfilePosts(posts => posts.filter(post => post.id !== id));
+  }
+
   useEffect(() => {
-    fetch(`/users/${username}`)
+    fetch(`/api/v1/users/${username}`)
       .then((res) => {
         if (res.ok) {
-          res.json().then(setProfileUser);
+          res.json().then(data => {
+            setProfileUser(data);
+            setProfilePosts(data.posts);
+          });
         } else {
           navigate("/404");
         }
@@ -105,7 +114,11 @@ const Profile = ({ currentUser, updateCurrentUser }) => {
         </Box>
       </Drawer>
 
-      <PostsContainer posts={profileUser?.posts} currentUser={currentUser} />
+      <PostsContainer 
+        posts={profilePosts} 
+        handlePostDelete={handleProfilePostDelete}
+        currentUser={currentUser} 
+        updateProfileUser={updateProfileUser} />
     </Box>
   );
 };

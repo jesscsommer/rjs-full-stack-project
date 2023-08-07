@@ -28,7 +28,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const Post = ({ currentUser, post, handlePostDelete }) => {
+const Post = ({ currentUser, post, handlePostDelete, updateProfileUser }) => {
   const [currentPost, setCurrentPost] = useState(post);
   const post_like_for_user = currentPost.post_likes?.find(
     (pl) => pl.user_id == currentUser?.id
@@ -42,14 +42,14 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
 
   const handleLikedData = () => {
     if (liked) {
-      fetch(`/post_likes/${liked.id}`, {
+      fetch(`/api/v1/post_likes/${liked.id}`, {
         method: "DELETE",
       }).then((res) => {
         setNumLikes((numLikes) => numLikes - 1);
         setLiked((like) => !like);
       });
     } else {
-      fetch("/post_likes", {
+      fetch("/api/v1/post_likes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ post_id: post.id, user_id: currentUser.id }),
@@ -68,7 +68,7 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
 
   const handleSubmitComment = (e, submitComment) => {
     e.preventDefault();
-    fetch("/comments", {
+    fetch("/api/v1/comments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(submitComment),
@@ -109,6 +109,7 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
 
   const randCardColor =
     cardColors[Math.floor(Math.random() * cardColors.length)];
+
   return (
     <Card sx={{ maxWidth: 345, bgcolor: randCardColor, my: 2, marginTop: "0" }}>
       <CardHeader
@@ -157,7 +158,9 @@ const Post = ({ currentUser, post, handlePostDelete }) => {
         </ExpandMore>
 
         {post.user?.id === currentUser?.id ? (
-          <DeleteForeverIcon onClick={() => handlePostDelete(post.id)} />
+          <DeleteForeverIcon onClick={() => {
+            handlePostDelete(post.id)
+          }} />
         ) : (
           <></>
         )}

@@ -63,7 +63,7 @@ const EditProfile = ({ profileUser, updateProfileUser, updateCurrentUser }) => {
         enableReinitialize: true,
         validationSchema: userSchema, 
         onSubmit: (values) => {
-            fetch(`/users/${profileUser.id}`, {
+            fetch(`/api/v1/users/${profileUser.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"
@@ -88,7 +88,7 @@ const EditProfile = ({ profileUser, updateProfileUser, updateCurrentUser }) => {
     })
 
     const handleClick = () => {
-        fetch(`/users/${profileUser.id}`, {
+        fetch(`/api/v1/users/${profileUser.id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"

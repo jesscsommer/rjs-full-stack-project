@@ -17,12 +17,18 @@ import os
 # Local imports
 
 # Instantiate app, set attributes
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_url_path="",
+    static_folder="../client/build",
+    template_folder="../client/build"
+)
 
 load_dotenv(".env")
 app.secret_key=environ.get("SECRET_KEY")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URI")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.json.compact = False
@@ -36,7 +42,7 @@ migrate = Migrate(app, db)
 db.init_app(app)
 
 # Instantiate REST API
-api = Api(app)
+api = Api(app, prefix="/api/v1")
 
 # Instantiate CORS
 CORS(app)

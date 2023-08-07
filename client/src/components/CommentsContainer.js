@@ -6,7 +6,7 @@ function CommentsContainer({ post, currentUser }) {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    fetch("/comments")
+    fetch("/api/v1/comments")
       .then((r) => r.json())
       .then((allComments) =>
         setComments(

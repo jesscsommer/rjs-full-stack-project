@@ -14,7 +14,7 @@ const App = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch("/check_session").then((res) => {
+    fetch("/api/v1/check_session").then((res) => {
       if (res.ok) {
         res.json().then(setCurrentUser);
       }
@@ -22,21 +22,21 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    fetch("/posts")
+    fetch("/api/v1/posts")
       .then((r) => r.json())
       .then(setPosts)
       .catch((err) => console.error(err));
   }, []);
 
   const handleSetPosts = () => {
-    fetch("/posts")
+    fetch("/api/v1/posts")
       .then((r) => r.json())
       .then(setPosts)
       .catch((err) => console.error(err));
   };
 
   const handlePostDelete = (id) => {
-    fetch(`/posts/${id}`, {
+    fetch(`/api/v1/posts/${id}`, {
       method: "DELETE",
     }).then(setPosts((current) => current.filter((item) => item.id !== id)));
   };
@@ -80,6 +80,7 @@ const App = () => {
             <Profile
               currentUser={currentUser}
               updateCurrentUser={updateCurrentUser}
+              handlePostDelete={handlePostDelete}
             />
           }
         />
